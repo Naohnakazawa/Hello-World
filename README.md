@@ -1,5 +1,5 @@
 ### Hello-World
-a short description
+This is Naohito Nakazawa's first repository on github. I am
 
 # a physicist 
 a part-time lecturer in Waseda Univresity
