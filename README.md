@@ -21,3 +21,14 @@ git status
 git add 
 git commit 
 ```
+
+### This is a figure of T1-experiment:
+
+
+
+
+
+![image-svg](https://github.com/Naohnakazawa/Hello-World/assets/117684192/736e2732-3329-4fff-ada8-90aafa7f45a0)
+
+
+
