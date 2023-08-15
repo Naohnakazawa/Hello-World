@@ -28,7 +28,6 @@ git commit
 
 
 
-![image-svg](https://github.com/Naohnakazawa/Hello-World/assets/117684192/736e2732-3329-4fff-ada8-90aafa7f45a0)
 
 
 
