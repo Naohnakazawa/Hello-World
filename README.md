@@ -12,14 +12,15 @@ This is a <sub>subscript</sub> text.
 
 This is a <sup>superscript</sup> test.
 
-Today is a holiday.
-> Today is a holiday.
+Today is a **holiday**.
+> Today is a **holiday**.
 
 Some basic Git commands are:
 ```
 git status
 git add 
-git commit 
+git commit
+git log 
 ```
 
 ### This is a figure of T1-experiment:
