@@ -38,7 +38,6 @@ An **interesting** paper is [here](https://arxiv.org/abs/2308.02321).
 
 
 
-![image-svg](https://github.com/Naohnakazawa/Hello-World/assets/117684192/736e2732-3329-4fff-ada8-90aafa7f45a0)
 
 
 
