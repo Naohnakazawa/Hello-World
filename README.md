@@ -18,9 +18,12 @@ Today is a **holiday**.
 Some basic Git commands are:
 ```
 git status
-git add 
+git add
+git diff 
 git commit
 git log 
+git checkout # dangerous!
+git restore  # dangerous!
 ```
 
 ### This is a figure of T1-experiment:
