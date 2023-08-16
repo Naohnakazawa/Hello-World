@@ -26,7 +26,7 @@ git checkout # dangerous!
 git restore  # dangerous!
 ```
 
-An **interesting** paper is [here](https://arxiv.org/abs/2308.02321).
+An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 
 
@@ -34,6 +34,13 @@ An **interesting** paper is [here](https://arxiv.org/abs/2308.02321).
 
 ### This is a figure of T1-experiment:
 
+(The figure is dragged from the local jupyter notebook and dropped on this private repository.)
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/872469ba-6668-49ad-b05f-afb6907f9e2e)
 
 
 
