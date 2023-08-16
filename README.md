@@ -26,7 +26,7 @@ git checkout # dangerous!
 git restore  # dangerous!
 ```
 
-### An interesting paper is [here](https://arxiv.org/abs/2308.02321).
+An **interesting** paper is [here](https://arxiv.org/abs/2308.02321).
 
 
 
