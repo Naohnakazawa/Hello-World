@@ -3,7 +3,7 @@
 This is **Naohito Nakazawa's** first repository on github. *I am*
 
 ## *a physicist* 
-### a part-time lecturer in Waseda Univresity
+### a part-time lecturer in Waseda University
 
 a begnner of github and also, 
 a begnner of python
