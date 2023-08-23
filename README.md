@@ -35,6 +35,23 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 ### This is a figure of T1-experiment:
 
 (The figure is dragged from the local jupyter notebook and dropped on this private repository.)
+```
+from qiskit_experiments.library import T1
+from qiskit.providers.fake_provider import FakeManilaV2
+from qiskit_aer import AerSimulator
+import numpy as np
+
+backend = AerSimulator.from_backend(FakeManilaV2())
+
+qubit0_t1 = FakeManilaV2().qubit_properties(0).t1
+delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
+
+exp = T1(physical_qubits=(0, ), delays=delays)
+exp_data = exp.run(backend=backend).block_for_results()
+display(exp_data.figure(0))
+```
+
+
 
 
 
@@ -51,6 +68,35 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 ### This is a figure of T2Hahn-experiment:
 
+```
+from qiskit_experiments.library.characterization.t2hahn import T2Hahn
+
+conversion_factor = 1e-6
+delays = list(range(0, 50, 1))
+delays = [float(_)*conversion_factor for _ in delays]
+number_of_echoes = 1
+
+exp = T2Hahn(physical_qubits=(0, ), delays=delays, num_echoes=number_of_echoes)
+print(exp.circuits()[0])
+
+from qiskit_experiments.test.t2hahn_backend import T2HahnBackend
+
+estimated_t2hahn = 20*conversion_factor
+
+backend = T2HahnBackend(
+    t2hahn=[estimated_t2hahn], 
+    frequency=[100100], 
+    readout0to1 = [0.02], 
+    readout1to0 = [0.02], 
+    )
+
+exp.analysis.set_options(p0=None, plot=True)
+expdata = exp.run(backend=backend, shots=1000, seed_simulator=101)
+expdata.block_for_results()
+
+display(expdata.figure(0))
+
+```
 
 
 
