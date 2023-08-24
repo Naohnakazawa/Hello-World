@@ -113,8 +113,41 @@ display(expdata.figure(0))
 
 
 
+### T"*-Ramsey :
+
+```
+from qiskit_experiments.library import T2Ramsey
+import numpy as np
+
+delays = list(np.arange(1.00e-6, 50.0e-6, 2.00e-6))
+exp = T2Ramsey(physical_qubits=(0, ), delays=delays, osc_freq=1.0e5)
+
+from qiskit.providers.fake_provider import FakeManilaV2
+from qiskit_aer import AerSimulator
+from qiskit_aer.noise import NoiseModel
+
+noise_model = NoiseModel.from_backend(FakeManilaV2(), 
+                                      thermal_relaxation=True, 
+                                      gate_error=False, 
+                                      readout_error=False,                                           
+)
+
+backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
+
+exp.set_transpile_options(scheduling_method="asap")
+
+expdata = exp.run(backend=backend, shots=1000, seed_simulator=101)
+expdata.block_for_results()
+
+display(expdata.figure(0))
 
 
+
+
+
+
+
+```
 
 
 
