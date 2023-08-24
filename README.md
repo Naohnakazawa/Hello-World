@@ -141,12 +141,6 @@ expdata.block_for_results()
 
 display(expdata.figure(0))
 
-
-
-
-
-
-
 ```
 
 
@@ -154,4 +148,5 @@ display(expdata.figure(0))
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/07f3ea93-1f28-4997-8d18-fa7935f9f1a3)
 
