@@ -116,13 +116,12 @@ display(expdata.figure(0))
 ### T"*-Ramsey :
 
 ```
-import numpy as np
-import qiskit
 from qiskit_experiments.library import T2Ramsey
+import numpy as np
 
 delays = list(np.arange(1.00e-6, 50.0e-6, 2.00e-6))
 exp = T2Ramsey(physical_qubits=(0, ), delays=delays, osc_freq=1.0e5)
-print(exp.circuits()[0])
+
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
 from qiskit_aer.noise import NoiseModel
