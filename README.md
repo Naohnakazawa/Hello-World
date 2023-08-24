@@ -150,3 +150,49 @@ display(expdata.figure(0))
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/07f3ea93-1f28-4997-8d18-fa7935f9f1a3)
 
+
+
+
+
+
+
+
+
+### Tphi-experiment
+
+```
+from qiskit_experiments.library.characterization import Tphi
+import numpy as np
+
+from qiskit.providers.fake_provider import FakeManilaV2
+from qiskit_aer import AerSimulator
+from qiskit_aer.noise import NoiseModel
+
+noise_model = NoiseModel.from_backend(FakeManilaV2(), 
+                                      thermal_relaxation=True, 
+                                      gate_error=False, 
+                                      readout_error=False, 
+                                     )
+
+backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
+
+delays_t1 = np.arange(1e-6, 300e-6, 10e-6)
+delays_t2 = np.arange(1e-6, 50e-6, 2e-6)
+
+exp = Tphi(physical_qubits=(0, ), delays_t1=delays_t1, delays_t2=delays_t2, num_echoes=1)
+
+expdata = exp.run(backend=backend, seed_simulator=100).block_for_results()
+result = expdata.analysis_results("T_phi")
+
+```
+
+AnalysisResult
+- name: T_phi
+- value: (5.15+/-0.31)e-06
+- quality: good
+- extra: <1 items>
+- device_components: ['Q0']
+- verified: False
+
+
+
