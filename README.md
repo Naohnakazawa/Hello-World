@@ -229,7 +229,7 @@ for result in expdata.analysis_results():
 
 
 
-
+![image](https://qiskit.org/ecosystem/experiments/dev/_images/quantum_volume_2_0.png)
 
 
 
