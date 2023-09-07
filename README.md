@@ -270,3 +270,52 @@ spec_data.figure(0)
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/fafdf88a-6616-4040-83d8-bd8798b7133a)
 
+
+
+
+
+
+
+
+
+### Rabi
+```
+# mwc
+
+import numpy as np
+
+from qiskit import pulse
+from qiskit.circuit import Parameter
+
+# backend 
+
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+
+seed = 100
+backend = SingleTransmonTestBackend(seed=seed)
+
+# mwc
+from qiskit_experiments.library import Rabi
+
+with pulse.build() as sched:
+    pulse.play(
+        pulse.Gaussian(160, Parameter("amp"), sigma=40),
+        pulse.DriveChannel(0)
+    )
+
+rabi = Rabi(
+    physical_qubits=(0,),
+    backend=backend,
+    schedule=sched,
+    amplitudes=np.linspace(-0.1, 0.1, 21),
+)
+
+rabi_data = rabi.run().block_for_results()
+rabi_data.figure(0)
+
+```
+
+
+
+
+
