@@ -362,6 +362,7 @@ drag_data.figure(0)
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/2346363d-bf6a-4072-aced-b70879cb11eb)
 
 
 
