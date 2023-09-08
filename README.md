@@ -370,3 +370,40 @@ drag_data.figure(0)
 
 
 
+### FineAmplitude
+```
+# mwc
+
+import numpy as np
+import qiskit.pulse as pulse
+from qiskit.pulse import InstructionScheduleMap
+from qiskit_experiments.library import FineXAmplitude
+
+# backend
+
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
+qubit = 0
+
+# mwc
+
+x_pulse = backend.defaults().instruction_schedule_map.get('x', (qubit,)).instructions[0][1].pulse
+d0 = pulse.DriveChannel(qubit)
+inst_map = pulse.InstructionScheduleMap()
+
+ideal_amp = x_pulse.amp
+over_amp = ideal_amp*1.01
+with pulse.build(backend=backend, name="x") as x_over:
+    pulse.play(pulse.Drag(x_pulse.duration, over_amp, x_pulse.sigma, x_pulse.beta), d0)
+inst_map.add("x", (qubit,), x_over) 
+
+overamp_exp = FineXAmplitude(qubit, backend=backend)
+overamp_exp.set_transpile_options(inst_map=inst_map)
+
+# mwc
+
+exp_data_over = overamp_exp.run(backend).block_for_results()
+exp_data_over.figure(0)
+
+```
+
