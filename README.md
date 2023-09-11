@@ -420,10 +420,6 @@ exp_data_over.figure(0)
 ```
 # mwc
 
-import numpy as np
-import matplotlib.pyplot as plt
-from qiskit import QuantumCircuit
-from qiskit.visualization import plot_histogram
 from qiskit_experiments.library import LocalReadoutError
 
 # backend 
