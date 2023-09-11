@@ -458,6 +458,57 @@ result.figure(0)
 
 
 
+### CorrelatedReadoutError
+```
+# mwc
+
+from qiskit_experiments.library import CorrelatedReadoutError
+
+# backend & noise_model
+
+from qiskit_aer import AerSimulator
+from qiskit_aer.noise import NoiseModel
+from qiskit.providers.fake_provider import FakePerth
+
+noise_model = NoiseModel.from_backend(FakePerth(), 
+                                      thermal_relaxation = False, 
+                                      gate_error = False, 
+                                      readout_error = True, 
+                                     )
+
+backend = AerSimulator.from_backend(FakePerth(), noise_model=noise_model)
+
+# mwc
+
+qubits = [0,1,2]
+num_qubits = len(qubits)
+exp = CorrelatedReadoutError(physical_qubits=qubits)
+
+# mwc if necessary
+
+for c in exp.circuits():
+    print(c)
+
+shots=1024
+exp.analysis.set_options(plot=True)
+result = exp.run(backend=backend, shots=shots)
+mitigator = result.analysis_results(0).value
+
+result.figure(0)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
