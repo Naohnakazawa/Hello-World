@@ -500,6 +500,7 @@ result.figure(0)
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/da36777c-9b78-4cc8-a1f0-4f458a64021f)
 
 
 
