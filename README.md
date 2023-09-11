@@ -454,6 +454,7 @@ result.figure(0)
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/ae533440-164a-47a5-b00f-a57a130016c9)
 
 
 
