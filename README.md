@@ -407,7 +407,7 @@ exp_data_over.figure(0)
 
 ```
 
-Note that the noise_model defined from a FakeBackend does not support correlated-reoudout-error. 
+ 
 
 
 
@@ -500,6 +500,10 @@ mitigator = result.analysis_results(0).value
 result.figure(0)
 
 ```
+
+Note that the noise_model defined from a FakeBackend does not support correlated-reoudout-error.
+
+
 
 
 
