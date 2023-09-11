@@ -415,3 +415,55 @@ exp_data_over.figure(0)
 
 
 
+
+### LocalReadoutError
+```
+# mwc
+
+import numpy as np
+import matplotlib.pyplot as plt
+from qiskit import QuantumCircuit
+from qiskit.visualization import plot_histogram
+from qiskit_experiments.library import LocalReadoutError
+
+# backend 
+
+from qiskit_aer import AerSimulator
+from qiskit.providers.fake_provider import FakePerth
+
+backend = AerSimulator.from_backend(FakePerth())
+
+# mwc
+
+shots=1000
+qubits = list(range(4))
+num_qubits = 4
+
+exp = LocalReadoutError(physical_qubits=qubits)
+
+exp.analysis.set_options(plot=True)
+result = exp.run(backend=backend)
+mitigator = result.analysis_results(0).value
+
+# mwc
+
+result.figure(0)
+
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/ae533440-164a-47a5-b00f-a57a130016c9)
+
+
+
+
+
+
+
+
+
+
+
+
