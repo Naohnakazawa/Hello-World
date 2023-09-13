@@ -128,7 +128,20 @@ cal_drag.circuits()[5].draw(output='mpl')
 drag_data = cal_drag.run().block_for_results()
 drag_data.figure(0)
 
+columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
+pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters="beta"))[columns_to_show]
+
 ```
+
+
+
+
+
+
+
+
+
+
 
 
 
