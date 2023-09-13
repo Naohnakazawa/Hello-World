@@ -36,3 +36,10 @@ spec_data = spec.run().block_for_results()
 spec_data.figure(0)
 
 ```
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/e9ffdec6-ffd8-48c5-9bf4-b5534e50652f)
+
+
+
