@@ -35,12 +35,15 @@ spec.set_experiment_options(amp=0.005)
 spec_data = spec.run().block_for_results()
 spec_data.figure(0)
 
+columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
 pd.DataFrame(**cals.parameters_table(qubit_list=[qubit]))[columns_to_show]
+
 ```
 
 
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/e9ffdec6-ffd8-48c5-9bf4-b5534e50652f)
+
 
 
 
@@ -76,6 +79,9 @@ rabi = RoughXSXAmplitudeCal((qubit,), cals, backend=backend, amplitudes=np.linsp
 
 rabi_data = rabi.run().block_for_results()
 rabi_data.figure(0)
+
+columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
+pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters="amp"))[columns_to_show]
 
 ```
 
