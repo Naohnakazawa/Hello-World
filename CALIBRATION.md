@@ -117,9 +117,8 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
 
 qubit = 0
-library = FixedFrequencyTransmon(default_values={"duration": 320})
-cals = Calibrations.from_backend(backend, library)
-cals.load_parameter_values(file_name="PulseBackendparameter_values.csv")
+library = FixedFrequencyTransmon(default_values={"duration": 320, "amp": 0.03})
+cals = Calibrations.from_backend(backend, libraries=[library])
 
 from qiskit_experiments.library import RoughDragCal
 cal_drag = RoughDragCal([qubit], cals, backend=backend, betas=np.linspace(-20, 20, 25))
