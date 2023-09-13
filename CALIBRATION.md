@@ -118,18 +118,18 @@ from qiskit_experiments.calibration_management.basis_gate_library import FixedFr
 
 qubit = 0
 library = FixedFrequencyTransmon(default_values={"duration": 320})
-cals = Calibrations.from_backend(backend, libraries=[library])
+cals = Calibrations.from_backend(backend, library)
+cals.load_parameter_values(file_name="PulseBackendparameter_values.csv")
 
 from qiskit_experiments.library import RoughDragCal
 cal_drag = RoughDragCal([qubit], cals, backend=backend, betas=np.linspace(-20, 20, 25))
 cal_drag.set_experiment_options(reps=[3, 5, 7])
-cal_drag.circuits()[5].draw(output='mpl')
 
 drag_data = cal_drag.run().block_for_results()
 drag_data.figure(0)
 
 columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
-pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters="beta"))[columns_to_show]
+pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp","β")))[columns_to_show]
 
 ```
 
