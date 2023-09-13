@@ -35,6 +35,7 @@ spec.set_experiment_options(amp=0.005)
 spec_data = spec.run().block_for_results()
 spec_data.figure(0)
 
+pd.DataFrame(**cals.parameters_table(qubit_list=[qubit]))[columns_to_show]
 ```
 
 
