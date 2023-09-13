@@ -19,12 +19,9 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=
 
 # mwc
 
-qubit = 0
-cals=Calibrations.from_backend(backend)
-print(cals.get_inst_map())
-
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
 
+qubit = 0
 library = FixedFrequencyTransmon(default_values={"duration": 320})
 cals = Calibrations.from_backend(backend, libraries=[library])
 
