@@ -88,6 +88,10 @@ pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters="amp"))[
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/53fba2f9-9b94-4a7b-9389-1938af484fbc)
+
+
+
 
 
 
