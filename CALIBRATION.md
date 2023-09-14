@@ -142,9 +142,50 @@ pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp","
 
 
 
+### FineAmplitudeCal
+```
+# mwc
+
+import numpy as np
+import qiskit.pulse as pulse
+from qiskit.circuit import Parameter
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit import schedule
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+
+# backend
+
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
+
+# mwc
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+
+qubit = 0
+library = FixedFrequencyTransmon(default_values={"duration": 320})
+cals = Calibrations.from_backend(backend, libraries=[library])
+
+from qiskit_experiments.library import FineSXAmplitudeCal
+
+amp_cal = FineSXAmplitudeCal([qubit], 
+                             cals, 
+                             schedule_name="sx",
+                             backend=backend, 
+                             cal_parameter_name="amp", 
+                             auto_update=True, 
+                             )
+
+amp_cal.set_transpile_options(scheduling_method="asap", 
+                              optimization_level=3, 
+                              basis_gates=["sx"]
+                              )
+
+exp_data_x90p = amp_cal.run().block_for_results()
+exp_data_x90p.figure(0)
+
+```
 
 
-
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/33a4ca2c-64c1-4946-9569-6706a01c4ed2)
 
 
 
