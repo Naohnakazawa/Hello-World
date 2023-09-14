@@ -185,6 +185,7 @@ exp_data_x90p.figure(0)
 ```
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/33a4ca2c-64c1-4946-9569-6706a01c4ed2)
 
 
 
