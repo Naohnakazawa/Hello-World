@@ -192,6 +192,8 @@ exp_data_x90p.figure(0)
 
 ### FineFrequencyCal(failed)
 ```
+# mwc
+
 import pandas as pd
 import numpy as np
 import qiskit.pulse as pulse
@@ -200,14 +202,18 @@ from qiskit_experiments.calibration_management.calibrations import Calibrations
 from qiskit import schedule
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
 
+# backend
+
 backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
+
+# mwc
 
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
 
 qubit = 0
 library = FixedFrequencyTransmon(default_values={"duration": 320})
 cals = Calibrations.from_backend(backend, libraries=[library])
-print(cals.get_schedule('sx',(0,))) # check one of the schedules built from the new calibration
+
 
 from qiskit_experiments.library import FineFrequencyCal
 
@@ -220,26 +226,13 @@ freq_cal = FineFrequencyCal([qubit],
                             gate_name="sx",
                              )
 # options
-
-freq_cal.set_run_options()
 freq_cal.set_transpile_options(scheduling_method="asap", 
                               optimization_level=3, 
                               basis_gates=["sx", "rz", "delay"]
                               )
-freq_cal.set_experiment_options()
-
-
-freq_cal.circuits()[4].draw(output="mpl")
 
 exp_data_x90p = freq_cal.run().block_for_results()
 exp_data_x90p.figure(0)
-
-
-
-
-
-
-
 
 ```
 
