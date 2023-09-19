@@ -83,5 +83,6 @@ plot_state_city(state_result.value, title="Density Matrix")
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/dcbca5dd-2c24-41aa-9760-c0393bc5f42e)
 
 
