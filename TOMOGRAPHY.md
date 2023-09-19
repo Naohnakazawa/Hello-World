@@ -34,6 +34,10 @@ plot_state_city(state_result.value, title="Density Matrix")
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/8027c4de-5ce9-474f-9bc7-9091a0ea356e)
+
+
+
 
 
 
@@ -75,6 +79,10 @@ state_result = mitqstdata.analysis_results("state")
 plot_state_city(state_result.value, title="Density Matrix")
 
 ```
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/2d7924ab-7901-45cb-8afa-b3bc4eaddbe3)
 
 
 
