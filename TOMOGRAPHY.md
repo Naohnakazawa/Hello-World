@@ -32,6 +32,14 @@ plot_state_city(state_result.value, title="Density Matrix")
 ```
 
 
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/98a5421d-2a75-4035-8198-a7c9793dce94)
+
+
+
+
+
 ### mit-qst
 ```
 # backend 
@@ -69,10 +77,11 @@ mitqstdata = mitqstexp.run(backend=backend, shots=1000, seed_simulator=100).bloc
 state_result = mitqstdata.analysis_results("state")
 plot_state_city(state_result.value, title="Density Matrix")
 
-
-
-
 ```
+
+
+
+
 
 
 
