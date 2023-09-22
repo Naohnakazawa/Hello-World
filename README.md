@@ -36,16 +36,21 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 (The figure is dragged from the local jupyter notebook and dropped on this private repository.)
 ```
+# mwc
+
 from qiskit_experiments.library import T1
-from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
 import numpy as np
 
+# bakend
+
+from qiskit.providers.fake_provider import FakeManilaV2
 backend = AerSimulator.from_backend(FakeManilaV2())
-
 qubit0_t1 = FakeManilaV2().qubit_properties(0).t1
-delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
 
+# mwc
+
+delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
 exp = T1(physical_qubits=(0, ), delays=delays)
 exp_data = exp.run(backend=backend).block_for_results()
 display(exp_data.figure(0))
