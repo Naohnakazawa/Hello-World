@@ -74,6 +74,9 @@ display(exp_data.figure(0))
 ### T2Hahn-experiment:
 
 ```
+# mwc
+
+import qiskit
 from qiskit_experiments.library.characterization.t2hahn import T2Hahn
 
 conversion_factor = 1e-6
@@ -84,10 +87,11 @@ number_of_echoes = 1
 exp = T2Hahn(physical_qubits=(0, ), delays=delays, num_echoes=number_of_echoes)
 print(exp.circuits()[0])
 
+# backend
+
 from qiskit_experiments.test.t2hahn_backend import T2HahnBackend
 
 estimated_t2hahn = 20*conversion_factor
-
 backend = T2HahnBackend(
     t2hahn=[estimated_t2hahn], 
     frequency=[100100], 
@@ -95,22 +99,18 @@ backend = T2HahnBackend(
     readout1to0 = [0.02], 
     )
 
+# mwc
+
 exp.analysis.set_options(p0=None, plot=True)
 expdata = exp.run(backend=backend, shots=1000, seed_simulator=101)
 expdata.block_for_results()
 
 display(expdata.figure(0))
-
 ```
 
 
 
-
-
-
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/96440a20-c0e8-4582-9ed0-438e167b9c73)
-
-
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/eac0eaec-9419-4f27-bc25-0f0b318c260b)
 
 
 
@@ -121,30 +121,7 @@ display(expdata.figure(0))
 ### T"*-Ramsey :
 
 ```
-from qiskit_experiments.library import T2Ramsey
-import numpy as np
 
-delays = list(np.arange(1.00e-6, 50.0e-6, 2.00e-6))
-exp = T2Ramsey(physical_qubits=(0, ), delays=delays, osc_freq=1.0e5)
-
-from qiskit.providers.fake_provider import FakeManilaV2
-from qiskit_aer import AerSimulator
-from qiskit_aer.noise import NoiseModel
-
-noise_model = NoiseModel.from_backend(FakeManilaV2(), 
-                                      thermal_relaxation=True, 
-                                      gate_error=False, 
-                                      readout_error=False,                                           
-)
-
-backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
-
-exp.set_transpile_options(scheduling_method="asap")
-
-expdata = exp.run(backend=backend, shots=1000, seed_simulator=101)
-expdata.block_for_results()
-
-display(expdata.figure(0))
 
 ```
 
