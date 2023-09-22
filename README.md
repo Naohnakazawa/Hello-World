@@ -36,35 +36,35 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 (The figure is dragged from the local jupyter notebook and dropped on this private repository.)
 ```
+# backend 
+
+from qiskit.providers.fake_provider import FakeManilaV2
+from qiskit_aer import AerSimulator
+backend = AerSimulator.from_backend(FakeManilaV2())
+
 # mwc
 
 from qiskit_experiments.library import T1
-from qiskit_aer import AerSimulator
 import numpy as np
 
-# bakend
+### qubit0_t1 = FakeManilaV2().qubit_properties(0).t1
+### delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
 
-from qiskit.providers.fake_provider import FakeManilaV2
-backend = AerSimulator.from_backend(FakeManilaV2())
-qubit0_t1 = FakeManilaV2().qubit_properties(0).t1
+delays = np.arange(1.e-6, 300.e-6, 30.e-6)
+exp = T1(physical_qubits=(0, ), delays=delays)
 
 # mwc
 
-delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
-exp = T1(physical_qubits=(0, ), delays=delays)
 exp_data = exp.run(backend=backend).block_for_results()
 display(exp_data.figure(0))
+
 ```
 
 
 
 
 
-
-
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/872469ba-6668-49ad-b05f-afb6907f9e2e)
-
-
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/8b24728f-8e94-4d37-a5d9-d05b50dadf50)
 
 
 
