@@ -32,7 +32,7 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 
 
-### This is a figure of T1-experiment:
+### T1-experiment:
 
 (The figure is dragged from the local jupyter notebook and dropped on this private repository.)
 ```
@@ -66,7 +66,7 @@ display(exp_data.figure(0))
 
 
 
-### This is a figure of T2Hahn-experiment:
+### T2Hahn-experiment:
 
 ```
 from qiskit_experiments.library.characterization.t2hahn import T2Hahn
