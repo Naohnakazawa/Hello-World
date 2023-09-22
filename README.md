@@ -36,30 +36,35 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 (The figure is dragged from the local jupyter notebook and dropped on this private repository.)
 ```
-from qiskit_experiments.library import T1
+# backend 
+
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
-import numpy as np
-
 backend = AerSimulator.from_backend(FakeManilaV2())
 
-qubit0_t1 = FakeManilaV2().qubit_properties(0).t1
-delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
+# mwc
 
+from qiskit_experiments.library import T1
+import numpy as np
+
+### qubit0_t1 = FakeManilaV2().qubit_properties(0).t1
+### delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
+
+delays = np.arange(1.e-6, 300.e-6, 30.e-6)
 exp = T1(physical_qubits=(0, ), delays=delays)
+
+# mwc
+
 exp_data = exp.run(backend=backend).block_for_results()
 display(exp_data.figure(0))
+
 ```
 
 
 
 
 
-
-
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/872469ba-6668-49ad-b05f-afb6907f9e2e)
-
-
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/8b24728f-8e94-4d37-a5d9-d05b50dadf50)
 
 
 
@@ -69,6 +74,9 @@ display(exp_data.figure(0))
 ### T2Hahn-experiment:
 
 ```
+# mwc
+
+import qiskit
 from qiskit_experiments.library.characterization.t2hahn import T2Hahn
 
 conversion_factor = 1e-6
@@ -79,10 +87,11 @@ number_of_echoes = 1
 exp = T2Hahn(physical_qubits=(0, ), delays=delays, num_echoes=number_of_echoes)
 print(exp.circuits()[0])
 
+# backend
+
 from qiskit_experiments.test.t2hahn_backend import T2HahnBackend
 
 estimated_t2hahn = 20*conversion_factor
-
 backend = T2HahnBackend(
     t2hahn=[estimated_t2hahn], 
     frequency=[100100], 
@@ -90,22 +99,18 @@ backend = T2HahnBackend(
     readout1to0 = [0.02], 
     )
 
+# mwc
+
 exp.analysis.set_options(p0=None, plot=True)
 expdata = exp.run(backend=backend, shots=1000, seed_simulator=101)
 expdata.block_for_results()
 
 display(expdata.figure(0))
-
 ```
 
 
 
-
-
-
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/96440a20-c0e8-4582-9ed0-438e167b9c73)
-
-
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/eac0eaec-9419-4f27-bc25-0f0b318c260b)
 
 
 
@@ -116,11 +121,17 @@ display(expdata.figure(0))
 ### T"*-Ramsey :
 
 ```
-from qiskit_experiments.library import T2Ramsey
+# mwc
+
 import numpy as np
+import qiskit
+from qiskit_experiments.library import T2Ramsey
 
 delays = list(np.arange(1.00e-6, 50.0e-6, 2.00e-6))
 exp = T2Ramsey(physical_qubits=(0, ), delays=delays, osc_freq=1.0e5)
+print(exp.circuits()[0])
+
+# backend
 
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
@@ -134,8 +145,9 @@ noise_model = NoiseModel.from_backend(FakeManilaV2(),
 
 backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
 
-exp.set_transpile_options(scheduling_method="asap")
+# mwc
 
+exp.set_transpile_options(scheduling_method="asap")
 expdata = exp.run(backend=backend, shots=1000, seed_simulator=101)
 expdata.block_for_results()
 
@@ -147,10 +159,7 @@ display(expdata.figure(0))
 
 
 
-
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/07f3ea93-1f28-4997-8d18-fa7935f9f1a3)
-
-
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/6a25e823-76b5-4031-8a72-4c253bca94f5)
 
 
 
@@ -161,8 +170,16 @@ display(expdata.figure(0))
 ### Tphi-experiment
 
 ```
-from qiskit_experiments.library.characterization import Tphi
+# mwc
+
 import numpy as np
+import qiskit
+from qiskit_experiments.library.characterization import Tphi
+
+delays_t1 = np.arange(1e-6, 300e-6, 10e-6)
+delays_t2 = np.arange(1e-6, 50e-6, 2e-6)
+
+# backend
 
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
@@ -176,16 +193,15 @@ noise_model = NoiseModel.from_backend(FakeManilaV2(),
 
 backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
 
-delays_t1 = np.arange(1e-6, 300e-6, 10e-6)
-delays_t2 = np.arange(1e-6, 50e-6, 2e-6)
+# mwc
 
 exp = Tphi(physical_qubits=(0, ), delays_t1=delays_t1, delays_t2=delays_t2, num_echoes=1)
+exp_data = exp.run(backend=backend, seed_simulator=100).block_for_results()
 
-expdata = exp.run(backend=backend, seed_simulator=100).block_for_results()
-result = expdata.analysis_results("T_phi")
+result = exp_data.analysis_results("T_phi")
+print(result)
 
 ```
-
 AnalysisResult
 - name: T_phi
 - value: (5.15+/-0.31)e-06
@@ -193,7 +209,6 @@ AnalysisResult
 - extra: <1 items>
 - device_components: ['Q0']
 - verified: False
-
 
 
 ### QV
@@ -237,6 +252,8 @@ for result in expdata.analysis_results():
 
 ### QS
 ```
+# mwc
+
 import numpy as np
 from qiskit_experiments.library.characterization import QubitSpectroscopy
 
