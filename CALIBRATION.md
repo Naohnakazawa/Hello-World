@@ -174,11 +174,6 @@ amp_cal = FineSXAmplitudeCal([qubit],
                              auto_update=True, 
                              )
 
-amp_cal.set_transpile_options(scheduling_method="asap", 
-                              optimization_level=3, 
-                              basis_gates=["sx"]
-                              )
-
 exp_data_x90p = amp_cal.run().block_for_results()
 exp_data_x90p.figure(0)
 
