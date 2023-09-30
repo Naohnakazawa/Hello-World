@@ -315,39 +315,36 @@ exp_data.figure(0)
 
 ### RoughDrag
 ```
-# mwc
-
-import numpy as np
-
-from qiskit_experiments.library import RoughDrag
-from qiskit_experiments.visualization import PlotStyle
-from qiskit.circuit import Parameter
-from qiskit import pulse
-from qiskit.pulse import DriveChannel, Drag
-
-beta = Parameter("beta")
-with pulse.build(name="xp") as xp:
-    pulse.play(pulse.Drag(160, 0.50, 40, beta), pulse.DriveChannel(0))
-
 # backend 
-
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
 
-seed=100
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=seed)
+seed=101
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=seed)
 
 # mwc
+import numpy as np
+from qiskit_experiments.library import RoughDrag
+from qiskit.circuit import Parameter
+from qiskit import pulse
 
-drag = RoughDrag(physical_qubits=(0,), schedule=xp, backend=backend)
-drag.set_experiment_options(reps=[3, 5, 7])
-drag_data = drag.run().block_for_results()
-drag_data.figure(0)
+beta = Parameter("β")
+with pulse.build() as build_sched:
+    pulse.play(pulse.Drag(160, 0.50, 40, beta), pulse.DriveChannel(0))
 
+exp = RoughDrag(physical_qubits=(0,), 
+                schedule=build_sched,
+                betas = np.linspace(-4, 4, 51), 
+                backend=backend)
+exp.set_experiment_options(reps=[3, 5, 7])
+
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
 ```
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/2346363d-bf6a-4072-aced-b70879cb11eb)
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/e2261a84-2e33-4879-ba9e-8c65158b72a1)
 
 
 
