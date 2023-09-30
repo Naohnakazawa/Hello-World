@@ -69,23 +69,10 @@ display(exp_data.figure(0))
 ### T2Hahn-experiment:
 
 ```
-# mwc
-
-import qiskit
-from qiskit_experiments.library.characterization.t2hahn import T2Hahn
-
-conversion_factor = 1e-6
-delays = list(range(0, 50, 1))
-delays = [float(_)*conversion_factor for _ in delays]
-number_of_echoes = 1
-
-exp = T2Hahn(physical_qubits=(0, ), delays=delays, num_echoes=number_of_echoes)
-print(exp.circuits()[0])
-
 # backend
-
 from qiskit_experiments.test.t2hahn_backend import T2HahnBackend
 
+conversion_factor = 1e-6
 estimated_t2hahn = 20*conversion_factor
 backend = T2HahnBackend(
     t2hahn=[estimated_t2hahn], 
@@ -95,10 +82,20 @@ backend = T2HahnBackend(
     )
 
 # mwc
+import qiskit
+from qiskit_experiments.library.characterization.t2hahn import T2Hahn
 
+delays = list(range(0, 50, 1))
+delays = [float(_)*conversion_factor for _ in delays]
+number_of_echoes = 1
+
+exp = T2Hahn(physical_qubits=(0, ), delays=delays, num_echoes=number_of_echoes, backend=backend)
+print(exp.circuits()[0])
+
+# mwc
 exp.analysis.set_options(p0=None, plot=True)
-expdata = exp.run(backend=backend, shots=1000, seed_simulator=101)
-expdata.block_for_results()
+exp.set_run_options(shots=1000, seed_simulator=121)
+expdata = exp.run().block_for_results()
 
 display(expdata.figure(0))
 ```
@@ -106,8 +103,6 @@ display(expdata.figure(0))
 
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/eac0eaec-9419-4f27-bc25-0f0b318c260b)
-
-
 
 
 
