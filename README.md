@@ -274,13 +274,12 @@ exp_data.figure(0)
 ### Rabi
 ```
 # backend 
-
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+
 seed = 200
-backend = SingleTransmonTestBackend(seed=seed)
+backend = SingleTransmonTestBackend(5.2e9, seed=seed)
 
 # mwc
-
 import numpy as np
 from qiskit import pulse
 from qiskit.circuit import Parameter
