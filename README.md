@@ -37,13 +37,11 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 (The figure is dragged from the local jupyter notebook and dropped on this private repository.)
 ```
 # backend 
-
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
 backend = AerSimulator.from_backend(FakeManilaV2())
 
 # mwc
-
 from qiskit_experiments.library import T1
 import numpy as np
 
@@ -51,20 +49,17 @@ import numpy as np
 ### delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
 
 delays = np.arange(1.e-6, 300.e-6, 30.e-6)
-exp = T1(physical_qubits=(0, ), delays=delays)
+exp = T1(physical_qubits=(0, ), delays=delays, backend=backend)
 
 # mwc
-
-exp_data = exp.run(backend=backend).block_for_results()
+exp_data = exp.run().block_for_results()
 display(exp_data.figure(0))
-
 ```
 
 
 
 
-
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/8b24728f-8e94-4d37-a5d9-d05b50dadf50)
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/da71acf1-d516-4470-a5c9-eec1b7492d0d)
 
 
 
