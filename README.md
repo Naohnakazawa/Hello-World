@@ -396,40 +396,33 @@ exp_data.figure(0)
 
 ### LocalReadoutError
 ```
-# mwc
-
-from qiskit_experiments.library import LocalReadoutError
-
 # backend 
-
 from qiskit_aer import AerSimulator
 from qiskit.providers.fake_provider import FakePerth
 
 backend = AerSimulator.from_backend(FakePerth())
 
 # mwc
+from qiskit_experiments.library import LocalReadoutError
 
-shots=1000
 qubits = list(range(4))
-num_qubits = 4
+shots=10000
 
-exp = LocalReadoutError(physical_qubits=qubits)
-
+exp = LocalReadoutError(physical_qubits=qubits, backend=backend)
 exp.analysis.set_options(plot=True)
-result = exp.run(backend=backend)
+exp.set_run_options(shots=shots)
+
+result = exp.run()
 mitigator = result.analysis_results(0).value
 
-# mwc
-
 result.figure(0)
-
 ```
 
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/ae533440-164a-47a5-b00f-a57a130016c9)
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/88e75bfd-6eab-4f18-b6b4-dd67df46036b)
 
 
 
