@@ -235,42 +235,35 @@ for result in expdata.analysis_results():
 
 ### QS
 ```
-# mwc
+# backend
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=199)
 
+# mwc
 import numpy as np
 from qiskit_experiments.library.characterization import QubitSpectroscopy
-
-# backend
-
-from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
-
-# mwc
 
 qubit = 0
 freq01_estimate = backend.defaults().qubit_freq_est[qubit]
 frequencies = np.linspace(freq01_estimate-15e6, freq01_estimate+15e6, 51)
 
-spec = QubitSpectroscopy(physical_qubits = (0,),
-                         frequencies = frequencies, 
-                         backend = backend, 
-                         absolute = True, 
+exp = QubitSpectroscopy(physical_qubits = (0,),                        
+                        frequencies = frequencies, 
+                        backend = backend, 
+                        absolute = True,
                         )
-spec.set_experiment_options(amp=0.005)  # This is not a default value
+exp.set_experiment_options(amp=0.005)  # This is not a default value
 
 # mwc
-
-spec_data = spec.run().block_for_results()
-spec_data.figure(0)
-
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
 ```
 
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/fafdf88a-6616-4040-83d8-bd8798b7133a)
 
-
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/c176aac9-3570-4b00-853f-085028c02398)
 
 
 
