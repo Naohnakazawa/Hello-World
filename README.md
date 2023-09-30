@@ -156,17 +156,7 @@ display(expdata.figure(0))
 ### Tphi-experiment
 
 ```
-# mwc
-
-import numpy as np
-import qiskit
-from qiskit_experiments.library.characterization import Tphi
-
-delays_t1 = np.arange(1e-6, 300e-6, 10e-6)
-delays_t2 = np.arange(1e-6, 50e-6, 2e-6)
-
 # backend
-
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
 from qiskit_aer.noise import NoiseModel
@@ -180,14 +170,21 @@ noise_model = NoiseModel.from_backend(FakeManilaV2(),
 backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
 
 # mwc
+import numpy as np
+import qiskit
+from qiskit_experiments.library.characterization import Tphi
 
-exp = Tphi(physical_qubits=(0, ), delays_t1=delays_t1, delays_t2=delays_t2, num_echoes=1)
-exp_data = exp.run(backend=backend, seed_simulator=100).block_for_results()
+delays_t1 = np.arange(1e-6, 300e-6, 10e-6)
+delays_t2 = np.arange(1e-6, 50e-6, 2e-6)
 
+# mwc
+exp = Tphi(physical_qubits=(0, ), delays_t1=delays_t1, delays_t2=delays_t2, num_echoes=1, backend=backend)
+exp.set_run_options(seed_simulator=100)
+exp_data = exp.run().block_for_results()
 result = exp_data.analysis_results("T_phi")
 print(result)
-
 ```
+
 AnalysisResult
 - name: T_phi
 - value: (5.15+/-0.31)e-06
