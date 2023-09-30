@@ -431,12 +431,7 @@ result.figure(0)
 
 ### CorrelatedReadoutError
 ```
-# mwc
-
-from qiskit_experiments.library import CorrelatedReadoutError
-
 # backend & noise_model
-
 from qiskit_aer import AerSimulator
 from qiskit_aer.noise import NoiseModel
 from qiskit.providers.fake_provider import FakePerth
@@ -450,23 +445,21 @@ noise_model = NoiseModel.from_backend(FakePerth(),
 backend = AerSimulator.from_backend(FakePerth(), noise_model=noise_model)
 
 # mwc
+from qiskit_experiments.library import CorrelatedReadoutError
 
 qubits = [0,1,2]
-num_qubits = len(qubits)
-exp = CorrelatedReadoutError(physical_qubits=qubits)
+exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
 
-# mwc if necessary
+for circ in exp.circuits():
+    print(circ)
 
-for c in exp.circuits():
-    print(c)
-
-shots=1024
+shots=1000
+exp.set_run_options(shots=shots)
 exp.analysis.set_options(plot=True)
-result = exp.run(backend=backend, shots=shots)
+result = exp.run()
 mitigator = result.analysis_results(0).value
 
 result.figure(0)
-
 ```
 
 Note that the noise_model defined from a FakeBackend does not support correlated-reoudout-error.
