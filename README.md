@@ -503,6 +503,12 @@ exp_data.figure(0)
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/bef91275-c98f-49ef-a1d4-7d5f72c1b33c)
+
+
+
+
+
 
 
 ### EFRabi
@@ -539,6 +545,7 @@ exp_data.figure(0)
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/a5a30a88-f029-4eae-b01c-fa0717d1c413)
 
 
 
