@@ -475,7 +475,77 @@ Note that the noise_model defined from a FakeBackend does not support correlated
 
 
 
+### EFSpectroscopy
+```
+# backend
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
 
+# mwc
+import numpy as np
+from qiskit_experiments.library.characterization import EFSpectroscopy
+
+qubit = 0
+freq01_estimate = backend.defaults().qubit_freq_est[qubit]
+frequencies = np.linspace(freq01_estimate-15e6, freq01_estimate+15e6, 51)
+
+exp = EFSpectroscopy(physical_qubits = (0,),
+                         frequencies = frequencies, 
+                         backend = backend, 
+                         absolute = True, 
+                        )
+exp.set_experiment_options(amp=0.005)  # This is not a default value
+
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/bef91275-c98f-49ef-a1d4-7d5f72c1b33c)
+
+
+
+
+
+
+
+### EFRabi
+```
+# backend 
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+
+seed = 200
+backend = SingleTransmonTestBackend(5.2e9, seed=seed)
+
+# mwc
+import numpy as np
+from qiskit import pulse
+from qiskit.circuit import Parameter
+from qiskit_experiments.library import EFRabi
+
+with pulse.build() as build_sched:
+    pulse.play(
+        pulse.Gaussian(160, Parameter("amp"), sigma=40),
+        pulse.DriveChannel(0)
+    )
+
+exp = EFRabi(
+    physical_qubits=(0,),
+    backend=backend,
+    schedule=build_sched,
+    amplitudes=np.linspace(-0.1, 0.1, 21),
+)
+
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/a5a30a88-f029-4eae-b01c-fa0717d1c413)
 
 
 
