@@ -209,8 +209,6 @@ from qiskit_experiments.library import QuantumVolume
 
 qubits = tuple(range(4)) # Can use specific qubits. for example [2, 4, 7, 10]
 qv_exp = QuantumVolume(qubits, seed=42)
-# Transpile options like optimization_level affect only the real device run and not the simulation run
-# Run options affect both simulation and real device runs
 qv_exp.set_transpile_options(optimization_level=3)
 
 expdata = qv_exp.run(backend).block_for_results()
