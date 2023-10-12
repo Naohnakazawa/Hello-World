@@ -15,10 +15,11 @@ qubit = 0
 freq01_estimate = backend.defaults().qubit_freq_est[qubit]
 frequencies = np.linspace(freq01_estimate-15e6, freq01_estimate+15e6, 51)
 
-exp = QubitSpectroscopy(physical_qubits = (0,),                        
+exp = QubitSpectroscopy(physical_qubits = (0,), 
                         frequencies = frequencies, 
                         backend = backend, 
                         absolute = True,
+                        analysis = None,
                         )
 exp.set_experiment_options(amp=0.005)  # This is not a default value
 
