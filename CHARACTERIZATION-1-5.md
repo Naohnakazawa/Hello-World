@@ -3,11 +3,16 @@
 
 ### Qubit Spectroscopy
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
 backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=199)
 
-# mwc
+# ..jupyter-exexute::
+
 import numpy as np
 from qiskit_experiments.library.characterization import QubitSpectroscopy
 
@@ -23,7 +28,8 @@ exp = QubitSpectroscopy(physical_qubits = (0,),
                         )
 exp.set_experiment_options(amp=0.005)  # This is not a default value
 
-# mwc
+# ..jupyter-execute::
+
 exp_data = exp.run().block_for_results()
 exp_data.figure(0)
 ```
@@ -44,12 +50,17 @@ exp_data.figure(0)
 
 (The figure is dragged from the local jupyter notebook and dropped on this private repository.)
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend 
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
 backend = AerSimulator.from_backend(FakeManilaV2())
 
-# mwc
+# ..jupyter-execute::
+
 from qiskit_experiments.library import T1
 import numpy as np
 
@@ -72,6 +83,10 @@ display(exp_data.figure(0))
 ### T2Hahn-experiment:
 
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend
 from qiskit_experiments.test.t2hahn_backend import T2HahnBackend
 
@@ -84,7 +99,8 @@ backend = T2HahnBackend(
     readout1to0 = [0.02], 
     )
 
-# mwc
+# ..jupyter-execute::
+
 import qiskit
 from qiskit_experiments.library.characterization.t2hahn import T2Hahn
 
@@ -95,7 +111,8 @@ number_of_echoes = 1
 exp = T2Hahn(physical_qubits=(0, ), delays=delays, num_echoes=number_of_echoes, backend=backend)
 print(exp.circuits()[0])
 
-# mwc
+# ..jupyter-execute::
+
 exp.analysis.set_options(p0=None, plot=True)
 exp.set_run_options(shots=1000, seed_simulator=121)
 expdata = exp.run().block_for_results()
@@ -114,6 +131,10 @@ display(expdata.figure(0))
 ### T"*-Ramsey :
 
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
@@ -123,11 +144,12 @@ noise_model = NoiseModel.from_backend(FakeManilaV2(),
                                       thermal_relaxation=True, 
                                       gate_error=False, 
                                       readout_error=False,                                           
-)
+                                      )
 
 backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
 
-# mwc
+# ..jupyter-execute::
+
 import numpy as np
 import qiskit
 from qiskit_experiments.library import T2Ramsey
@@ -136,7 +158,8 @@ delays = list(np.arange(1.00e-6, 50.0e-6, 2.00e-6))
 exp = T2Ramsey(physical_qubits=(0, ), delays=delays, backend=backend, osc_freq=1.0e5)
 print(exp.circuits()[0])
 
-# mwc
+# ..jupyter-execute::
+
 exp.set_run_options(shots=1000, seed_simulator=101)
 expdata = exp.run().block_for_results()
 
@@ -158,6 +181,10 @@ display(expdata.figure(0))
 ### Tphi-experiment
 
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend
 from qiskit.providers.fake_provider import FakeManilaV2
 from qiskit_aer import AerSimulator
@@ -171,7 +198,8 @@ noise_model = NoiseModel.from_backend(FakeManilaV2(),
 
 backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
 
-# mwc
+# ..jupyter-execute::
+
 import numpy as np
 import qiskit
 from qiskit_experiments.library.characterization import Tphi
@@ -179,7 +207,8 @@ from qiskit_experiments.library.characterization import Tphi
 delays_t1 = np.arange(1e-6, 300e-6, 10e-6)
 delays_t2 = np.arange(1e-6, 50e-6, 2e-6)
 
-# mwc
+# ..jupyter-execute::
+
 exp = Tphi(physical_qubits=(0, ),
             delays_t1=delays_t1,
             delays_t2=delays_t2,
