@@ -15,17 +15,12 @@ from qiskit.circuit import Parameter
 from qiskit_experiments.library import Rabi
 
 with pulse.build() as build_sched:
-    pulse.play(
-        pulse.Gaussian(160, Parameter("amp"), sigma=40),
-        pulse.DriveChannel(0)
-    )
+    pulse.play(pulse.Gaussian(160, Parameter("amp"), 40), pulse.DriveChannel(0))
 
-exp = Rabi(
-    physical_qubits=(0,),
-    backend=backend,
-    schedule=build_sched,
-    amplitudes=np.linspace(-0.1, 0.1, 21),
-)
+exp = Rabi(physical_qubits=(0,),
+           schedule=build_sched,
+           amplitudes=np.linspace(-0.1, 0.1, 21),
+           backend=backend,)
 
 exp_data = exp.run().block_for_results()
 exp_data.figure(0)
@@ -52,18 +47,17 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, 
 
 # mwc
 import numpy as np
-from qiskit_experiments.library import RoughDrag
-from qiskit.circuit import Parameter
 from qiskit import pulse
+from qiskit.circuit import Parameter
+from qiskit_experiments.library import RoughDrag
 
-beta = Parameter("β")
 with pulse.build() as build_sched:
-    pulse.play(pulse.Drag(160, 0.50, 40, beta), pulse.DriveChannel(0))
+    pulse.play(pulse.Drag(160, 0.50, 40, Parameter("beta")), pulse.DriveChannel(0))
 
 exp = RoughDrag(physical_qubits=(0,), 
                 schedule=build_sched,
                 betas = np.linspace(-4, 4, 51), 
-                backend=backend)
+                backend=backend,)
 exp.set_experiment_options(reps=[3, 5, 7])
 
 exp_data = exp.run().block_for_results()
@@ -91,22 +85,23 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, s
 # mwc
 import numpy as np
 import qiskit.pulse as pulse
-from qiskit.pulse import InstructionScheduleMap
+# from qiskit.pulse import InstructionScheduleMap
 from qiskit_experiments.library import FineXAmplitude
 
 qubit = 0
 x_pulse = backend.defaults().instruction_schedule_map.get('x', (qubit,)).instructions[0][1].pulse
-drive_chan = pulse.DriveChannel(qubit)
-inst_map = pulse.InstructionScheduleMap()
+# drive_chan = pulse.DriveChannel(qubit)
+# inst_map = pulse.InstructionScheduleMap()
 
 ideal_amp = x_pulse.amp
 over_amp = ideal_amp*1.01
 with pulse.build(backend=backend, name="x") as x_over:
-    pulse.play(pulse.Drag(x_pulse.duration, over_amp, x_pulse.sigma, x_pulse.beta), drive_chan)
+    pulse.play(pulse.Drag(x_pulse.duration, over_amp, x_pulse.sigma, x_pulse.beta),
+               pulse.DriveChannel(qubit),)
 inst_map.add("x", (qubit,), x_over) 
 
 exp = FineXAmplitude(qubit, backend=backend)
-exp.set_transpile_options(inst_map=inst_map)
+# exp.set_transpile_options(inst_map=inst_map)
 exp_data = exp.run().block_for_results()
 exp_data.figure(0)
 ```
