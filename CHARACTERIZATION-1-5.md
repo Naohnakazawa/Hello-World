@@ -52,13 +52,8 @@ backend = AerSimulator.from_backend(FakeManilaV2())
 from qiskit_experiments.library import T1
 import numpy as np
 
-### qubit0_t1 = FakeManilaV2().qubit_properties(0).t1
-### delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
-
 delays = np.arange(1.e-6, 300.e-6, 30.e-6)
 exp = T1(physical_qubits=(0, ), delays=delays, backend=backend)
-
-# mwc
 exp_data = exp.run().block_for_results()
 display(exp_data.figure(0))
 ```
