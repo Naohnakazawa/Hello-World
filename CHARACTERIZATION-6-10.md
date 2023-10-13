@@ -2,13 +2,18 @@
 
 ### Rabi
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend 
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
 
 seed = 200
 backend = SingleTransmonTestBackend(5.2e9, seed=seed)
 
-# mwc
+# ..jupyter-execute::
+
 import numpy as np
 from qiskit import pulse
 from qiskit.circuit import Parameter
@@ -39,13 +44,18 @@ exp_data.figure(0)
 
 ### RoughDrag
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend 
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
 
 seed=101
 backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=seed)
 
-# mwc
+# ..jupyter-execute::
+
 import numpy as np
 from qiskit import pulse
 from qiskit.circuit import Parameter
@@ -77,19 +87,24 @@ exp_data.figure(0)
 
 ### FineAmplitude
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-seed=198
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=seed)
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=198)
 
-# mwc
+# ..jupyter-execute::
+
 from qiskit_experiments.library import FineXAmplitude
 
 qubit = 0
 exp = FineXAmplitude(qubit, backend=backend)
 exp.circuits()[5].draw("mpl")
 
-# mwc
+# ..jupyter-execute::
+
 exp_data = exp.run().block_for_results()
 exp_data.figure(0)
 ```
@@ -108,11 +123,16 @@ exp_data.figure(0)
 
 ### EFSpectroscopy
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
 backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
 
-# mwc
+# ..jupyter-execute::
+
 import numpy as np
 from qiskit_experiments.library.characterization import EFSpectroscopy
 
@@ -144,13 +164,16 @@ exp_data.figure(0)
 
 ### EFRabi
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend 
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9, seed=200)
 
-seed = 200
-backend = SingleTransmonTestBackend(5.2e9, seed=seed)
+# ..jupyter-execute::
 
-# mwc
 import numpy as np
 from qiskit import pulse
 from qiskit.circuit import Parameter
