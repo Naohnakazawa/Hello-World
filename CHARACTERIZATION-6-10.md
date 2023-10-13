@@ -79,29 +79,17 @@ exp_data.figure(0)
 ```
 # backend
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-seed=101
+seed=198
 backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=seed)
 
 # mwc
-import numpy as np
-import qiskit.pulse as pulse
-# from qiskit.pulse import InstructionScheduleMap
 from qiskit_experiments.library import FineXAmplitude
 
 qubit = 0
-x_pulse = backend.defaults().instruction_schedule_map.get('x', (qubit,)).instructions[0][1].pulse
-# drive_chan = pulse.DriveChannel(qubit)
-# inst_map = pulse.InstructionScheduleMap()
-
-ideal_amp = x_pulse.amp
-over_amp = ideal_amp*1.01
-with pulse.build(backend=backend, name="x") as x_over:
-    pulse.play(pulse.Drag(x_pulse.duration, over_amp, x_pulse.sigma, x_pulse.beta),
-               pulse.DriveChannel(qubit),)
-inst_map.add("x", (qubit,), x_over) 
-
 exp = FineXAmplitude(qubit, backend=backend)
-# exp.set_transpile_options(inst_map=inst_map)
+exp.circuits()[5].draw("mpl")
+
+# mwc
 exp_data = exp.run().block_for_results()
 exp_data.figure(0)
 ```
@@ -110,7 +98,7 @@ exp_data.figure(0)
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/2b007bcf-f5b9-4fd7-9df9-3db701428c94)
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/189f3620-4bf4-45e6-b3f7-28af739f1817)
 
 
 
