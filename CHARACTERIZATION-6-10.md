@@ -8,9 +8,7 @@
 
 # backend 
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-
-seed = 200
-backend = SingleTransmonTestBackend(5.2e9, seed=seed)
+backend = SingleTransmonTestBackend(5.2e9, seed=200)
 
 # ..jupyter-execute::
 
@@ -50,9 +48,7 @@ exp_data.figure(0)
 
 # backend 
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-
-seed=101
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=seed)
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=101)
 
 # ..jupyter-execute::
 
