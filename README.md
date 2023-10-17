@@ -33,11 +33,17 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 ### LocalReadoutError
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend 
 from qiskit_aer import AerSimulator
 from qiskit.providers.fake_provider import FakePerth
 
 backend = AerSimulator.from_backend(FakePerth())
+
+# ..jupyter-execute::
 
 # mwc
 from qiskit_experiments.library import LocalReadoutError
@@ -68,6 +74,10 @@ result.figure(0)
 
 ### CorrelatedReadoutError
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend & noise_model
 from qiskit_aer import AerSimulator
 from qiskit_aer.noise import NoiseModel
@@ -81,6 +91,8 @@ noise_model = NoiseModel.from_backend(FakePerth(),
 
 backend = AerSimulator.from_backend(FakePerth(), noise_model=noise_model)
 
+# ..jupyter-execute::
+
 # mwc
 from qiskit_experiments.library import CorrelatedReadoutError
 
@@ -89,6 +101,8 @@ exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
 
 for circ in exp.circuits():
     print(circ)
+
+# ..jupyter-execute::
 
 shots=1000
 exp.set_run_options(shots=shots)
@@ -113,21 +127,26 @@ Note that the noise_model defined from a FakeBackend does not support correlated
 
 ### HalfAngle
 ```
-# backend 
+# section: example
+# ..jupyter-execute::
+# :hide-code:
 
+# backend 
 from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
 backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
-
 # note that "noise" option is "False"
 
-# mwc
+# ..jupyter-execute::
 
+# mwc
 from qiskit import pulse
 from qiskit_experiments.library.characterization import HalfAngle
 
 qubit=0
 exp = HalfAngle([qubit], backend=backend)
 print(exp.circuits()[5])
+
+# ..jupyter-execute::
 
 # mwc
 inst_map = backend.defaults().instruction_schedule_map
@@ -139,14 +158,12 @@ with pulse.build(backend=backend, name="y") as sched_build:
                           angle=0.0, 
                           name="Yp_d0"
                          ), pulse.DriveChannel(0), name="Yp_d0")
-inst_map.add("y", (qubit,), sched_build)
-    
+inst_map.add("y", (qubit,), sched_build)    
 exp.set_transpile_options(inst_map=inst_map)
 exp.set_run_options(shots=1000, seed_simulator=178)
 
 exp_data = exp.run().block_for_results()
 exp_data.figure(0)
-
 ```
 
 
@@ -154,6 +171,8 @@ exp_data.figure(0)
 
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/29c9e663-cf3d-4bbe-b224-739d4bb83008)
+
+
 
 
 
