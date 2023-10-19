@@ -213,3 +213,48 @@ exp_data.figure(0)
 
 
 
+### ReadoutAngle
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend  
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199) # "noise" option is "False"
+
+# ..jupyter-execute::
+
+# mwc
+from qiskit_experiments.library.characterization import ReadoutAngle
+qubit=0
+exp = ReadoutAngle([qubit], backend=backend)
+
+print(exp.circuits()[0])
+print()
+print(exp.circuits()[1])
+
+# ..jupyter-execute::
+
+# mwc
+exp.set_run_options(shots=1000, seed_simulator=106)
+exp_data = exp.run().block_for_results()
+result = exp_data.analysis_results()
+for _ in result:
+    print(_)
+
+# ..jupyter-execute::
+
+# mwc
+exp_data.figure(0)
+
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/919260d5-8037-40a2-b145-908bd8c8c76b)
+
+
+
+
