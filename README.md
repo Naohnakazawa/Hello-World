@@ -176,3 +176,40 @@ exp_data.figure(0)
 
 
 
+### FineDrag
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend 
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199) # "noise" option is "False"
+
+# ..jupyter-execute::
+
+# mwc
+from qiskit_experiments.library.characterization import FineXDrag
+
+qubit=0
+exp = FineXDrag([qubit], backend=backend)
+print(exp.circuits()[3])
+
+# ..jupyter-execute::
+
+# mwc
+exp.set_run_options(shots=1000, seed_simulator=101)
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
+
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/494e35b9-a807-421c-834f-f936e55097aa)
+
+
+
+
+
