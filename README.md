@@ -229,15 +229,8 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, 
 from qiskit_experiments.library.characterization import ReadoutAngle
 qubit=0
 exp = ReadoutAngle([qubit], backend=backend)
-
-print(exp.circuits()[0])
-print()
-print(exp.circuits()[1])
-
-# ..jupyter-execute::
-
-# mwc
 exp.set_run_options(shots=1000, seed_simulator=106)
+
 exp_data = exp.run().block_for_results()
 result = exp_data.analysis_results()
 for _ in result:
