@@ -33,6 +33,15 @@ result.figure(0)
 
 ```
 
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/7db60598-9587-41cd-964a-eaf450f872c4)
+
+
+
+
+
 ### CorrelatedReadoutError
 ```
 
@@ -75,6 +84,16 @@ mitigator = result.analysis_results(0).value
 result.figure(0)
 
 ```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/55967124-d1bf-427d-a1b8-82c7024d490f)
+
+
+
+
+
 
 ### HalfAngle
 ```
@@ -119,6 +138,17 @@ exp_data.figure(0)
 
 ```
 
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/41809e24-12e0-42dc-8478-5524309b9517)
+
+
+
+
+
+
 ### FineDrag
 ```
 
@@ -147,6 +177,15 @@ exp_data = exp.run().block_for_results()
 exp_data.figure(0)
 
 ```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/2eb727ab-2d3f-4283-8108-cf1fe168474d)
+
+
+
+
 
 ### ReadoutAngle
 ```
@@ -182,13 +221,19 @@ exp_data.figure(0)
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/11512a28-e388-4dd1-bf03-7748bcb2c5c2)
 
 
 
 
 
 
-
+AnalysisResult
+- name: readout_angle
+- value: 1.027061422399426
+- extra: <4 items>
+- device_components: ['Q0']
+- verified: False
 
 
 
