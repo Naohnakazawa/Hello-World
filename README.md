@@ -120,6 +120,12 @@ print(d_freq)
 exp_data.figure(0)
 ```
 
+1.7040192705815202e-05
+12.712962669546187
+
+
+
+
 
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/088dfde6-90d6-49e3-bfb8-2c81d204cf8b)
@@ -171,9 +177,16 @@ print(f" The calibrated frequency is {freq_after} Hz.")
 exp_data.figure(0)
 ```
 
+ The frequency is 5157546043.297998 Hz before the calibration.
+ The calibrated frequency is 5157546052.551331 Hz.
+
 
 
 
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/bca1b1f7-5a34-4fe5-ae6e-ea54a2784b8e)
+
+
+
+
 
