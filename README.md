@@ -190,3 +190,42 @@ exp_data.figure(0)
 
 
 
+
+### RamseyXY
+```
+
+# backend
+from qiskit_experiments.framework import BackendData
+from qiskit_experiments.test.mock_iq_backend import MockIQBackend
+from qiskit_experiments.test.mock_iq_helpers import MockIQRamseyXYHelper
+
+exp_helper=MockIQRamseyXYHelper(t2ramsey=5.e-6, 
+                               freq_shift=0., )
+backend=MockIQBackend(exp_helper)
+exp_helper_dt=BackendData(backend).dt
+
+# mwc
+import numpy as np
+from qiskit_experiments.library.characterization import RamseyXY
+
+qubit=0
+delays = np.linspace(0, 10.e-6, 51)
+exp = RamseyXY([qubit], backend=backend, delays=delays, osc_freq=0.01e6)
+exp.set_run_options(shots=1000, seed_simulator=201)
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
+
+```
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/692c3712-7a6d-433b-aae5-d4547e084865)
+
+
+
+
+
+
+
+
+
