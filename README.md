@@ -193,6 +193,9 @@ exp_data.figure(0)
 
 ### RamseyXY
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
 
 # backend
 from qiskit_experiments.framework import BackendData
@@ -203,6 +206,8 @@ exp_helper=MockIQRamseyXYHelper(t2ramsey=5.e-6,
                                freq_shift=0., )
 backend=MockIQBackend(exp_helper)
 exp_helper_dt=BackendData(backend).dt
+
+# ..jupyter-execute::
 
 # mwc
 import numpy as np
