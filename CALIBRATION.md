@@ -250,15 +250,10 @@ freq_shift=freq_shift_list[2]
 
 exp_helper=FineFreqHelper(sx_duration, freq_shift)
 backend=MockIQBackend(exp_helper)
-exp_helper_dt=BackendData(backend).dt
 
 # ..jupyter-execute::
 
 # mwc
-import numpy as np
-from qiskit import pulse
-from qiskit.pulse import InstructionScheduleMap, DriveChannel
-
 from qiskit.providers.fake_provider import FakePerth
 from qiskit_experiments.library import FineFrequencyCal
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
