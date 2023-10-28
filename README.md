@@ -277,3 +277,55 @@ The value of zz is (0.9+/-2.2)e+02
 
 
 
+
+
+
+### FineDragCal
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+#backend
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
+
+# ..jupyter-execute::
+
+#mwc
+import numpy as np
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+from qiskit_experiments.library import FineDragCal
+
+qubit = 0
+library = FixedFrequencyTransmon(default_values={"duration": 320})
+cals = Calibrations.from_backend(backend, libraries=[library])
+
+exp = FineDragCal([qubit], 
+                  cals, 
+                  backend=backend, 
+                  schedule_name="sx",
+                  cal_parameter_name="β", 
+                  auto_update=True, 
+                  )
+print(exp.circuits()[2])
+
+# mwc
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/dde0fe80-7f79-4882-b476-554fa86da390)
+
+
+
+
+
+
+
+
+
