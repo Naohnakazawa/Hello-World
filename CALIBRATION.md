@@ -288,4 +288,55 @@ exp_data.figure(0)
 
 
 
+### HalfAngleCal
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend 
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
+
+# ..jupyter-execute::
+
+# mwc
+from qiskit import pulse
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+from qiskit_experiments.library.calibration.half_angle_cal import HalfAngleCal
+
+qubit = 0
+library = FixedFrequencyTransmon(default_values={"duration": 640})
+cals = Calibrations.from_backend(backend, libraries=[library])
+exp = HalfAngleCal([qubit], cals, backend=backend)
+
+inst_map = backend.defaults().instruction_schedule_map
+with pulse.build(backend=backend, name="y") as sched_build:
+    pulse.play(pulse.Drag(duration=160, 
+                          sigma=40, 
+                          beta=5, 
+                          amp=0.05821399464431249, 
+                          angle=0.0, 
+                          name="Yp_d0"
+                         ), pulse.DriveChannel(0), name="Yp_d0")
+inst_map.add("y", (qubit,), sched_build)
+exp.set_transpile_options(inst_map=inst_map)
+exp.set_run_options(shots=1000, seed_simulator=177)
+
+exp_data = exp.run().block_for_results()
+result =exp_data.analysis_results()
+exp_data.figure(0)
+
+```
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/c3f2eada-994f-4cbf-a92f-459c96af9a1b)
+
+
+
 
