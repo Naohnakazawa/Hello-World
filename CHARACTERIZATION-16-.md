@@ -1,6 +1,7 @@
-Characterization experiments 16, 17, 18
+# Characterization experiments 16, 17, 18
 
-
+### Fine Frequency
+```
 # section: example
 # ..jupyter-execute::
 # :hide-code:
@@ -45,4 +46,4 @@ print(d_freq)
 
 exp_data.figure(0)
 
-
+```
