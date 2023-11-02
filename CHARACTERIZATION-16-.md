@@ -146,3 +146,39 @@ exp_data.figure(0)
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/1b39765b-373d-4c50-868a-2d4e0989584d)
 
 
+
+
+
+
+
+
+### ResonatorSpectroscopy
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm-nairobi
+from qiskit_ibm_provider import IBMProvider
+
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_nairobi")
+
+initial_layout = list(range(7))
+
+# ..jupyter-execute::
+
+# mwc 
+import numpy as np
+from qiskit_experiments.library.characterization import ResonatorSpectroscopy
+
+qubit = 0
+exp = ResonatorSpectroscopy(physical_qubits = [qubit], backend = backend)
+exp.set_run_options(shots=1000, seed_simulator=119)
+
+exp_data = exp.run().block_for_results()
+result = exp_data.analysis_results()
+exp_data.figure(0)
+
+```
