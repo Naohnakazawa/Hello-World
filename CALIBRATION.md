@@ -386,3 +386,16 @@ result=exp_data.analysis_results()
 exp_data.figure(0)
 
 ```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/731249e8-62f7-40ff-8c8e-08f2b11582ea)
+
+
+
+
+
+
+
+
