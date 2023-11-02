@@ -1,4 +1,4 @@
-# Characterization experiments 16, 17, 18
+# Characterization experiments 16, 17, 18, 19
 
 ### Fine Frequency
 ```
@@ -180,5 +180,19 @@ exp.set_run_options(shots=1000, seed_simulator=119)
 exp_data = exp.run().block_for_results()
 result = exp_data.analysis_results()
 exp_data.figure(0)
-
 ```
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/e8a47195-03dd-421f-bf99-eff7cbbe9f4b)
+
+
+
+
+
+
+
+
+
