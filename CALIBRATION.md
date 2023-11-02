@@ -340,3 +340,49 @@ exp_data.figure(0)
 
 
 
+
+
+
+
+### FrequencyCal
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm_nirobi
+from qiskit_ibm_provider import IBMProvider
+
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_nairobi")
+initial_layout = list(range(7))
+
+# ..jupyter-execute::
+
+# mwc
+import numpy as np
+from qiskit.providers.fake_provider import FakePerth
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+from qiskit_experiments.library.calibration.frequency_cal import FrequencyCal
+
+qubit = 0
+delays =np.linspace(0, 10.0e-6, 11)
+library = FixedFrequencyTransmon(default_values={"duration": 640})
+cals = Calibrations.from_backend(backend, libraries=[library])
+
+exp = FrequencyCal([qubit], 
+                   cals, 
+                   backend=backend,  
+#                    cal_parameter_name = "drive_freq",   # may be bug!
+                   delays=delays, 
+                   osc_freq=2.e6, 
+                   auto_update=True, 
+                  )
+
+exp_data = exp.run().block_for_results()
+result=exp_data.analysis_results()
+exp_data.figure(0)
+
+```
