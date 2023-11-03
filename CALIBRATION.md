@@ -350,12 +350,12 @@ exp_data.figure(0)
 # ..jupyter-execute::
 # :hide-code:
 
-# backend ibm_nirobi
+# backend ibm_lagos
 from qiskit_ibm_provider import IBMProvider
 
 INSTANCE="ibm-q/open/main"
 provider = IBMProvider(instance=INSTANCE)
-backend = provider.get_backend("ibm_nairobi")
+backend = provider.get_backend("ibm_lagos")
 initial_layout = list(range(7))
 
 # ..jupyter-execute::
@@ -368,29 +368,21 @@ from qiskit_experiments.calibration_management.basis_gate_library import FixedFr
 from qiskit_experiments.library.calibration.frequency_cal import FrequencyCal
 
 qubit = 0
-delays =np.linspace(0, 10.0e-6, 11)
-library = FixedFrequencyTransmon(default_values={"duration": 640})
-cals = Calibrations.from_backend(backend, libraries=[library])
+cals = Calibrations.from_backend(backend, libraries=[FixedFrequencyTransmon()])
+exp = FrequencyCal([qubit], cals, backend=backend) 
 
-exp = FrequencyCal([qubit], 
-                   cals, 
-                   backend=backend,  
-#                    cal_parameter_name = "drive_freq",   # may be bug!
-                   delays=delays, 
-                   osc_freq=2.e6, 
-                   auto_update=True, 
-                  )
-
-exp_data = exp.run().block_for_results()
+exp_data=exp.run().block_for_results()
 result=exp_data.analysis_results()
 exp_data.figure(0)
-
 ```
 
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/731249e8-62f7-40ff-8c8e-08f2b11582ea)
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/7b0f2529-dbca-48d5-abab-5ad08c87b148)
+
 
 
 
