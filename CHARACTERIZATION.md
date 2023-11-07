@@ -409,7 +409,7 @@
 
         # backend  
         from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-        backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199) # "noise" option is "False"
+        backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
     ..jupyter-execute::
 
