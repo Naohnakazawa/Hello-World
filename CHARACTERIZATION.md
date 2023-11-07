@@ -424,38 +424,212 @@
 
 ### ResonatorSpectroscopy
 ```
+# section: example
+    # ..jupyter-execute::
+        # :hide-code:
 
+        # backend ibm-nairobi
+        from qiskit_ibm_provider import IBMProvider
 
+        INSTANCE="ibm-q/open/main"
+        provider = IBMProvider(instance=INSTANCE)
+        backend = provider.get_backend("ibm_nairobi")
 
+        initial_layout = list(range(7))
+
+    # ..jupyter-execute::
+
+        import numpy as np
+        from qiskit_experiments.library.characterization import ResonatorSpectroscopy
+
+        qubit = 0
+        exp = ResonatorSpectroscopy(physical_qubits = [qubit], backend = backend)
+        exp.set_run_options(shots=1000, seed_simulator=119)
+
+        exp_data = exp.run().block_for_results()
+        result = exp_data.analysis_results()
+        exp_data.figure(0)
 ```
 
 ### T1
 ```
+# test 20231107
 
+    # section: example
+    # ..jupyter-execute::
+        # :hide-code:
+
+        # backend 
+        from qiskit.providers.fake_provider import FakeManilaV2
+        from qiskit_aer import AerSimulator
+        backend = AerSimulator.from_backend(FakeManilaV2())
+
+    # ..jupyter-execute::
+
+        from qiskit_experiments.library import T1
+        import numpy as np
+
+        delays = np.arange(1.e-6, 300.e-6, 30.e-6)
+        exp = T1(physical_qubits=(0, ), delays=delays, backend=backend)
+        exp_data = exp.run().block_for_results()
+        display(exp_data.figure(0))
 ```
 
 ### T2Hahn
 ```
+# section: example
+    # ..jupyter-execute::
+        # :hide-code:
 
+        # backend
+        from qiskit_experiments.test.t2hahn_backend import T2HahnBackend
 
+        conversion_factor = 1e-6
+        estimated_t2hahn = 20*conversion_factor
+        backend = T2HahnBackend(
+            t2hahn=[estimated_t2hahn], 
+            frequency=[100100], 
+            readout0to1 = [0.02], 
+            readout1to0 = [0.02], 
+            )
+
+    # ..jupyter-execute::
+
+        import qiskit
+        from qiskit_experiments.library.characterization.t2hahn import T2Hahn
+
+        delays = list(range(0, 50, 1))
+        delays = [float(_)*conversion_factor for _ in delays]
+        number_of_echoes = 1
+
+        exp = T2Hahn(physical_qubits=(0, ), delays=delays, num_echoes=number_of_echoes, backend=backend)
+        print(exp.circuits()[0])
+
+    # ..jupyter-execute::
+
+        exp.analysis.set_options(p0=None, plot=True)
+        exp.set_run_options(shots=1000, seed_simulator=121)
+        expdata = exp.run().block_for_results()
+
+        display(expdata.figure(0))
 ```
 
 ### T2Ramsey
 ```
+# section: example
+    # ..jupyter-execute::
+        # :hide-code:
 
+        # backend
+        from qiskit.providers.fake_provider import FakeManilaV2
+        from qiskit_aer import AerSimulator
+        from qiskit_aer.noise import NoiseModel
 
+        noise_model = NoiseModel.from_backend(FakeManilaV2(), 
+                                              thermal_relaxation=True, 
+                                              gate_error=False, 
+                                              readout_error=False,                                           
+                                              )
+
+        backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
+
+    # ..jupyter-execute::
+
+        import numpy as np
+        import qiskit
+        from qiskit_experiments.library import T2Ramsey
+
+        delays = list(np.arange(1.00e-6, 50.0e-6, 2.00e-6))
+        exp = T2Ramsey(physical_qubits=(0, ), delays=delays, backend=backend, osc_freq=1.0e5)
+        print(exp.circuits()[0])
+
+    # ..jupyter-execute::
+
+        exp.set_run_options(shots=1000, seed_simulator=101)
+        expdata = exp.run().block_for_results()
+
+        display(expdata.figure(0))
 ```
 
 ### Tphi
 ```
+# section: example
+    # ..jupyter-execute::
+        # :hide-code:
 
+        # backend
+        from qiskit.providers.fake_provider import FakeManilaV2
+        from qiskit_aer import AerSimulator
+        from qiskit_aer.noise import NoiseModel
 
+        noise_model = NoiseModel.from_backend(FakeManilaV2(), 
+                                              thermal_relaxation=True, 
+                                              gate_error=False, 
+                                              readout_error=False, 
+                                             )
+
+        backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
+
+    # ..jupyter-execute::
+
+        import numpy as np
+        import qiskit
+        from qiskit_experiments.library.characterization import Tphi
+
+        delays_t1 = np.arange(1e-6, 300e-6, 10e-6)
+        delays_t2 = np.arange(1e-6, 50e-6, 2e-6)
+
+    # ..jupyter-execute::
+
+        exp = Tphi(physical_qubits=(0, ),
+                    delays_t1=delays_t1,
+                    delays_t2=delays_t2,
+                    t2type="hahn",
+                    osc_freq = 5.e-6, 
+                    num_echoes=1,
+                    backend=backend
+                    )
+        exp.set_run_options(seed_simulator=100)
+        exp_data = exp.run().block_for_results()
+
+        result = exp_data.analysis_results("T_phi")
+        print(result)
 ```
 
 ### ZZRamsey
 ```
+# section: example
+    # ..jupyter-execute::
+        # :hide-code:
 
+        # backend
+        from qiskit.providers.fake_provider import FakePerth
+        from qiskit_aer import AerSimulator
+        from qiskit_aer.noise import NoiseModel
 
+        noise_model = NoiseModel.from_backend(FakePerth(), 
+                                              thermal_relaxation=True, 
+                                              gate_error=False, 
+                                              readout_error=False,                                           
+        )
+
+        backend = AerSimulator.from_backend(FakePerth(), noise_model=noise_model)
+
+    # ..jupyter-execute::
+
+        from qiskit_experiments.library.characterization import ZZRamsey
+
+        qubits = (0, 1)
+        exp = ZZRamsey(physical_qubits=qubits, backend=backend)
+        exp.set_run_options(shots=1000, seed_simulator=101)
+        print(exp.circuits()[2])
+        print(exp.circuits()[3])
+
+        exp_data = exp.run().block_for_results()
+        result=exp_data.analysis_results()
+        print(f"The value of {exp_data.analysis_results(1).name} is {exp_data.analysis_results(1).value}")
+
+        exp_data.figure(0)
 ```
 
 
