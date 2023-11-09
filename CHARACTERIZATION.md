@@ -16,7 +16,6 @@
                                               gate_error = False, 
                                               readout_error = True, 
                                              )
-
         backend = AerSimulator.from_backend(FakePerth(), noise_model=noise_model)
 
     ..jupyter-execute::
@@ -237,7 +236,6 @@
         # backend 
         from qiskit_aer import AerSimulator
         from qiskit.providers.fake_provider import FakePerth
-
         backend = AerSimulator.from_backend(FakePerth())
 
     ..jupyter-execute::
