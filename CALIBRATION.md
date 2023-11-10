@@ -29,7 +29,7 @@ from qiskit_experiments.library.calibration.rough_frequency import RoughFrequenc
 
 freq01_estimate = backend.defaults().qubit_freq_est[qubit]
 frequencies = np.linspace(freq01_estimate-15e6, freq01_estimate+15e6, 51)
-spec = RoughFrequencyCal([qubit], cals, frequencies, backend=backend)
+spec = RoughFrequencyCal((0,), cals, frequencies, backend=backend)
 spec.set_experiment_options(amp=0.005)
 
 spec_data = spec.run().block_for_results()
