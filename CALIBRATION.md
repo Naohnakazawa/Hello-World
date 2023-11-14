@@ -2,30 +2,29 @@
 
 ### RoughFrequencyCal
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
+
+# ..jupyter-execute::
 
 # mwc
-
 import pandas as pd
 import numpy as np
 import qiskit.pulse as pulse
+from qiskit import schedule
 from qiskit.circuit import Parameter
 from qiskit_experiments.calibration_management.calibrations import Calibrations
-from qiskit import schedule
-from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-
-# backend
-
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
-
-# mwc
-
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+from qiskit_experiments.library.calibration.rough_frequency import RoughFrequencyCal
 
 qubit = 0
 library = FixedFrequencyTransmon(default_values={"duration": 320})
 cals = Calibrations.from_backend(backend, libraries=[library])
-
-from qiskit_experiments.library.calibration.rough_frequency import RoughFrequencyCal
 
 freq01_estimate = backend.defaults().qubit_freq_est[qubit]
 frequencies = np.linspace(freq01_estimate-15e6, freq01_estimate+15e6, 51)
@@ -34,10 +33,6 @@ spec.set_experiment_options(amp=0.005)
 
 spec_data = spec.run().block_for_results()
 spec_data.figure(0)
-
-columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
-pd.DataFrame(**cals.parameters_table(qubit_list=[qubit]))[columns_to_show]
-
 ```
 
 
@@ -52,36 +47,6 @@ pd.DataFrame(**cals.parameters_table(qubit_list=[qubit]))[columns_to_show]
 ### RoughAmplitudeCal
 ```
 
-# mwc
-
-import pandas as pd
-import numpy as np
-import qiskit.pulse as pulse
-from qiskit.circuit import Parameter
-from qiskit_experiments.calibration_management.calibrations import Calibrations
-from qiskit import schedule
-from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-
-# backend
-
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
-
-# mwc
-
-from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
-
-qubit = 0
-library = FixedFrequencyTransmon(default_values={"duration": 320})
-cals = Calibrations.from_backend(backend, libraries=[library])
-
-from qiskit_experiments.library.calibration import RoughXSXAmplitudeCal
-rabi = RoughXSXAmplitudeCal((qubit,), cals, backend=backend, amplitudes=np.linspace(-0.1, 0.1, 51))
-
-rabi_data = rabi.run().block_for_results()
-rabi_data.figure(0)
-
-columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
-pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters="amp"))[columns_to_show]
 
 ```
 
@@ -98,37 +63,7 @@ pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters="amp"))[
 
 ### RoughDragCal
 ```
-# mwc
 
-import pandas as pd
-import numpy as np
-import qiskit.pulse as pulse
-from qiskit.circuit import Parameter
-from qiskit_experiments.calibration_management.calibrations import Calibrations
-from qiskit import schedule
-from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-
-# backend
-
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
-
-# mwc
-
-from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
-
-qubit = 0
-library = FixedFrequencyTransmon(default_values={"duration": 320, "amp": 0.03})
-cals = Calibrations.from_backend(backend, libraries=[library])
-
-from qiskit_experiments.library import RoughDragCal
-cal_drag = RoughDragCal([qubit], cals, backend=backend, betas=np.linspace(-20, 20, 25))
-cal_drag.set_experiment_options(reps=[3, 5, 7])
-
-drag_data = cal_drag.run().block_for_results()
-drag_data.figure(0)
-
-columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
-pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp","β")))[columns_to_show]
 
 ```
 
@@ -144,38 +79,7 @@ pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp","
 
 ### FineAmplitudeCal
 ```
-# mwc
 
-import numpy as np
-import qiskit.pulse as pulse
-from qiskit.circuit import Parameter
-from qiskit_experiments.calibration_management.calibrations import Calibrations
-from qiskit import schedule
-from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-
-# backend
-
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=100)
-
-# mwc
-from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
-
-qubit = 0
-library = FixedFrequencyTransmon(default_values={"duration": 320})
-cals = Calibrations.from_backend(backend, libraries=[library])
-
-from qiskit_experiments.library import FineSXAmplitudeCal
-
-amp_cal = FineSXAmplitudeCal([qubit], 
-                             cals, 
-                             schedule_name="sx",
-                             backend=backend, 
-                             cal_parameter_name="amp", 
-                             auto_update=True, 
-                             )
-
-exp_data_x90p = amp_cal.run().block_for_results()
-exp_data_x90p.figure(0)
 
 ```
 
