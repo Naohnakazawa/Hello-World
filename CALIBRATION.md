@@ -12,7 +12,6 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=
 
 # ..jupyter-execute::
 
-# mwc
 import pandas as pd
 import numpy as np
 import qiskit.pulse as pulse
@@ -56,7 +55,6 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=
 
 # ..jupyter-execute::
 
-# mwc
 import pandas as pd
 import numpy as np
 import qiskit.pulse as pulse
@@ -98,7 +96,6 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=
 
 # ..jupyter-execute::
 
-# mwc
 import pandas as pd
 import numpy as np
 import qiskit.pulse as pulse
@@ -140,7 +137,6 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=
 
 # ..jupyter-execute::
 
-# mwc
 import numpy as np
 import qiskit.pulse as pulse
 from qiskit import schedule
@@ -186,7 +182,6 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, noise=False, seed=
 
 # ..jupyter-execute::
 
-#mwc
 import numpy as np
 from qiskit_experiments.calibration_management.calibrations import Calibrations
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
@@ -239,7 +234,6 @@ backend=MockIQBackend(exp_helper)
 
 # ..jupyter-execute::
 
-# mwc
 from qiskit.providers.fake_provider import FakePerth
 from qiskit_experiments.library import FineFrequencyCal
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
@@ -286,7 +280,6 @@ backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, 
 
 # ..jupyter-execute::
 
-# mwc
 from qiskit import pulse
 from qiskit_experiments.calibration_management.calibrations import Calibrations
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
@@ -346,7 +339,6 @@ initial_layout = list(range(7))
 
 # ..jupyter-execute::
 
-# mwc
 import numpy as np
 from qiskit.providers.fake_provider import FakePerth
 from qiskit_experiments.calibration_management.calibrations import Calibrations
