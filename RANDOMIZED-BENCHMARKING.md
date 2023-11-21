@@ -2,13 +2,17 @@
 
 ### StandardRB
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 # backend 
 from qiskit_aer import AerSimulator
 from qiskit.providers.fake_provider import FakePerth
-
 backend = AerSimulator.from_backend(FakePerth())
 
-# mws
+# ..jupyter-execute::
+
 import numpy as np
 from qiskit_experiments.library import StandardRB
 import qiskit.circuit.library as circuits
