@@ -2,14 +2,17 @@
 
 ### QV
 ```
-# backend
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
 from qiskit import Aer
 from qiskit_aer import AerSimulator
 from qiskit.providers.fake_provider import FakeSydneyV2
-
 backend = AerSimulator.from_backend(FakeSydneyV2())
 
-# mwc
+# ..jupyter-execute::
+
 from qiskit_experiments.framework import BatchExperiment
 from qiskit_experiments.library import QuantumVolume
 
