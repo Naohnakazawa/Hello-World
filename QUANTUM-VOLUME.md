@@ -6,6 +6,7 @@
 # ..jupyter-execute::
 # :hide-code:
 
+# backend
 from qiskit import Aer
 from qiskit_aer import AerSimulator
 from qiskit.providers.fake_provider import FakeSydneyV2
