@@ -73,6 +73,17 @@ result.figure(0)
 
 ### Issue#1238(also #1221)
 
+### reno
+
+features:
+  - |
+    List new features here, or remove this section.  All of the list items in
+    this section are combined when the release notes are rendered, so the text
+    needs to be worded so that it does not depend on any information only
+    available in another section, such as the prelude. This may mean repeating
+    some details.
+
+
 ### Pull request checklist (for qiskit)
 
 1. The code follows the code style of the project and successfully
