@@ -93,9 +93,9 @@ features:
    code formatting check) you can use `tox -eblack` to automatically
    fix update the code formatting.
 
-tox -epy310                      : There remains one issue
+tox -epy310                      : well-done
 
-tox -epy38                       : There remains one issue
+tox -epy38                       : well-done
 
 tox -elint & tox -eblack         : well-done
 
@@ -128,7 +128,7 @@ When submitting a pull request for review, please ensure that:
 
 1. The code follows the code style of the project and successfully passes the tests.
 
-tox -epy310                      : There remains one issue.
+tox -epy310                      : well-done
 
 tox -elint & tox -eblack         : well-done
 .
