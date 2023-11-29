@@ -260,9 +260,17 @@ exp.set_experiment_options(max_circuits=None,
 
 exp.circuits()[287].draw("mpl")
 
-# run carefully on the realdevice!
+# run carefully on real devices!
 # exp_data=exp.run()
 ```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/35f11f7c-9fe4-46d0-9a64-c4126e0485e5)
+
+
+
 
 
 ### ECRH
@@ -301,6 +309,18 @@ exp.set_experiment_options(max_circuits=None,
 
 exp.circuits()[287].draw("mpl")
 
-# run carefully on the realdevice!
+# run carefully on real devices!
 # exp_data=exp.run()
 ```
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/a547ff5d-481b-4cd0-8aa3-1d3565ae031d)
+
+
+
+
+
