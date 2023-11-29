@@ -1,4 +1,4 @@
-# Characterization experiments 16, 17, 18, 19, 20, 21, 22
+# Characterization experiments 16, 17, 18, 19, 20, 21, 22, 23
 
 ### Fine Frequency
 ```
@@ -319,6 +319,46 @@ exp.circuits()[287].draw("mpl")
 
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/a547ff5d-481b-4cd0-8aa3-1d3565ae031d)
+
+
+
+
+
+
+### StarkP1Spectroscopy
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm_brisbane
+from qiskit_ibm_provider import IBMProvider
+
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_brisbane")
+initial_layout = list(range(127))
+
+# ..jupyter-execute::
+
+# mwc
+from qiskit_experiments.library.characterization.t1 import StarkP1Spectroscopy
+
+qubit=13
+exp = StarkP1Spectroscopy((qubit,), backend=backend)
+exp.set_run_options(shots=100)
+exp_data = exp.run().block_for_results()
+result=exp_data.analysis_results()
+
+exp_data.figure(0)
+```
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/752fc54e-5244-4ac9-927b-a3ba9dc72c09)
+
 
 
 
