@@ -68,15 +68,11 @@ exp_data.figure(0)
 # ..jupyter-execute::
 # :hide-code:
 
-# backend
-from qiskit_experiments.framework import BackendData
-from qiskit_experiments.test.mock_iq_backend import MockIQBackend
-from qiskit_experiments.test.mock_iq_helpers import MockIQRamseyXYHelper
+# backend 
+from qiskit_aer import AerSimulator
+from qiskit.providers.fake_provider import FakePerth
 
-exp_helper=MockIQRamseyXYHelper(t2ramsey=5.e-6, 
-                               freq_shift=0., )
-backend=MockIQBackend(exp_helper)
-exp_helper_dt=BackendData(backend).dt
+backend = AerSimulator.from_backend(FakePerth())
 
 # ..jupyter-execute::
 
@@ -85,18 +81,21 @@ import numpy as np
 from qiskit_experiments.library.characterization import RamseyXY
 
 qubit=0
-delays = np.linspace(0, 10.e-6, 51)
-exp = RamseyXY([qubit], backend=backend, delays=delays, osc_freq=0.01e6)
+delays = np.linspace(0, 10.e-7, 101)
+exp = RamseyXY([qubit], backend=backend, delays=delays, osc_freq=2.0e6)
 exp.set_run_options(shots=1000, seed_simulator=201)
-exp_data = exp.run().block_for_results()
-exp_data.figure(0)
+exp.circuits()[0].draw("mpl")
 
+exp_data = exp.run().block_for_results()
+result=exp_data.analysis_results()
+exp_data.figure(0)
 ```
 
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/13cf758b-233d-4949-9cee-b53d4e83d7b2)
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/1844aef3-0e3b-40f5-bef1-32f36ad1cf02)
 
 
 
