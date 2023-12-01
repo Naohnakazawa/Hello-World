@@ -1,4 +1,4 @@
-# Characterization experiments 21, 22, 23
+# Characterization experiments 21, 22, 23, 24
 ### CRH
 ```
 # section: example
@@ -132,6 +132,72 @@ exp_data.figure(0)
 
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/752fc54e-5244-4ac9-927b-a3ba9dc72c09)
+
+
+
+
+
+
+
+### StarkRamseyXY
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm_kyoyo, shots=100
+from qiskit_ibm_provider import IBMProvider
+
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
+
+qubit = 6
+for qpair in backend.coupling_map:
+    if qpair[0] == qubit:
+        break       
+
+# ..jupyter-execute::
+        
+# mwc        
+qubit = 6
+from qiskit import pulse
+from qiskit_experiments.library import StarkRamseyXY
+
+exp = StarkRamseyXY(
+    physical_qubits=(qubit,),
+    backend=backend,
+    )
+
+exp.set_experiment_options(stark_amp=0.5, 
+                           stark_channel=pulse.ControlChannel(qubit), 
+                          )
+
+exp.set_run_options(shots=1000)
+
+for i in range(2):
+    print(exp.circuits()[i])
+
+step1=False   # run carefully if your backend is a real device
+if step1==True:
+        
+    exp_data=exp.run().block_for_results()
+    result=exp_data.analysis_results()
+    
+    for _ in result:
+        print(_)
+    
+    exp_data.figure(0)
+    
+else:
+    pass
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/7f3ac26b-5ef5-4900-b767-086511bf1852)
+
 
 
 
