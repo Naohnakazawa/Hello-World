@@ -1,37 +1,4 @@
 # Characterization experiments 21, 22, 23
-
-### MultiStateDiscrimination
-```
-# section: example
-# ..jupyter-execute::
-# :hide-code:
-
-# backend 
-from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
-
-# ..jupyter-execute::
-
-# mwc
-from qiskit_experiments.library.characterization import MultiStateDiscrimination
-
-qubit=0
-exp=MultiStateDiscrimination([qubit], backend=backend)
-exp_data=exp.run().block_for_results()
-result=exp_data.analysis_results()
-exp_data.figure(0)
-```
-
-
-
-
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/9efc11be-ad8f-450f-a001-76f5d42b286a)
-
-
-
-
-
-
 ### CRH
 ```
 # section: example
