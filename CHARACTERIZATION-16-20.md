@@ -157,14 +157,12 @@ exp_data.figure(0)
 # ..jupyter-execute::
 # :hide-code:
 
-# backend ibm-nairobi
+# backend 
 from qiskit_ibm_provider import IBMProvider
 
 INSTANCE="ibm-q/open/main"
 provider = IBMProvider(instance=INSTANCE)
-backend = provider.get_backend("ibm_nairobi")
-
-initial_layout = list(range(7))
+backend = provider.get_backend("ibm_kyoto")
 
 # ..jupyter-execute::
 
@@ -172,15 +170,18 @@ initial_layout = list(range(7))
 import numpy as np
 from qiskit_experiments.library.characterization import ResonatorSpectroscopy
 
-qubit = 0
+qubit = 13
 exp = ResonatorSpectroscopy(physical_qubits = [qubit], backend = backend)
-exp.set_run_options(shots=1000, seed_simulator=119)
+exp.set_run_options(shots=100, seed_simulator=119)
 
-exp_data = exp.run().block_for_results()
-result = exp_data.analysis_results()
-exp_data.figure(0)
+exp.circuit()[0].draw("mpl")
+
+step1=False  # run carefully if your backend is a real device
+if step1==True:
+    exp_data = exp.run().block_for_results()
+    result = exp_data.analysis_results()
+    exp_data.figure(0)
 ```
-
 
 
 
