@@ -181,6 +181,18 @@ if step1==True:
     exp_data = exp.run().block_for_results()
     result = exp_data.analysis_results()
     exp_data.figure(0)
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData
+job_ids= ["cnnm53we4ks0008gmpa0"] # list of job IDs for the experiment
+
+exp_data = ExperimentData(experiment=exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+
+exp_data.block_for_results()
+result = exp_data.analysis_results()
+exp_data.figure(0)
 ```
 
 
