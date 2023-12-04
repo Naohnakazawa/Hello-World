@@ -191,6 +191,17 @@ if step1==True:
     
 else:
     pass
+
+# retrieve job
+from qiskit_experiments.framework import ExperimentData 
+
+job_ids= ["cnmb50mtakkg008rgkdg"] # List of job IDs for the experiment
+exp_data = ExperimentData(experiment=exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+exp_data.block_for_results()
+
+exp_data.figure(0)
 ```
 
 
