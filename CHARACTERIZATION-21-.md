@@ -165,7 +165,7 @@ exp_data.figure(0)
 # ..jupyter-execute::
 # :hide-code:
 
-# backend ibm_kyoyo, shots=100
+# backend ibm_kyoyo
 from qiskit_ibm_provider import IBMProvider
 
 INSTANCE="ibm-q/open/main"
@@ -212,10 +212,10 @@ if step1==True:
 else:
     pass
 
-# retrieve job
+# retrieve your jobs
 from qiskit_experiments.framework import ExperimentData 
 
-job_ids= ["cnmb50mtakkg008rgkdg"] # List of job IDs for the experiment
+job_ids= ["cnmb50mtakkg008rgkdg"] # list of job IDs for the experiment
 exp_data = ExperimentData(experiment=exp)
 exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
 exp.analysis.run(exp_data)
