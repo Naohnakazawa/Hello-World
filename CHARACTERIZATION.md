@@ -447,30 +447,48 @@
 ### ResonatorSpectroscopy
 ```
 # section: example
-    ..jupyter-execute::
-        :hide-code:
+# ..jupyter-execute::
+# :hide-code:
 
-        # backend ibm-nairobi
-        from qiskit_ibm_provider import IBMProvider
+# backend ibm-kyoto
+from qiskit_ibm_provider import IBMProvider
 
-        INSTANCE="ibm-q/open/main"
-        provider = IBMProvider(instance=INSTANCE)
-        backend = provider.get_backend("ibm_nairobi")
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
 
-        initial_layout = list(range(7))
+# ..jupyter-execute::
 
-    ..jupyter-execute::
+# mwc 
+import numpy as np
+from qiskit_experiments.library.characterization import ResonatorSpectroscopy
 
-        import numpy as np
-        from qiskit_experiments.library.characterization import ResonatorSpectroscopy
+qubit = 13
+exp = ResonatorSpectroscopy(physical_qubits = [qubit], backend = backend)
+exp.set_run_options(shots=100, seed_simulator=119)
 
-        qubit = 0
-        exp = ResonatorSpectroscopy(physical_qubits = [qubit], backend = backend)
-        exp.set_run_options(shots=1000, seed_simulator=119)
+print(exp.circuits()[0])
 
-        exp_data = exp.run().block_for_results()
-        result = exp_data.analysis_results()
-        exp_data.figure(0)
+step1=False  # run carefully if your backend is a real device
+if step1==True:
+    exp_data = exp.run().block_for_results()
+    result = exp_data.analysis_results()
+    exp_data.figure(0)
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData
+job_ids= ["cnnm53we4ks0008gmpa0"] # List of job IDs for the experiment
+
+exp_data = ExperimentData(experiment=exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+
+exp_data.block_for_results()
+result = exp_data.analysis_results()
+exp_data.figure(0)
 ```
 
 ### T1
