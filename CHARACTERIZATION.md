@@ -515,7 +515,50 @@ exp_data.figure(0)
 
 ### StarkP1Spectroscopy
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
 
+# backend ibm_brisbane
+from qiskit_ibm_provider import IBMProvider
+
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_brisbane")
+
+# ..jupyter-execute::
+
+# mwc
+from qiskit_experiments.library.characterization.t1 import StarkP1Spectroscopy
+
+qubit=13
+exp = StarkP1Spectroscopy((qubit,), backend=backend)
+exp.set_run_options(shots=100)
+
+step1=False # run carefully if your device is a real device
+if step1==True:
+    exp_data = exp.run().block_for_results()
+    result=exp_data.analysis_results()
+
+    for _ in result:
+        print(_)
+
+    exp_data.figure(0)
+    
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData
+
+job_ids= ["cnkf59nq9ax00087ecv0"] # list of job IDs for the experiment
+exp_data = ExperimentData(experiment = exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+exp_data.block_for_results()
+
+result=exp_data.analysis_results()
+exp_data.figure(0)
 ```
 
 ### T2Hahn
