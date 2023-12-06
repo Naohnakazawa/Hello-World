@@ -24,22 +24,22 @@
 
         for c in exp.circuits():
             print(c)
-    
+
         step1=False # run carefully if your device is a real one!
-        if step1==True:    
+        if step1==True:
             exp_data = exp.run()
             mitigator = exp_data.analysis_results(0).value
-            result=exp_data.analysis_results()    
+            result=exp_data.analysis_results()
             for _ in result:
                 print(_)
-        
+
             exp_data.figure(0)
-    
+
         else:
             pass
 
         # retrieve your jobs
-        from qiskit_experiments.framework import ExperimentData 
+        from qiskit_experiments.framework import ExperimentData
 
         jobs_ids=[" "] # list of job IDs for the experiment
         exp_data = ExperimentData(experiment=exp)
@@ -67,7 +67,7 @@
     ..jupyter-execute::
         :hide-code:
 
-        # backend 
+        # backend
         from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
         backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=101)
 
@@ -81,9 +81,9 @@
         with pulse.build() as build_sched:
             pulse.play(pulse.Drag(160, 0.50, 40, Parameter("beta")), pulse.DriveChannel(0))
 
-        exp = RoughDrag(physical_qubits=(0,), 
+        exp = RoughDrag(physical_qubits=(0,),
                         schedule=build_sched,
-                        betas = np.linspace(-4, 4, 51), 
+                        betas = np.linspace(-4, 4, 51),
                         backend=backend,)
         exp.set_experiment_options(reps=[3, 5, 7])
 
@@ -111,11 +111,11 @@
         frequencies = np.linspace(freq01_estimate-15e6, freq01_estimate+15e6, 51)
 
         exp = EFSpectroscopy(physical_qubits = (0,),
-                                 frequencies = frequencies, 
-                                 backend = backend, 
-                                 absolute = True, 
+                                 frequencies = frequencies,
+                                 backend = backend,
+                                 absolute = True,
                                 )
-        exp.set_experiment_options(amp=0.005)  
+        exp.set_experiment_options(amp=0.005)
 
         exp_data = exp.run().block_for_results()
         exp_data.figure(0)
@@ -151,7 +151,7 @@
     ..jupyter-execute::
         :hide-code:
 
-        # backend 
+        # backend
         from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
         backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
@@ -221,7 +221,7 @@
     ..jupyter-execute::
         :hide-code:
 
-        # backend 
+        # backend
         from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
         backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
@@ -238,14 +238,14 @@
 
         inst_map = backend.defaults().instruction_schedule_map
         with pulse.build(backend=backend, name="y") as sched_build:
-            pulse.play(pulse.Drag(duration=160, 
-                                  sigma=40, 
-                                  beta=5, 
-                                  amp=0.05821399464431249, 
-                                  angle=0.0, 
+            pulse.play(pulse.Drag(duration=160,
+                                  sigma=40,
+                                  beta=5,
+                                  amp=0.05821399464431249,
+                                  angle=0.0,
                                   name="Yp_d0"
                                  ), pulse.DriveChannel(0), name="Yp_d0")
-        inst_map.add("y", (qubit,), sched_build)    
+        inst_map.add("y", (qubit,), sched_build)
         exp.set_transpile_options(inst_map=inst_map)
         exp.set_run_options(shots=1000, seed_simulator=178)
 
