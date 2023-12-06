@@ -3,7 +3,6 @@
 
 ### LocalReadoutError
 ```
-
 # section: example
 # ..jupyter-execute::
 # :hide-code:
@@ -30,7 +29,6 @@ result = exp.run()
 mitigator = result.analysis_results(0).value
 
 result.figure(0)
-
 ```
 
 
@@ -44,45 +42,57 @@ result.figure(0)
 
 ### CorrelatedReadoutError
 ```
-
 # section: example
 # ..jupyter-execute::
 # :hide-code:
 
-# backend & noise_model
-from qiskit_aer import AerSimulator
-from qiskit_aer.noise import NoiseModel
-from qiskit.providers.fake_provider import FakePerth
+# backend ibm_kyoto
+from qiskit_ibm_provider import IBMProvider
 
-noise_model = NoiseModel.from_backend(FakePerth(), 
-                                      thermal_relaxation = False, 
-                                      gate_error = False, 
-                                      readout_error = True, 
-                                     )
-
-backend = AerSimulator.from_backend(FakePerth(), noise_model=noise_model)
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
 
 # ..jupyter-execute::
 
-# mwc
+#mwc
 from qiskit_experiments.library import CorrelatedReadoutError
 
-qubits = [0,1,2]
+qubits = [10,11,12]
+num_qubits = len(qubits)
 exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
-
-for circ in exp.circuits():
-    print(circ)
-
-# ..jupyter-execute::
-
-shots=1000
-exp.set_run_options(shots=shots)
+exp.set_run_options(shots=1000)
 exp.analysis.set_options(plot=True)
-result = exp.run()
-mitigator = result.analysis_results(0).value
 
-result.figure(0)
+for c in exp.circuits():
+    print(c)
+    
+step1=False # run carefully if your device is a real one!
+if step1==True:
+    
+    exp_data = exp.run()
+    mitigator = exp_data.analysis_results(0).value
+    result=exp_data.analysis_results()
+    
+    for _ in result:
+        print(_)
+        
+    exp_data.figure(0)
+    
+else:
+    pass
 
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+jobs_ids=[" "] # list of job IDs for the experiment
+exp_data = ExperimentData(experiment=exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+exp_data.block_for_results()
+result=exp_data.analysis_results()
+
+exp_data.figure(0)
 ```
 
 
