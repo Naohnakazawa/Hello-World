@@ -14,7 +14,6 @@
 
     # ..jupyter-execute::
 
-        #mwc
         from qiskit_experiments.library import CorrelatedReadoutError
 
         qubits = [10,11,12]
@@ -503,8 +502,7 @@
                 break       
 
     # ..jupyter-execute::
-        
-        # mwc        
+
         qubit = 6
         from qiskit import pulse
         from qiskit_experiments.library import StarkRamseyXYAmpScan
@@ -587,7 +585,6 @@
 
     # ..jupyter-execute::
 
-        # mwc 
         import numpy as np
         from qiskit_experiments.library.characterization import ResonatorSpectroscopy
 
@@ -654,7 +651,6 @@
 
     # ..jupyter-execute::
 
-        # mwc
         from qiskit_experiments.library.characterization.t1 import StarkP1Spectroscopy
 
         qubit=13
@@ -842,6 +838,3 @@
 
         exp_data.figure(0)
 ```
-
-
-
