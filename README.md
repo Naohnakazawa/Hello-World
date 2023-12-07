@@ -33,27 +33,19 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 ### LocalReadoutError
 ```
-# section: example
-# ..jupyter-execute::
-# :hide-code:
-
 # backend 
 from qiskit_aer import AerSimulator
 from qiskit.providers.fake_provider import FakePerth
 
 backend = AerSimulator.from_backend(FakePerth())
 
-# ..jupyter-execute::
-
 # mwc
 from qiskit_experiments.library import LocalReadoutError
 
 qubits = list(range(4))
-shots=10000
-
 exp = LocalReadoutError(physical_qubits=qubits, backend=backend)
 exp.analysis.set_options(plot=True)
-exp.set_run_options(shots=shots)
+exp.set_run_options(shots=10000)
 
 result = exp.run()
 mitigator = result.analysis_results(0).value
@@ -74,10 +66,6 @@ result.figure(0)
 
 ### CorrelatedReadoutError
 ```
-# section: example
-# ..jupyter-execute::
-# :hide-code:
-
 # backend ibm_kyoto
 from qiskit_ibm_provider import IBMProvider
 
@@ -85,15 +73,13 @@ INSTANCE="ibm-q/open/main"
 provider = IBMProvider(instance=INSTANCE)
 backend = provider.get_backend("ibm_kyoto")
 
-# ..jupyter-execute::
-
 #mwc
 from qiskit_experiments.library import CorrelatedReadoutError
 
 qubits = [10,11,12]
 num_qubits = len(qubits)
 exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
-exp.set_run_options(shots=1000)
+exp.set_run_options(shots=10000)
 exp.analysis.set_options(plot=True)
 
 for c in exp.circuits():
@@ -104,8 +90,7 @@ if step1==True:
     
     exp_data = exp.run()
     mitigator = exp_data.analysis_results(0).value
-    result=exp_data.analysis_results()
-    
+    result=exp_data.analysis_results()    
     for _ in result:
         print(_)
         
@@ -117,7 +102,7 @@ else:
 # retrieve your jobs
 from qiskit_experiments.framework import ExperimentData 
 
-jobs_ids=[" "] # list of job IDs for the experiment
+jobs_ids=["cnqvks7gsbh0008svjf0"] # list of job IDs for the experiment
 exp_data = ExperimentData(experiment=exp)
 exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
 exp.analysis.run(exp_data)
@@ -126,6 +111,14 @@ result=exp_data.analysis_results()
 
 exp_data.figure(0)
 ```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/0663868e-8bf9-49b1-b9af-b6296316ad9d)
+
+
+
 
 
 
