@@ -6,56 +6,74 @@
 # ..jupyter-execute::
 # :hide-code:
 
-# backend
-from qiskit_experiments.framework import BackendData
-from qiskit_experiments.test.mock_iq_backend import MockIQBackend
-from qiskit_experiments.test.mock_iq_helpers import MockIQFineFreqHelper as FineFreqHelper
+# backend ibm_kyoto
+from qiskit_ibm_provider import IBMProvider
 
-
-sx_duration=160
-freq_shift_list=[-0.5e-6, -0.1e-6, 0.1e-6, 0.5e-6]
-freq_shift=freq_shift_list[0]
-
-exp_helper=FineFreqHelper(sx_duration, freq_shift)
-backend=MockIQBackend(exp_helper)
-exp_helper_dt=BackendData(backend).dt
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
 
 # ..jupyter-execute::
 
-# mwc
+from qiskit_experiments.library.characterization import FineFrequency
+
+qubit=13
+repetitions = list(range(40))
+exp = FineFrequency((qubit,), 
+                    delay_duration=320, 
+                    backend=backend, 
+                    repetitions=repetitions)
+exp.set_run_options(shots=100, seed_simulator=199)
+print(exp.circuits()[3])
+
+step1=False # run carefully if your device is a real one
+if step1==True:
+    exp_data = exp.run().block_for_results()
+    result = exp_data.analysis_results()
+    
+    for _ in result:
+        print(_)
+    
+    exp_data.figure(0)
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+job_ids=["cnrj6gazeg00008v7nrg"] # list of job IDs for the experiment
+exp_data = ExperimentData(experiment=exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+exp_data.block_for_results()
+result=exp_data.analysis_results()
+
 import numpy as np
-from qiskit import pulse
-from qiskit.pulse import InstructionScheduleMap, DriveChannel
-from qiskit_experiments.library import FineFrequency
-
-qubit=0
-inst_map = InstructionScheduleMap()
-with pulse.build(name="sx") as sched_build:
-    pulse.play(pulse.Gaussian(duration=sx_duration, amp=0.5, sigma=40), pulse.DriveChannel(0))
-inst_map.add("sx", qubit, sched_build)
-
-exp = FineFrequency([qubit], sx_duration, backend)
-exp.set_transpile_options(inst_map=inst_map)
-exp.set_run_options(shots=1000, seed_simulator=175)
-exp_data = exp.run().block_for_results()
-
 d_theta = exp_data.analysis_results(1).value.n
-print(d_theta)
-d_freq = d_theta / (2*np.pi*sx_duration*exp_helper_dt)
-print(d_freq)
+print(f"d_theta : {d_theta}")
+dt = backend.dt
+print(f"dt :{dt}")
+d_freq = d_theta / (2 * np.pi * exp.experiment_options.delay_duration * dt)
+print(f"d_freq : {d_freq}")
 
 exp_data.figure(0)
 ```
 
-1.7040192705815202e-05
 
-12.712962669546187
+d_theta : 0.004578346234158528
+
+dt :5e-10
+
+d_freq : 4554.165214703087
 
 
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/96ebdd1b-8ca3-4424-a0ef-8a353affa215)
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/2c9515d0-4bda-4950-9d92-6fc38e196ca9)
 
 
 
