@@ -394,7 +394,7 @@
 
             exp_data = exp.run().block_for_results()
             exp_data.figure(0)
-    ```
+```
 
 ### RamseyXY
 ```
