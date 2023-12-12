@@ -115,7 +115,64 @@ exp_data.figure(0)
 
 ### EchoedCRH
 ```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
 
+# backend ibm-kyoto
+from qiskit_ibm_provider import IBMProvider
+
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
+
+# ..jupyter-execute::
+
+from qiskit_experiments.library.characterization import EchoedCrossResonanceHamiltonian
+
+qubits=(17, 30)
+exp=EchoedCrossResonanceHamiltonian(physical_qubits=qubits, backend=backend)
+
+exp.set_experiment_options(max_circuits=None, 
+                       flat_top_widths=None, 
+                       durations=None, 
+                       min_durations=1.0e-07, 
+                       max_durations=1.2e-06, 
+                       num_durations=48, 
+                       amp=0.2024212826036257, 
+                       amp_t=0.0, 
+                       sigma=30, 
+                       risefall=2)
+
+exp.set_run_options(shots=1000)
+
+step1=False # run carefully if your device is a real device!
+if step1==True:
+    
+    exp_data=exp.run().block_for_results()
+    result=exp_data.analysis_results()
+
+    for _ in result:
+        print(_)
+        
+    exp_data.figure(0)
+
+else:
+    pass 
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+# job_ids= ["cnw40cswsx00008zawy0"] # case : shots=100
+
+job_ids= ["cnwbhqe5vh500087x5fg"] # case : shots=1000
+exp_data = ExperimentData(experiment=exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+exp_data.block_for_results()
+result=exp_data.analysis_results()
+
+exp_data.figure(0)
 ```
 
 ### RoughDrag
