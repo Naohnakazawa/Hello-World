@@ -140,18 +140,24 @@ backend = provider.get_backend("ibm_brisbane")
 
 # ..jupyter-execute::
 
-# mwc
+import pandas as pd
+
 from qiskit_experiments.library import FineFrequencyCal
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
 from qiskit_experiments.calibration_management import Calibrations
 
 qubit=13
+
 cals=Calibrations.from_backend(backend, libraries=[FixedFrequencyTransmon()])
-freq_before=cals.get_parameter_value("drive_freq", qubit) 
 exp_cal = FineFrequencyCal((qubit,), cals, backend)
 exp_cal.set_run_options(shots=1000)
 print(exp_cal.circuits()[0])
 print(exp_cal.circuits()[39])
+
+columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
+print()
+print("parameters before calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()]))[columns_to_show])
 
 step1=False
 if step1==True:
@@ -175,24 +181,47 @@ exp_cal.analysis.run(cal_data)
 cal_data.block_for_results()
 cal_result=cal_data.analysis_results()
 
-freq_after=cals.get_parameter_value("drive_freq", qubit)
-print(f" The frequency is {freq_before} Hz before the calibration.")
-print(f" The calibrated frequency is {freq_after} Hz.")
+print()
+print("parameters after calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()]))[columns_to_show])
 
 cal_data.figure(0)
 ```
 
-The frequency is 5005804850.423292 Hz before the calibration.
-
-The calibrated frequency is 5005796943.727423 Hz.
 
 
+parameters before calibration
+    parameter qubits schedule         value                        date_time
+0           β     ()       sx  0.000000e+00  2023-12-13 00:14:28.915828+0900
+1           β     ()        x  0.000000e+00  2023-12-13 00:14:28.915797+0900
+2  drive_freq  (13,)     None  5.005809e+09  2023-12-13 00:14:30.371949+0900
+3           σ     ()        x  4.000000e+01  2023-12-13 00:14:28.915806+0900
+4           σ     ()       sx  4.000000e+01  2023-12-13 00:14:28.915836+0900
+5         amp     ()       sx  2.500000e-01  2023-12-13 00:14:28.915813+0900
+6         amp     ()        x  5.000000e-01  2023-12-13 00:14:28.915752+0900
+7    duration     ()        x  1.600000e+02  2023-12-13 00:14:28.915787+0900
+8    duration     ()       sx  1.600000e+02  2023-12-13 00:14:28.915821+0900
+9   meas_freq  (13,)     None  7.169739e+09  2023-12-13 00:14:32.215174+0900
+
+parameters after calibration
+    parameter qubits schedule         value                        date_time
+0           β     ()       sx  0.000000e+00  2023-12-13 00:14:28.915828+0900
+1           β     ()        x  0.000000e+00  2023-12-13 00:14:28.915797+0900
+2  drive_freq  (13,)     None  5.005801e+09  2023-12-13 00:14:39.000361+0900
+3           σ     ()        x  4.000000e+01  2023-12-13 00:14:28.915806+0900
+4           σ     ()       sx  4.000000e+01  2023-12-13 00:14:28.915836+0900
+5         amp     ()       sx  2.500000e-01  2023-12-13 00:14:28.915813+0900
+6         amp     ()        x  5.000000e-01  2023-12-13 00:14:28.915752+0900
+7    duration     ()        x  1.600000e+02  2023-12-13 00:14:28.915787+0900
+8    duration     ()       sx  1.600000e+02  2023-12-13 00:14:28.915821+0900
+9   meas_freq  (13,)     None  7.169739e+09  2023-12-13 00:14:32.215174+0900
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/674b2d83-ab09-4a99-843a-3e50d6ffc6c7)
+
 
  
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/8a92aee2-a7f9-4220-a679-3418778fe641)
 
 
 
