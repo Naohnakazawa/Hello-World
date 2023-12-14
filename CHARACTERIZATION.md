@@ -277,8 +277,8 @@
 ### FineFrequency
 ```
     # section: example
-        # ..jupyter-execute::
-            # :hide-code:
+        ..jupyter-execute::
+            :hide-code:
 
             # backend ibm_kyoto
             from qiskit_ibm_provider import IBMProvider
@@ -286,7 +286,7 @@
             provider = IBMProvider(instance=INSTANCE)
             backend = provider.get_backend("ibm_kyoto")
 
-        # ..jupyter-execute::
+        ..jupyter-execute::
 
             from qiskit_experiments.library.characterization import FineFrequency
 
@@ -305,7 +305,7 @@
                 result = exp_data.analysis_results()    
                 for _ in result:
                     print(_)
-    
+
                 exp_data.figure(0)
 
             else:
