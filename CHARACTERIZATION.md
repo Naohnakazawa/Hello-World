@@ -38,7 +38,6 @@
             else:
                 pass
 
-            # retrieve your jobs
             from qiskit_experiments.framework import ExperimentData
 
             jobs_ids=["cnqtqxfgsbh0008svbcg"] # list of job IDs for the experiment
