@@ -207,10 +207,87 @@ No documentation has been created.
    for dependencies required for running tests and building documentation.
 
 
+### an example of workflow ( from github.com/Qiskit-Extensions/qiskit-experiments )
+```
+name: Cron-staging
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
 
-
-
-
+jobs:
+  qiskit-main-tests:
+    name: tests-python${{ matrix.python-version }}-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: [3.8, "3.11"]
+        os: ["ubuntu-latest", "macOS-latest", "windows-latest"]
+    steps:
+      - name: Print Concurrency Group
+        env:
+          CONCURRENCY_GROUP: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}
+        run: |
+          echo -e "\033[31;1;4mConcurrency Group\033[0m"
+          echo -e "$CONCURRENCY_GROUP\n"
+        shell: bash
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Pip cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ matrix.python-version }}-pip-tests-${{ hashFiles('setup.py','requirements.txt','requirements-extras.txt','requirements-dev.txt','constraints.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.python-version }}-pip-tests-
+            ${{ runner.os }}-${{ matrix.python-version }}-pip-
+            ${{ runner.os }}-${{ matrix.python-version }}
+      - name: Install Deps
+        run: python -m pip install -U tox setuptools virtualenv wheel
+      - name: Install and Run Tests (Windows and Linux)
+        run: tox -e qiskit-main
+        if: runner.os != 'macOS'
+      - name: Install and Run Tests (Macs only)
+        run: tox -e qiskit-main
+        if: runner.os == 'macOS'
+        env:
+          TEST_TIMEOUT: 120
+          OMP_NUM_THREADS: 1
+  docs:
+    name: docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Pip cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-docs-${{ hashFiles('setup.py','requirements.txt','requirements-extras.txt','requirements-dev.txt','constraints.txt') }}
+      - name: Install Deps
+        run: |
+          python -m pip install -U tox
+          sudo apt-get install -y pandoc graphviz
+      - name: Build Docs
+        run: tox -edocs-qiskit-main
+      - name: Compress Artifacts
+        run: |
+          mkdir artifacts
+          tar -Jcvf html_docs.tar.xz docs/_build/html
+          mv html_docs.tar.xz artifacts/.
+      - uses: actions/upload-artifact@v3
+        with:
+          name: html_docs
+          path: artifacts
+```
 
 
 
