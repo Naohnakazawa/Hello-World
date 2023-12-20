@@ -63,9 +63,9 @@
             backend = provider.get_backend("ibm_kyoto")
 
         ..jupyter-execute::
-    
+
             from qiskit_experiments.library.characterization import CrossResonanceHamiltonian
-    
+
             qubits=(17, 30)
             exp=CrossResonanceHamiltonian(physical_qubits=qubits, backend=backend)
 
@@ -90,9 +90,9 @@
 
                 for _ in result:
                     print(_)
-            
+
                 exp_data.figure(0)
-    
+
             else:
                 pass
 
