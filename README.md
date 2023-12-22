@@ -144,13 +144,6 @@ features:
    code formatting check) you can use `tox -eblack` to automatically
    fix update the code formatting.
 
-tox -epy310                      : well-done
-
-tox -epy38                       : well-done
-
-tox -elint & tox -eblack         : well-done
-
-tox -e docs                      : Tere are some issues.
 
 2. The documentation has been updated accordingly. In particular, if a
    function or class has been modified during the PR, please update the
@@ -182,30 +175,34 @@ When submitting a pull request for review, please ensure that:
 tox -epy310                      : well-done
 
 tox -elint & tox -eblack         : well-done
-.
-tox -e docs                      : Tere are some issues.
+
+tox -e docs                      : Tere are some issues. This must be fiexd.
 
 2. The API documentation has been updated accordingly.
 
-No documentation has been created.
+No documentation has been created. This must be fixed.
 
 3. You have updated the relevant documentation or written new docs. In case the PR needs
    to be merged without delay (e.g. for a high priority fix), open an issue for updating
    or adding the documentation later.
 
-No documentation has been created.
+No documentation has been created. This must be fixed.
 
 4. You've added tests that cover the changes you've made, if relevant.
+
+I've not added any tests. This my be no problem.
 
 5. If your change has an end user facing impact (new feature, deprecation, removal,
    etc.), you've added or updated a reno release note for that change and tagged the PR
    for the changelog.
+
+I've not added any reno release notes. This may be noo problem
 
 6. If your code requires a change to dependencies, you've updated the corresponding
    requirements file: `requirements.txt` contain core dependencies,
    `requirements-extras.txt` for dependencies for optional features, and `requirements-dev.txt`
    for dependencies required for running tests and building documentation.
 
-
+My code does not require any changes to dependencies. This may be no problem.
 
 
