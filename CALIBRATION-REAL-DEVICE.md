@@ -560,4 +560,136 @@ parameters after the calibration
 
 
 
+### FineAmplitudeCal
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm_kyoto
+from qiskit_ibm_provider import IBMProvider
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
+
+# ..jupyter-execute::
+
+import pandas as pd
+import numpy as np
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.library.calibration.fine_amplitude import FineXAmplitudeCal
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+
+qubit=13
+cals=Calibrations.from_backend(backend=backend, libraries=[FixedFrequencyTransmon()])
+exp_cal = FineXAmplitudeCal(physical_qubits=(qubit,),
+                            calibrations=cals, 
+                            schedule_name="x",                            
+                            backend=backend,
+                            cal_parameter_name="amp", 
+                            auto_update=True
+                           )
+exp_cal.set_run_options(shots=1000)
+
+columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
+print("parameters before the calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp")))[columns_to_show])
+
+step1=False # run carefully if your device is a real one!
+if step1==True:
+    
+    cal_data = exp_cal.run()
+    cal_result=cal_data.analysis_results()
+    
+    for _ in cal_result:
+        print(_)
+        
+    cal_data.figure(0)
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+job_ids=["cnsc4xvvn4c0008a1n50"] # list of job IDs for the experiment
+cal_data = ExperimentData(experiment=exp_cal)
+cal_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp_cal.analysis.run(cal_data)
+cal_data.block_for_results()
+cal_result=cal_data.analysis_results()
+for _ in cal_result:
+    print(_)
+    
+print("parameters after the calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp")))[columns_to_show])
+
+cal_data.figure(0)
+```
+
+
+parameters before the calibration
+
+  parameter qubits schedule  value                        date_time
+0       amp     ()        x   0.50  2023-12-26 23:50:02.822145+0900
+1       amp     ()       sx   0.25  2023-12-26 23:50:02.822189+0900
+
+
+AnalysisResult
+- name: @Parameters_FineAmplitudeAnalysis
+- value: CurveFitResult:
+ - fitting method: least_squares
+ - number of sub-models: 2
+  * F_spam cal.(x) = amp / 2 * (2 * x - 1) + base
+  * F_fine amp.(x) = amp / 2 * cos((d_theta + angle_per_gate) * x - phase_offset)...
+ - success: True
+ - number of function evals: 28
+ - degree of freedom: 13
+ - chi-square: 1056.224319423245
+ - reduced chi-square: 81.24802457101886
+ - Akaike info crit.: 73.03787429062339
+ - Bayesian info crit.: 75.35564045734273
+ - init params:
+  * amp = 0.983016983016983
+  * base = 0.49800199800199796
+  * d_theta = -1.2566370614359172
+  * angle_per_gate = 3.141592653589793
+  * phase_offset = 1.5707963267948966
+ - fit params:
+  * amp = 1.0171024007384146 ± 0.0034148190529203213
+  * base = 0.516333432702224 ± 0.001676774644105911
+  * d_theta = -1.0511396877988275 ± 0.0010644728174618453
+  * angle_per_gate = 3.141592653589793 ± 0.0
+  * phase_offset = 1.5707963267948966 ± 0.0
+ - correlations:
+  * (amp, d_theta) = 0.10381524080319095
+  * (amp, base) = 0.11034849064113972
+  * (base, d_theta) = 0.4044364160621178
+- quality: bad
+- device_components: ['Q13']
+- verified: False
+AnalysisResult
+- name: d_theta
+- value: -1.0511+/-0.0011
+- χ²: 81.24802457101886
+- quality: bad
+- device_components: ['Q13']
+- verified: False
+
+
+parameters after the calibration
+
+  parameter qubits schedule     value                        date_time
+0       amp  (13,)        x  0.751414  2023-12-26 23:50:17.413272+0900
+1       amp     ()        x  0.500000  2023-12-26 23:50:02.822145+0900
+2       amp     ()       sx  0.250000  2023-12-26 23:50:02.822189+0900
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/3850c6ca-8228-42cb-a4c0-faf753751374)
+
+
+
 
