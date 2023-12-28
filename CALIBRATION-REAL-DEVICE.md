@@ -697,7 +697,7 @@ parameters after the calibration
 
 
 
-### RoughAmplitudeCal
+### RoughXSXAmplitudeCal
 ```
 # section: example
 # ..jupyter-execute::
@@ -817,7 +817,7 @@ AnalysisResult
 parameters after the calibration
 
   parameter qubits schedule               value  \
-0       amp  (13,)       sx  0.037724+0.000000j   
+0       amp  (13,)       sx  0.037724+0.000000j                                      
 1       amp     ()       sx  0.250000+0.000000j   
 2       amp     ()        x  0.500000+0.000000j   
 3       amp  (13,)        x  0.075448+0.000000j   
