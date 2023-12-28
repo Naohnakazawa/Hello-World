@@ -560,7 +560,7 @@ parameters after the calibration
 
 
 
-### FineAmplitudeCal
+### FineXAmplitudeCal
 ```
 # section: example
 # ..jupyter-execute::
@@ -689,6 +689,147 @@ parameters after the calibration
 
 
 ![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/3850c6ca-8228-42cb-a4c0-faf753751374)
+
+
+
+
+
+
+
+
+### RoughAmplitudeCal
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm_kyoto
+from qiskit_ibm_provider import IBMProvider
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
+
+# ..jupyter-execute::
+
+import pandas as pd
+import numpy as np
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.library.calibration import RoughXSXAmplitudeCal
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+
+qubit = 13
+library = FixedFrequencyTransmon(default_values={"duration": 320})
+cals = Calibrations.from_backend(backend, libraries=[library])
+exp_cal = RoughXSXAmplitudeCal((qubit,), cals, backend=backend, amplitudes=np.linspace(-0.1, 0.1, 21))
+exp_cal.set_run_options(shots=1000)
+print(exp_cal.circuits()[0])
+
+columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
+print("parameters before the calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp")))[columns_to_show])
+
+step1=False # run carefully if your device is a real one!
+if step1==True:
+    
+    cal_data = exp_cal.run()
+    cal_result=cal_data.analysis_results()
+    
+    for _ in cal_result:
+        print(_)
+        
+    cal_data.figure(0)
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+job_ids=["cp5kxzqja3gg008hd8eg"] # list of job IDs for the experiment
+cal_data = ExperimentData(experiment=exp_cal)
+cal_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp_cal.analysis.run(cal_data)
+cal_data.block_for_results()
+cal_result=cal_data.analysis_results()
+for _ in cal_result:
+    print(_)
+
+print("parameters after the calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp")))[columns_to_show])
+
+cal_data.figure(0)
+```
+
+
+           ┌────────────┐ ░ ┌─┐
+        q: ┤ Rabi(-0.1) ├─░─┤M├
+           └────────────┘ ░ └╥┘
+measure: 1/══════════════════╩═
+                             0 
+
+
+parameters before the calibration
+
+  parameter qubits schedule  value                        date_time
+0       amp     ()       sx   0.25  2023-12-28 17:14:59.943711+0900
+1       amp     ()        x   0.50  2023-12-28 17:14:59.943667+0900
+AnalysisResult
+- name: @Parameters_OscillationAnalysis
+- value: CurveFitResult:
+ - fitting method: least_squares
+ - number of sub-models: 1
+  * F_cos(x) = amp * cos(2 * pi * freq * x + phase) + base
+ - success: True
+ - number of function evals: 72
+ - degree of freedom: 17
+ - chi-square: 28.278897321643
+ - reduced chi-square: 1.6634645483319412
+ - Akaike info crit.: 14.249461632877885
+ - Bayesian info crit.: 18.427551383771576
+ - init params:
+  * amp = 0.5211417505095016
+  * freq = 3.353174795467746
+  * phase = 0.7853981633974483
+  * base = 0.5211417505095016
+ - fit params:
+  * amp = -0.4997504329261023 ± 0.002134950319282326
+  * freq = 6.62707661336081 ± 0.021586905025742495
+  * phase = -0.00435602718165161 ± 0.008205472513654088
+  * base = 0.5045734455678135 ± 0.0018974366818668503
+ - correlations:
+  * (amp, freq) = -0.10625458600228559
+  * (freq, base) = -0.04159244048782998
+  * (amp, phase) = 0.0016549176691514887
+  * (phase, base) = 0.01206247253143645
+  * (freq, phase) = 0.016356077932642658
+  * (amp, base) = 0.2316548506103041
+- quality: good
+- device_components: ['Q13']
+- verified: False
+AnalysisResult
+- name: rabi_rate
+- value: 6.627+/-0.022
+- χ²: 1.6634645483319412
+- quality: good
+- device_components: ['Q13']
+- verified: False
+
+parameters after the calibration
+
+  parameter qubits schedule               value  \
+0       amp  (13,)       sx  0.037724+0.000000j   
+1       amp     ()       sx  0.250000+0.000000j   
+2       amp     ()        x  0.500000+0.000000j   
+3       amp  (13,)        x  0.075448+0.000000j   
+
+                         date_time  
+0  2023-12-28 17:15:12.459711+0900  
+1  2023-12-28 17:14:59.943711+0900  
+2  2023-12-28 17:14:59.943667+0900  
+3  2023-12-28 17:15:12.455329+0900  
+
+
+
 
 
 
