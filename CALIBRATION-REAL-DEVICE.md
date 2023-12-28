@@ -271,6 +271,142 @@ AnalysisResult
 
 
 
+
+
+### FrequencyCal
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm_kyoto
+from qiskit_ibm_provider import IBMProvider
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
+
+# ..jupyter-execute::
+
+import numpy as np
+import pandas as pd
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+from qiskit_experiments.library.calibration.frequency_cal import FrequencyCal
+
+qubit = 13
+cals = Calibrations.from_backend(backend, libraries=[FixedFrequencyTransmon()])
+exp_cal = FrequencyCal((qubit,), cals, backend=backend) 
+exp_cal.set_run_options(shots=100)
+
+columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
+print()
+print("parameters before calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("drive_freq", "meas_freq")))[columns_to_show])
+
+step1=False # run carefully if your device is a real one!
+if step1==True:
+    
+    cal_data = exp_cal.run()
+    cal_result=cal_data.analysis_results()
+    
+    for _ in cal_result:
+        print(_)
+        
+    cal_data.figure(0)
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+job_ids=["cns2y388ybr000840hn0"] # list of job IDs for the experiment
+cal_data = ExperimentData(experiment=exp_cal)
+cal_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp_cal.analysis.run(cal_data)
+cal_data.block_for_results()
+cal_result=cal_data.analysis_results()
+for _ in cal_result:
+    print(_)
+
+print()
+print("parameters after calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("drive_freq", "meas_freq")))[columns_to_show])    
+
+cal_data.figure(0)
+```
+
+
+parameters before calibration
+    parameter qubits schedule         value                        date_time
+0   meas_freq  (13,)     None  7.165973e+09  2023-12-29 00:15:06.009696+0900
+1  drive_freq  (13,)     None  4.859095e+09  2023-12-29 00:15:04.262813+0900
+
+AnalysisResult
+- name: @Parameters_RamseyXYAnalysis
+- value: CurveFitResult:
+ - fitting method: least_squares
+ - number of sub-models: 2
+  * F_X(x) = amp * exp(-x / tau) * cos(2 * pi * freq * x + phase) + base
+  * F_Y(x) = amp * exp(-x / tau) * sin(2 * pi * freq * x + phase) + base
+ - success: True
+ - number of function evals: 27
+ - degree of freedom: 97
+ - chi-square: 150.10989390850003
+ - reduced chi-square: 1.5475246794690725
+ - Akaike info crit.: 49.41227354017706
+ - Bayesian info crit.: 62.537137606598414
+ - init params:
+  * amp = 0.4059405940594059
+  * tau = 0.0010000000000000002
+  * freq = 1960784.3137254904
+  * phase = 0.0
+  * base = 0.38366336633663367
+ - fit params:
+  * amp = 0.38120139310658413 ± 0.005808925531378734
+  * tau = 0.0075988846270809264 ± 1.262857842909382
+  * freq = 1995564.5427915107 ± 7363.442630718354
+  * phase = 0.043534451385241174 ± 0.029472605277480895
+  * base = 0.37964857880254077 ± 0.0037111512977175253
+ - correlations:
+  * (freq, phase) = -0.8962682182898403
+  * (amp, tau) = -0.7250179819002514
+  * (freq, base) = -0.13646702871435018
+  * (amp, freq) = -0.05765332698103622
+  * (tau, freq) = -0.027607586325887307
+  * (tau, phase) = 0.02406363438029224
+  * (amp, phase) = 0.050523233569060196
+  * (phase, base) = 0.12011648341450737
+  * (tau, base) = 0.13776579053819651
+  * (amp, base) = 0.47251063956132994
+- quality: good
+- device_components: ['Q13']
+- verified: False
+AnalysisResult
+- name: freq
+- value: (1.996+/-0.007)e+06
+- χ²: 1.5475246794690725
+- quality: good
+- device_components: ['Q13']
+- verified: False
+
+
+parameters after calibration
+    parameter qubits schedule         value                        date_time
+0   meas_freq  (13,)     None  7.165973e+09  2023-12-29 00:15:06.009696+0900
+1  drive_freq  (13,)     None  4.859091e+09  2023-12-29 00:15:12.562919+0900
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/b1c086b4-506b-4697-bf22-bfd56ae86df2)
+
+
+
+
+
+
+
 ### RoughDragCal
 ```
 # section: example
