@@ -966,6 +966,174 @@ parameters after the calibration
 
 
 
+### HalfAngleCal
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm_kyoto
+from qiskit_ibm_provider import IBMProvider
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_kyoto")
+
+# ..jupyter-execute::
+
+import pandas as pd
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+from qiskit_experiments.library.calibration.half_angle_cal import HalfAngleCal
+
+qubit = 10
+library = FixedFrequencyTransmon()
+cals = Calibrations.from_backend(backend, libraries=[library])
+exp_cal = HalfAngleCal([qubit], cals, backend=backend)
+
+columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
+print()
+print("parameters before calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()]))[columns_to_show])
+
+step1=False
+if step1==True:
+    cal_data = exp_cal.run().block_for_results()
+    cal_result = cal_data.analysis_results()    
+    for _ in cal_result:
+        print(_)
+
+    cal_data.figure(0)
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+# job_ids=["cp6yka5ja3gg0080c6g0"] # case : shots=1000
+# job_ids=["cp70pd1prheg008rax10"] # case : shots=10000
+
+job_ids=["cp70t202zy6g008ned20"]
+cal_data = ExperimentData(experiment=exp_cal)
+cal_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp_cal.analysis.run(cal_data)
+cal_data.block_for_results()
+cal_result=cal_data.analysis_results()
+for _ in cal_result:
+    print(_)
+
+print()
+print("parameters after calibration")
+print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()]))[columns_to_show])
+
+cal_data.figure(0)
+```
+
+
+parameters before calibration
+
+    parameter qubits schedule         value                        date_time
+0    duration     ()       sx  1.600000e+02  2023-12-29 09:46:16.930348+0900
+1           β     ()        x  0.000000e+00  2023-12-29 09:46:16.930273+0900
+2           σ     ()        x  4.000000e+01  2023-12-29 09:46:16.930323+0900
+3    duration     ()        x  1.600000e+02  2023-12-29 09:46:16.930312+0900
+4   meas_freq  (10,)     None  7.230911e+09  2023-12-29 09:46:20.970059+0900
+5  drive_freq  (10,)     None  4.838627e+09  2023-12-29 09:46:18.789094+0900
+6         amp     ()       sx  2.500000e-01  2023-12-29 09:46:16.930356+0900
+7         amp     ()        x  5.000000e-01  2023-12-29 09:46:16.930331+0900
+8           σ     ()       sx  4.000000e+01  2023-12-29 09:46:16.930364+0900
+9           β     ()       sx  0.000000e+00  2023-12-29 09:46:16.930340+0900
+AnalysisResult
+- name: @Parameters_ErrorAmplificationAnalysis
+- value: CurveFitResult:
+ - fitting method: least_squares
+ - number of sub-models: 1
+  * F_ping_pong(x) = amp / 2 * cos((d_theta + angle_per_gate) * x - phase_offset)...
+ - success: True
+ - number of function evals: 15
+ - degree of freedom: 13
+ - chi-square: 21355.906671146313
+ - reduced chi-square: 1642.7620516266395
+ - Akaike info crit.: 112.91550157542373
+ - Bayesian info crit.: 114.33160197762815
+ - init params:
+  * amp = 1.0
+  * d_theta = 0.0320660241668141
+  * angle_per_gate = 3.141592653589793
+  * phase_offset = -1.5707963267948966
+  * base = 0.5097490250974903
+ - fit params:
+  * amp = 1.0 ± 0.0
+  * d_theta = -0.01113283100786067 ± 0.0002945890914688818
+  * angle_per_gate = 3.141592653589793 ± 0.0
+  * phase_offset = -1.5707963267948966 ± 0.0
+  * base = 0.5118581277740597 ± 0.0012041457396953293
+ - correlations:
+  * (d_theta, base) = 0.0570918819337092
+- quality: bad
+- device_components: ['Q10']
+- verified: False
+AnalysisResult
+- name: d_hac
+- value: -0.01113+/-0.00029
+- χ²: 1642.7620516266395
+- quality: bad
+- extra: <1 items>
+- device_components: ['Q10']
+- verified: False
+
+parameters after calibration
+
+     parameter qubits schedule  \
+0     duration     ()       sx   
+1            β     ()        x   
+2            σ     ()        x   
+3     duration     ()        x   
+4    meas_freq  (10,)     None   
+5          amp  (10,)       sx   
+6   drive_freq  (10,)     None   
+7          amp     ()       sx   
+8          amp     ()        x   
+9            σ     ()       sx   
+10           β     ()       sx   
+
+                                             value  \
+0   1.600000e+02+0.000000e+                    00j   
+1   0.000000e+00+0.000000e+                    00j   
+2   4.000000e+01+0.000000e+                    00j   
+3   1.600000e+02+0.000000e+                    00j   
+4   7.230911e+09+0.000000e+                    00j   
+5   2.499961e-01+1.391597e-                    03j   
+6   4.838627e+09+0.000000e+                    00j   
+7   2.500000e-01+0.000000e+                    00j   
+8   5.000000e-01+0.000000e+                    00j   
+9   4.000000e+01+0.000000e+                    00j   
+10  0.000000e+00+0.000000e+                    00j   
+
+                          date_time  
+0   2023-12-29 09:46:16.930348+0900  
+1   2023-12-29 09:46:16.930273+0900  
+2   2023-12-29 09:46:16.930323+0900  
+3   2023-12-29 09:46:16.930312+0900  
+4   2023-12-29 09:46:20.970059+0900  
+5   2023-12-29 09:46:27.120230+0900  
+6   2023-12-29 09:46:18.789094+0900  
+7   2023-12-29 09:46:16.930356+0900  
+8   2023-12-29 09:46:16.930331+0900  
+9   2023-12-29 09:46:16.930364+0900  
+10  2023-12-29 09:46:16.930340+0900  
+
+
+
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/25843c14-63e1-4d30-ad50-b3de8d6765a3)
+
+
 
 
 
