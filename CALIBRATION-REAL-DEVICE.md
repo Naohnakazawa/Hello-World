@@ -989,6 +989,8 @@ qubit = 10
 library = FixedFrequencyTransmon()
 cals = Calibrations.from_backend(backend, libraries=[library])
 exp_cal = HalfAngleCal([qubit], cals, backend=backend)
+exp_cal.set_run_options(shots=10000)
+print(exp_cal.circuits()[3])
 
 columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
 print()
