@@ -951,13 +951,11 @@ AnalysisResult
 - verified: False
 
 parameters after the calibration
-
   parameter qubits schedule               value  \
 0       amp  (13,)       sx  0.037724+0.000000j                                      
 1       amp     ()       sx  0.250000+0.000000j   
 2       amp     ()        x  0.500000+0.000000j   
 3       amp  (13,)        x  0.075448+0.000000j   
-
                          date_time  
 0  2023-12-28 17:15:12.459711+0900  
 1  2023-12-28 17:14:59.943711+0900  
@@ -1033,7 +1031,6 @@ cal_data.figure(0)
 
 
 parameters before calibration
-
     parameter qubits schedule         value                        date_time
 0    duration     ()       sx  1.600000e+02  2023-12-29 09:46:16.930348+0900
 1           β     ()        x  0.000000e+00  2023-12-29 09:46:16.930273+0900
@@ -1085,7 +1082,6 @@ AnalysisResult
 - verified: False
 
 parameters after calibration
-
      parameter qubits schedule  \
 0     duration     ()       sx   
 1            β     ()        x   
@@ -1098,7 +1094,6 @@ parameters after calibration
 8          amp     ()        x   
 9            σ     ()       sx   
 10           β     ()       sx   
-
                                              value  \
 0   1.600000e+02+0.000000e+                    00j   
 1   0.000000e+00+0.000000e+                    00j   
@@ -1111,7 +1106,6 @@ parameters after calibration
 8   5.000000e-01+0.000000e+                    00j   
 9   4.000000e+01+0.000000e+                    00j   
 10  0.000000e+00+0.000000e+                    00j   
-
                           date_time  
 0   2023-12-29 09:46:16.930348+0900  
 1   2023-12-29 09:46:16.930273+0900  
