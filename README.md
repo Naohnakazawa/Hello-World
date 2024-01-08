@@ -196,7 +196,7 @@ I've not added any tests. This may be no problem.
    etc.), you've added or updated a reno release note for that change and tagged the PR
    for the changelog.
 
-I've not added any reno release notes. This may be noo problem
+I've not added any reno release notes. This may be no problem
 
 6. If your code requires a change to dependencies, you've updated the corresponding
    requirements file: `requirements.txt` contain core dependencies,
