@@ -190,7 +190,7 @@ No documentation has been created. This must be fixed.
 
 4. You've added tests that cover the changes you've made, if relevant.
 
-I've not added any tests. This my be no problem.
+I've not added any tests. This may be no problem.
 
 5. If your change has an end user facing impact (new feature, deprecation, removal,
    etc.), you've added or updated a reno release note for that change and tagged the PR
