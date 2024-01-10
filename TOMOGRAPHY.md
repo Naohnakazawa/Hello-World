@@ -3,6 +3,7 @@
 ### qst
 ```
 # backend 
+# with a noise model
 
 from qiskit_aer import AerSimulator
 from qiskit.providers.fake_provider import FakePerth
