@@ -89,6 +89,170 @@ plot_state_city(state_result.value, title="Density Matrix")
 
 
 
+
+### qst (on a real device)
+```
+# backend
+from qiskit_ibm_provider import IBMProvider
+provider = IBMProvider()
+backend = provider.get_backend("ibm_kyoto")
+
+# mwc
+from qiskit import QuantumCircuit
+from qiskit_experiments.library import StateTomography
+from qiskit.visualization import plot_state_city
+
+nq = 2
+qc_ghz = QuantumCircuit(nq)
+qc_ghz.h(0)
+qc_ghz.s(0)
+
+for i in range(1, nq):
+    qc_ghz.cx(0, i)
+
+qst_exp = StateTomography(circuit=qc_ghz, backend=backend, physical_qubits=(0, 1))
+qst_exp.set_transpile_options(optimization_level=3)
+qst_exp.set_run_options(shots=1000)
+print(qst_exp.circuits()[8])
+
+step1=False
+if step1==True:
+    qst_data = qst_exp.run().block_for_results()
+    state_result = qst_data.analysis_results("state")
+
+    for _ in state_result:
+        print(_)
+    
+    plot_state_city(state_result.value, title="Density Matrix")
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+job_ids=["cpfggn2yx18g008bnesg"] # list of job IDs for the experiment
+exp_data = ExperimentData(experiment=qst_exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+qst_exp.analysis.run(exp_data)
+exp_data.block_for_results()
+result=exp_data.analysis_results()
+for _ in result:
+    print(_)
+
+state_result=exp_data.analysis_results("state")
+plot_state_city(state_result.value, title="Density Matrix")
+```
+
+AnalysisResult
+- name: state_fidelity
+- value: 0.7825
+- device_components: ['Q0', 'Q1']
+- verified: False
+AnalysisResult
+- name: positive
+- value: True
+- device_components: ['Q0', 'Q1']
+- verified: False
+
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/0eb83737-d59d-4464-b717-f88ffc504847)
+
+
+
+
+
+
+
+### mit-qst (on a real device)
+```
+# backend
+from qiskit_ibm_provider import IBMProvider
+provider = IBMProvider()
+backend = provider.get_backend("ibm_kyoto")
+
+# mwc
+from qiskit import QuantumCircuit
+from qiskit_experiments.library import MitigatedStateTomography
+from qiskit.visualization import plot_state_city
+
+
+nq = 2
+qc_ghz = QuantumCircuit(nq)
+qc_ghz.h(0)
+qc_ghz.s(0)
+
+for i in range(1, nq):
+    qc_ghz.cx(0, i)
+
+mitqst_exp = MitigatedStateTomography(circuit=qc_ghz, backend=backend, physical_qubits=(41, 42))
+mitqst_exp.set_transpile_options(optimization_level=3)
+mitqst_exp.set_run_options(shots=1000)
+print(mitqst_exp.circuits()[10])
+
+step1=False
+if step1==True:
+    mitqst_data = mitqst_exp.run().block_for_results()
+    result = mitqst_data.analysis_results()
+
+    for _ in result:
+        print(_)
+    
+    state_result = mitqst_data.analysis_results("state")
+    plot_state_city(state_result.value, title="Density Matrix")
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+job_ids=["cpfkmpjyx18g008bnrm0"] # list of job IDs for the experiment
+exp_data = ExperimentData(experiment=mitqst_exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+mitqst_exp.analysis.run(exp_data)
+exp_data.block_for_results()
+result=exp_data.analysis_results()
+for _ in result:
+    print(_)
+
+state_result=exp_data.analysis_results("state")
+plot_state_city(state_result.value, title="Density Matrix")
+```
+
+
+AnalysisResult
+- name: state_fidelity
+- value: 0.9857157085469233
+- extra: <2 items>
+- device_components: ['Q41', 'Q42']
+- verified: False
+AnalysisResult
+- name: positive
+- value: True
+- extra: <2 items>
+- device_components: ['Q41', 'Q42']
+- verified: False
+
+
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/0c043097-8b2b-416f-820c-66b2f987287d)
+
+
+
+
+
+
 ### qpt
 ```
 # backend 
