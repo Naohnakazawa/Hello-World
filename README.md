@@ -133,6 +133,12 @@ prelude: >
     when read independently. This may mean repeating some details. Not every
     release note requires a prelude. Usually only notes describing major
     features or adding release theme details should have a prelude.
+
+    comment, minimal working code examples are added to the API pages for each 
+    experiment, especially in characterizaion experiments.  
+    
+    
+
 features:
   - |
     List new features here, or remove this section.  All of the list items in
@@ -140,6 +146,9 @@ features:
     needs to be worded so that it does not depend on any information only
     available in another section, such as the prelude. This may mean repeating
     some details.
+
+    comment, 
+
 issues:
   - |
     List known issues here, or remove this section.  All of the list items in
@@ -147,6 +156,9 @@ issues:
     needs to be worded so that it does not depend on any information only
     available in another section, such as the prelude. This may mean repeating
     some details.
+
+    comment, issues, #1238 and also #1224, are solved. 
+
 upgrade:
   - |
     List upgrade notes here, or remove this section.  All of the list items in
@@ -154,6 +166,9 @@ upgrade:
     needs to be worded so that it does not depend on any information only
     available in another section, such as the prelude. This may mean repeating
     some details.
+
+    None
+
 deprecations:
   - |
     List deprecations notes here, or remove this section.  All of the list
@@ -161,6 +176,9 @@ deprecations:
     the text needs to be worded so that it does not depend on any information
     only available in another section, such as the prelude. This may mean
     repeating some details.
+
+    None
+
 critical:
   - |
     Add critical notes here, or remove this section.  All of the list items in
@@ -168,6 +186,9 @@ critical:
     needs to be worded so that it does not depend on any information only
     available in another section, such as the prelude. This may mean repeating
     some details.
+
+    None
+
 security:
   - |
     Add security notes here, or remove this section.  All of the list items in
@@ -175,6 +196,9 @@ security:
     needs to be worded so that it does not depend on any information only
     available in another section, such as the prelude. This may mean repeating
     some details.
+
+    None
+
 fixes:
   - |
     Add normal bug fixes here, or remove this section.  All of the list items
@@ -182,6 +206,9 @@ fixes:
     text needs to be worded so that it does not depend on any information only
     available in another section, such as the prelude. This may mean repeating
     some details.
+
+    None
+
 developer:
   - |
     Add upgrade of protected-level API (e.g. hooks). All of the list items
@@ -189,6 +216,9 @@ developer:
     text needs to be worded so that it does not depend on any information only
     available in another section, such as the prelude. This may mean repeating
     some details.
+
+    None
+
 other:
   - |
     Add other notes here, or remove this section.  All of the list items in
@@ -197,6 +227,7 @@ other:
     available in another section, such as the prelude. This may mean repeating
     some details.
 
+    None
 
 ### Pull request checklist (for qiskit)
 
