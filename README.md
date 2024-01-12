@@ -33,39 +33,6 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 ### LocalReadoutError
 ```
-# backend 
-from qiskit_aer import AerSimulator
-from qiskit.providers.fake_provider import FakePerth
-
-backend = AerSimulator.from_backend(FakePerth())
-
-# mwc
-from qiskit_experiments.library import LocalReadoutError
-
-qubits = list(range(4))
-exp = LocalReadoutError(physical_qubits=qubits, backend=backend)
-exp.analysis.set_options(plot=True)
-exp.set_run_options(shots=10000)
-
-result = exp.run()
-mitigator = result.analysis_results(0).value
-
-result.figure(0)
-```
-
-
-
-
-
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/88e75bfd-6eab-4f18-b6b4-dd67df46036b)
-
-
-
-
-
-
-### CorrelatedReadoutError
-```
 # backend ibm_kyoto
 from qiskit_ibm_provider import IBMProvider
 
@@ -74,12 +41,12 @@ provider = IBMProvider(instance=INSTANCE)
 backend = provider.get_backend("ibm_kyoto")
 
 #mwc
-from qiskit_experiments.library import CorrelatedReadoutError
+from qiskit_experiments.library import LocalReadoutError
 
 qubits = [10,11,12]
 num_qubits = len(qubits)
-exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
-exp.set_run_options(shots=10000)
+exp = LocalReadoutError(physical_qubits=qubits, backend=backend)
+exp.set_run_options(shots=100)
 exp.analysis.set_options(plot=True)
 
 for c in exp.circuits():
@@ -101,8 +68,9 @@ else:
 
 # retrieve your jobs
 from qiskit_experiments.framework import ExperimentData 
+# job_ids=["cpgb4e9btqp0008tsp40"] # In case : shots=1000
 
-jobs_ids=["cnqvks7gsbh0008svjf0"] # list of job IDs for the experiment
+job_ids=["cpgdp28ja3gg00817x6g"] # list of job IDs for the experiment
 exp_data = ExperimentData(experiment=exp)
 exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
 exp.analysis.run(exp_data)
@@ -115,7 +83,67 @@ exp_data.figure(0)
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/0663868e-8bf9-49b1-b9af-b6296316ad9d)
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/bcba1d8f-01f6-4596-9937-3f9ead1703b6)
+
+
+
+
+
+
+
+### CorrelatedReadoutError
+```
+# backend ibm_brisbane
+from qiskit_ibm_provider import IBMProvider
+INSTANCE="ibm-q/open/main"
+provider = IBMProvider(instance=INSTANCE)
+backend = provider.get_backend("ibm_brisbane")
+
+# mwc
+from qiskit_experiments.library import CorrelatedReadoutError
+
+qubits = [10,11]
+num_qubits = len(qubits)
+exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
+exp.set_run_options(shots=100)
+exp.analysis.set_options(plot=True)
+for c in exp.circuits():
+    print(c)
+
+step1=False # run carefully if your device is a real one!
+if step1==True:
+    
+    exp_data = exp.run()
+    mitigator = exp_data.analysis_results(0).value
+    result=exp_data.analysis_results()
+    
+    for _ in result:
+        print(_)
+        
+    exp_data.figure(0)
+
+# retrieve your jobs
+from qiskit_experiments.framework import ExperimentData 
+
+job_ids= ["cpgdwf9mbjng008qsqt0"] # In case : backend=ibm_brisbane, shots=100, physical_qubits=(10, 11), date=20140112
+exp_data = ExperimentData(experiment=exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+exp_data.block_for_results()
+result=exp_data.analysis_results()
+
+exp_data.figure(0)
+```
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/706bd23c-9c81-4b0a-b0d4-20a4f5b1555b)
+
+
 
 
 
