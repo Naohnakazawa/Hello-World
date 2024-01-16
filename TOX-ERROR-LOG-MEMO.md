@@ -1,6 +1,6 @@
 ### Build Docs releasenotes/config.yaml is modified (Tests #11: Commit 2a3f59a pushed by Naohnakazawa)
 ### tox -elint
-
+```
 2024-01-12T15:50:36.9928744Z lint: commands[0]> black --check qiskit_experiments test tools setup.py
 2024-01-12T15:50:40.1442083Z All done! ✨ 🍰 ✨
 2024-01-12T15:50:40.1442905Z 262 files would be left unchanged.
@@ -29,14 +29,14 @@
 2024-01-12T15:52:01.1669739Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
 2024-01-12T15:52:01.1707655Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
 2024-01-12T15:52:01.2199921Z Cleaning up orphan processes
-
+```
 
 
 
 
 ### Build Docs releasenotes/config.yaml is modified (Tests #11: Commit 2a3f59a pushed by Naohnakazawa)
 ### tox -edocs-parallel 
-
+```
 2024-01-15T14:30:27.7427008Z scanning /home/runner/work/qiskit-experiments/qiskit-experiments/releasenotes/notes for current branch release notes
 2024-01-15T14:30:27.7496818Z 
 2024-01-15T14:30:27.7497224Z Traceback (most recent call last):
@@ -78,13 +78,13 @@
 2024-01-15T14:30:28.6295063Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
 2024-01-15T14:30:28.6335307Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
 2024-01-15T14:30:28.6813652Z Cleaning up orphan processes
-
+```
 
 
 
 ### tox (local, 20240116)
 ### tox -elint
-
+```
 (experiments-dev) nakazawa@nakazawa-macbook qiskit-experiments % tox -elint
 .pkg: _optional_hooks> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
 .pkg: get_requires_for_build_sdist> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
@@ -130,14 +130,13 @@ lint: exit 1 (18.79 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qisk
 .pkg: _exit> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
   lint: FAIL code 1 (115.13=setup[7.80]+cmd[1.27,87.27,18.79] seconds)
   evaluation failed :( (116.08 seconds)
-
+```
 
 
 
 ### tox (local, 20240116)
 ### tox -e docs
-
-
+```
 Traceback (most recent call last):
   File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/cmd/build.py", line 285, in build_main
     app.build(args.force_all, args.filenames)
@@ -196,7 +195,7 @@ docs: exit 2 (797.12 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qis
 .pkg: _exit> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
   docs: FAIL code 2 (819.89=setup[22.77]+cmd[797.12] seconds)
   evaluation failed :( (820.87 seconds)
-
+```
 
 
 
