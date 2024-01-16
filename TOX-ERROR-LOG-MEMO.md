@@ -134,4 +134,74 @@ lint: exit 1 (18.79 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qisk
 
 
 
+### tox (local, 20240116)
+### tox -e docs
+
+
+Traceback (most recent call last):
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/cmd/build.py", line 285, in build_main
+    app.build(args.force_all, args.filenames)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/application.py", line 353, in build
+    self.builder.build_update()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/builders/__init__.py", line 311, in build_update
+    self.build(to_build,
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/builders/__init__.py", line 328, in build
+    updated_docnames = set(self.read())
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/builders/__init__.py", line 435, in read
+    self._read_serial(docnames)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/builders/__init__.py", line 456, in _read_serial
+    self.read_doc(docname)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/builders/__init__.py", line 512, in read_doc
+    publisher.publish()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/core.py", line 224, in publish
+    self.document = self.reader.read(self.source, self.parser,
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/io.py", line 108, in read
+    self.parse()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/readers/__init__.py", line 76, in parse
+    self.parser.parse(self.input, document)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/sphinx/parsers.py", line 80, in parse
+    self.statemachine.run(inputlines, document, inliner=self.inliner)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/parsers/rst/states.py", line 169, in run
+    results = StateMachineWS.run(self, input_lines, input_offset,
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/statemachine.py", line 233, in run
+    context, next_state, result = self.check_line(
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/statemachine.py", line 445, in check_line
+    return method(match, context, next_state)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/parsers/rst/states.py", line 2355, in explicit_markup
+    nodelist, blank_finish = self.explicit_construct(match)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/parsers/rst/states.py", line 2367, in explicit_construct
+    return method(self, expmatch)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/parsers/rst/states.py", line 2104, in directive
+    return self.run_directive(
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/docutils/parsers/rst/states.py", line 2154, in run_directive
+    result = directive_instance.run()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/reno/sphinxext.py", line 114, in run
+    with loader.Loader(conf) as ldr:
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/reno/loader.py", line 62, in __init__
+    self._load_data()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/reno/loader.py", line 90, in _load_data
+    self._scanner_output = self._scanner.get_notes_by_version()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/reno/scanner.py", line 1003, in get_notes_by_version
+    raise ValueError(
+ValueError: earliest-version set to unknown revision '0.9.0'
+
+例外が発生しました
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/reno/scanner.py", line 1003, in get_notes_by_version
+    raise ValueError(
+ValueError: earliest-version set to unknown revision '0.9.0'
+完全なトレースバックを/var/folders/l3/kffgnfb96z110f1fb3bvlny00000gn/T/sphinx-err-vacwrs1k.logに保存しました。問題を開発者に報告するときに添付してください。
+次期バージョンでのエラーメッセージ改善のために、ユーザーエラーの場合にも報告してください。
+バグ報告はこちらにお願いします <https://github.com/sphinx-doc/sphinx/issues> 。ご協力ありがとうございます！
+docs: exit 2 (797.12 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments> sphinx-build -T -W --keep-going -b html docs/ docs/_build/html pid=2203
+.pkg: _exit> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+  docs: FAIL code 2 (819.89=setup[22.77]+cmd[797.12] seconds)
+  evaluation failed :( (820.87 seconds)
+
+
+
+
+
+
+
+
 
