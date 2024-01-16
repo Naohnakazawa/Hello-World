@@ -80,3 +80,58 @@
 2024-01-15T14:30:28.6813652Z Cleaning up orphan processes
 
 
+
+
+### tox (local, 20240116)
+### tox -elint
+
+(experiments-dev) nakazawa@nakazawa-macbook qiskit-experiments % tox -elint
+.pkg: _optional_hooks> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: get_requires_for_build_sdist> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: get_requires_for_build_editable> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: build_editable> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+lint: install_package> pip install -c/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/constraints.txt -U --force-reinstall --no-deps /Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.tox/.tmp/package/399/qiskit_experiments-0.6.0-0.editable-py3-none-any.whl
+lint: commands[0]> black --check qiskit_experiments test tools setup.py
+All done! ✨ 🍰 ✨
+262 files would be left unchanged.
+lint: commands[1]> pylint -rn --rcfile=/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/.pylintrc qiskit_experiments/ test/ tools/
+
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+
+lint: commands[2]> python /Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/tools/verify_headers.py
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/lib/python3.10/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/lib/python3.10/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/tools/verify_headers.py", line 63, in validate_header
+    lines = fd.readlines()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/lib/python3.10/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb3 in position 36: invalid start byte
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/tools/verify_headers.py", line 105, in <module>
+    main()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/tools/verify_headers.py", line 94, in main
+    res = pool.map(validate_header, files)
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/lib/python3.10/multiprocessing/pool.py", line 367, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+  File "/Users/nakazawa/anaconda3/envs/experiments-dev/lib/python3.10/multiprocessing/pool.py", line 774, in get
+    raise self._value
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb3 in position 36: invalid start byte
+lint: exit 1 (18.79 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments> python /Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/tools/verify_headers.py pid=1694
+.pkg: _exit> python /Users/nakazawa/.local/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+  lint: FAIL code 1 (115.13=setup[7.80]+cmd[1.27,87.27,18.79] seconds)
+  evaluation failed :( (116.08 seconds)
+
+
+
+
+
