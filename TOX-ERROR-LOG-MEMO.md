@@ -133,6 +133,11 @@ lint: exit 1 (18.79 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qisk
 chage the line 62 in File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/tools/verify_headers.py"
 (befre): with open(file_path, encoding="utf8") as fd:
 (after): with open(file_path, encoding="utf16") as fd:
+         with open(file_path, encoding="utf-16-le") as fd:
+         with open(file_path, encoding="utf-16-be") as fd:
+         with open(file_path, 'rb') as fd:
+
+Unfortunately, these do not work!
 ```
 
 
