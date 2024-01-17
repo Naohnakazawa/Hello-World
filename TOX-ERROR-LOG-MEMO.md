@@ -31,9 +31,6 @@
 2024-01-12T15:52:01.2199921Z Cleaning up orphan processes
 ```
 
-
-
-
 ### Build Docs releasenotes/config.yaml is modified (Tests #11: Commit 2a3f59a pushed by Naohnakazawa)
 ### tox -edocs-parallel 
 ```
@@ -131,7 +128,12 @@ lint: exit 1 (18.79 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qisk
   lint: FAIL code 1 (115.13=setup[7.80]+cmd[1.27,87.27,18.79] seconds)
   evaluation failed :( (116.08 seconds)
 ```
-
+### an alternative code sujested in Stack Overflow
+```
+chage the line 62 in File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/tools/verify_headers.py"
+(befre): with open(file_path, encoding="utf8") as fd:
+(after): with open(file_path, encoding="utf16") as fd:
+```
 
 
 ### tox (local, 20240116)
