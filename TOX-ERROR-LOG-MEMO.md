@@ -128,7 +128,7 @@ lint: exit 1 (18.79 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qisk
   lint: FAIL code 1 (115.13=setup[7.80]+cmd[1.27,87.27,18.79] seconds)
   evaluation failed :( (116.08 seconds)
 ```
-### an alternative code sujested in Stack Overflow
+### an alternative code suggested in Stack Overflow
 ```
 chage the line 62 in File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit-experiments/tools/verify_headers.py"
 (befre): with open(file_path, encoding="utf8") as fd:
