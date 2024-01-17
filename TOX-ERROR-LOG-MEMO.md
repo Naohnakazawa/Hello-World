@@ -137,7 +137,7 @@ chage the line 62 in File "/Users/nakazawa/anaconda3/envs/experiments-dev/qiskit
          with open(file_path, encoding="utf-16-be") as fd:
          with open(file_path, 'rb') as fd:
 
-Unfortunately, these do not work!
+Unfortunately, these do not work!　Do not change this line.
 ```
 
 
