@@ -205,6 +205,29 @@ docs: exit 2 (797.12 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qis
 ```
 
 
+### tox (local-imac-python3.8, 20240119 )
+### tox -elint
+```
+(experiments-dev8) nakazawanaohito@nakazawa-iMac qiskit-experiments % tox -elint
+.pkg: _optional_hooks> python /Users/nakazawanaohito/.local/lib/python3.8/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: get_requires_for_build_sdist> python /Users/nakazawanaohito/.local/lib/python3.8/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: get_requires_for_build_editable> python /Users/nakazawanaohito/.local/lib/python3.8/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: build_editable> python /Users/nakazawanaohito/.local/lib/python3.8/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+lint: install_package> pip install -c/Users/nakazawanaohito/anaconda3/envs/experiments-dev8/qiskit-experiments/constraints.txt -U --force-reinstall --no-deps /Users/nakazawanaohito/anaconda3/envs/experiments-dev8/qiskit-experiments/.tox/.tmp/package/14/qiskit_experiments-0.6.0-0.editable-py3-none-any.whl
+lint: commands[0]> black --check qiskit_experiments test tools setup.py
+All done! ✨ 🍰 ✨
+263 files would be left unchanged.
+lint: commands[1]> pylint -rn --rcfile=/Users/nakazawanaohito/anaconda3/envs/experiments-dev8/qiskit-experiments/.pylintrc qiskit_experiments/ test/ tools/
+
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+
+lint: commands[2]> python /Users/nakazawanaohito/anaconda3/envs/experiments-dev8/qiskit-experiments/tools/verify_headers.py
+.pkg: _exit> python /Users/nakazawanaohito/.local/lib/python3.8/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+  lint: OK (125.95=setup[10.97]+cmd[1.34,112.38,1.26] seconds)
+  congratulations :) (131.58 seconds)
+```
+
 
 
 
