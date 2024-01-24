@@ -260,7 +260,18 @@ Traceback (most recent call last):
 ValueError: earliest-version set to unknown revision '0.1.0'
 ```
 
+### git log (local-imac-oython3.8 20240124)
+### git log -1, git describe --tags <commit-id>
+```
+(experiments-dev8) nakazawanaohito@nakazawa-iMac qiskit-experiments % git log -1
+commit 881c069d9b794fb8c837dbe596008dfc1ffc536e (HEAD -> patch-T1)
+Author: 中澤 直仁 <nakazawanaohito@nakazawa-iMac.local>
+Date:   Wed Jan 24 16:06:22 2024 +0900
 
+    a code example is added to the API page of T1 experiment.
+(experiments-dev8) nakazawanaohito@nakazawa-iMac qiskit-experiments % git describe --tags 881c069d9b794fb8c837dbe596008dfc1ffc536e
+fatal: No names found, cannot describe anything.
+```
 
 
 
