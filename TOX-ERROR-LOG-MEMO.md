@@ -205,7 +205,7 @@ docs: exit 2 (797.12 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev/qis
 ```
 
 
-### tox (local-imac-python3.8, 20240119 )
+### tox (local-imac-python3.8, 20240119)
 ### tox -elint
 ```
 (experiments-dev8) nakazawanaohito@nakazawa-iMac qiskit-experiments % tox -elint
@@ -228,7 +228,37 @@ lint: commands[2]> python /Users/nakazawanaohito/anaconda3/envs/experiments-dev8
   congratulations :) (131.58 seconds)
 ```
 
-
+### reno (local-imac-python3.8 20240124)
+### reno report
+```
+(experiments-dev8) nakazawanaohito@nakazawa-iMac qiskit-experiments % git status
+On branch patch-T1
+nothing to commit, working tree clean
+(experiments-dev8) nakazawanaohito@nakazawa-iMac qiskit-experiments % git diff main patch-T1 --stat
+ qiskit_experiments/library/characterization/t1.py                 | 19 +++++++++++++++++++
+ releasenotes/notes/short-description-string-4b40eb84f1e11124.yaml | 14 ++++++++++++++
+ 2 files changed, 33 insertions(+)
+(experiments-dev8) nakazawanaohito@nakazawa-iMac qiskit-experiments % git status
+On branch patch-T1
+nothing to commit, working tree clean
+(experiments-dev8) nakazawanaohito@nakazawa-iMac qiskit-experiments % reno report
+loaded configuration file ./releasenotes/config.yaml
+scanning ./releasenotes/notes (branch=*current* earliest_version=0.1.0 collapse_pre_releases=True)
+Traceback (most recent call last):
+  File "/Users/nakazawanaohito/anaconda3/envs/experiments-dev8/bin/reno", line 8, in <module>
+    sys.exit(main())
+  File "/Users/nakazawanaohito/anaconda3/envs/experiments-dev8/lib/python3.8/site-packages/reno/main.py", line 228, in main
+    return args.func(args, conf)
+  File "/Users/nakazawanaohito/anaconda3/envs/experiments-dev8/lib/python3.8/site-packages/reno/report.py", line 21, in report_cmd
+    with loader.Loader(conf) as ldr:
+  File "/Users/nakazawanaohito/anaconda3/envs/experiments-dev8/lib/python3.8/site-packages/reno/loader.py", line 62, in __init__
+    self._load_data()
+  File "/Users/nakazawanaohito/anaconda3/envs/experiments-dev8/lib/python3.8/site-packages/reno/loader.py", line 90, in _load_data
+    self._scanner_output = self._scanner.get_notes_by_version()
+  File "/Users/nakazawanaohito/anaconda3/envs/experiments-dev8/lib/python3.8/site-packages/reno/scanner.py", line 1003, in get_notes_by_version
+    raise ValueError(
+ValueError: earliest-version set to unknown revision '0.1.0'
+```
 
 
 
