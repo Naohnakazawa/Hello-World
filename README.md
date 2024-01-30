@@ -17,6 +17,7 @@ Today is a **holiday**.
 
 Some basic Git commands are:
 ```
+git config
 git status
 git add
 git diff 
