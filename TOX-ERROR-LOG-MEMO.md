@@ -273,5 +273,7 @@ Date:   Wed Jan 24 16:06:22 2024 +0900
 fatal: No names found, cannot describe anything.
 ```
 
-
-
+### git commit problem (20240203)
+```
+In the commit, ***1ffc536e, the Author is wrong. 
+```
