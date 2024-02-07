@@ -289,6 +289,9 @@ Check some commits.
 I want to delete some commits with wrong e-mail address by using revert. It may be safe.
 ```
 
-
+### git commit problem (20240208)
+```
+This is a test of how to "revert" commits.
+```
 
 
