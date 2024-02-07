@@ -278,17 +278,8 @@ fatal: No names found, cannot describe anything.
 In the commit, ***1ffc536e, the Author is wrong. 
 ```
 
-### git commit problem (20240207)
+### git commit problem(20240207)
 ```
 Now, I come back!
 Check some commits.
 ```
-
-### git commit problem (20240208)
-```
-I want to delete some commits with wrong e-mail address by using revert. It may be safe.
-```
-
-
-
-
