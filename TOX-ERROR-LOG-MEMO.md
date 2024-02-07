@@ -277,9 +277,3 @@ fatal: No names found, cannot describe anything.
 ```
 In the commit, ***1ffc536e, the Author is wrong. 
 ```
-
-### git commit problem(20240207)
-```
-Now, I come back!
-Check some commits.
-```
