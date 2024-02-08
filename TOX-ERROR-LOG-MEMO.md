@@ -277,3 +277,9 @@ fatal: No names found, cannot describe anything.
 ```
 In the commit, ***1ffc536e, the Author is wrong. 
 ```
+
+### git commit problem (20240208)
+```
+
+The GPG key is set up on github.com and also on local.
+```
