@@ -283,3 +283,11 @@ In the commit, ***1ffc536e, the Author is wrong.
 
 The GPG key is set up on github.com and also on local.
 ```
+
+### git commit problem (20240209)
+```
+
+The GPG key works.
+```
+
+
