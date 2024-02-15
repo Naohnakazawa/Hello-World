@@ -283,3 +283,115 @@ In the commit, ***1ffc536e, the Author is wrong.
 
 The GPG key is set up on github.com and also on local.
 ```
+
+### tox -epy310 (local, branch issue-1238, 20240115)
+```
+======
+Totals
+======
+Ran: 1054 tests in 192.8756 sec.
+ - Passed: 1049
+ - Skipped: 5
+ - Expected Fail: 0
+ - Unexpected Success: 0
+ - Failed: 0
+Sum of execute time for each test: 1258.3459 sec.
+
+==============
+Worker Balance
+==============
+ - Worker 0 (51 tests) => 0:03:12.875594
+ - Worker 1 (70 tests) => 0:02:31.394430
+ - Worker 2 (127 tests) => 0:02:33.920210
+ - Worker 3 (163 tests) => 0:02:31.321538
+ - Worker 4 (167 tests) => 0:02:37.778611
+ - Worker 5 (181 tests) => 0:02:30.320972
+ - Worker 6 (161 tests) => 0:02:29.911825
+ - Worker 7 (134 tests) => 0:02:34.371933
+.pkg: _exit> python /Users/nakazawa/anaconda3/envs/experiments-dev10/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+  py310: OK (207.35=setup[2.80]+cmd[204.55] seconds)
+  congratulations :) (208.16 seconds)
+```
+
+### tox -elint (local, branch issue-1238, 20240115)
+```
+lint: recreate env because env type changed from {'name': 'black', 'type': 'VirtualEnvRunner'} to {'name': 'lint', 'type': 'VirtualEnvRunner'}
+lint: remove tox env folder .tox/lint
+lint: install_deps> pip install -c/Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/constraints.txt -U -r /Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/requirements-dev.txt -r /Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/requirements-extras.txt
+.pkg: _optional_hooks> python /Users/nakazawa/anaconda3/envs/experiments-dev10/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: get_requires_for_build_sdist> python /Users/nakazawa/anaconda3/envs/experiments-dev10/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: get_requires_for_build_editable> python /Users/nakazawa/anaconda3/envs/experiments-dev10/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+.pkg: build_editable> python /Users/nakazawa/anaconda3/envs/experiments-dev10/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+lint: install_package_deps> pip install -c/Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/constraints.txt -U lmfit 'matplotlib>=3.4' 'numpy>=1.17' 'pandas>=1.1.5' 'qiskit-ibm-experiment>=0.4.6' 'qiskit>=0.45' rustworkx 'scipy>=1.4' uncertainties
+lint: install_package> pip install -c/Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/constraints.txt -U --force-reinstall --no-deps /Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/.tox/.tmp/package/76/qiskit_experiments-0.7.0-0.editable-py3-none-any.whl
+lint: commands[0]> black --check qiskit_experiments test tools setup.py
+All done! ✨ 🍰 ✨
+277 files would be left unchanged.
+lint: commands[1]> pylint -rn --rcfile=/Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/.pylintrc qiskit_experiments/ test/ tools/
+
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+
+lint: commands[2]> python /Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/tools/verify_headers.py
+.pkg: _exit> python /Users/nakazawa/anaconda3/envs/experiments-dev10/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+  lint: OK (163.93=setup[70.83]+cmd[1.39,91.43,0.28] seconds)
+  congratulations :) (164.60 seconds)
+```
+
+### tox -e docs -r (local, branch issue-1238, 20240115)
+```
+WARNING: Cell printed to stderr:
+/Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments/.tox/docs/lib/python3.10/site-packages/qiskit/visualization/circuit/matplotlib.py:266: FutureWarning: The default matplotlib drawer scheme will be changed to "iqp" in a following release. To silence this warning, specify the current default explicitly as style="clifford", or the new default as style="iqp".
+  self._style, def_font_ratio = load_style(self._style)
+
+WARNING: Cell printed to stderr:
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_6919/3125245418.py:4: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  backend = AerSimulator.from_backend(FakePerth())
+
+WARNING: Cell printed to stderr:
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_6963/2722455767.py:5: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  backend = AerSimulator.from_backend(FakePerth())
+
+WARNING: Cell printed to stderr:
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_6993/2737779664.py:4: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  backend = AerSimulator.from_backend(FakeManilaV2())
+
+WARNING: Cell printed to stderr:
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_7013/3919130840.py:6: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  noise_model = NoiseModel.from_backend(FakeManilaV2(),
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_7013/3919130840.py:12: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
+
+WARNING: Cell printed to stderr:
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_7023/1818010371.py:6: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  noise_model = NoiseModel.from_backend(FakeManilaV2(),
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_7023/1818010371.py:12: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
+
+WARNING: Cell printed to stderr:
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_7033/1942356639.py:6: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  noise_model = NoiseModel.from_backend(FakePerth(),
+/var/folders/d_/6yhgtbzj56nfhcqtl1cgwqm40000gn/T/ipykernel_7033/1942356639.py:12: DeprecationWarning: The class ``qiskit.providers.fake_provider.fake_backend.FakeBackendV2`` is deprecated as of qiskit 0.46.0. It will be removed in qiskit 1.0. All fake backend instances based on real device snapshots (`FakeVigo`,`FakeSherbrooke`,...) have been migrated to the `qiskit_ibm_runtime` package. To migrate your code, run `pip install qiskit-ibm-runtime` and use `from qiskit_ibm_runtime.fake_provider import FakeExample` instead of `from qiskit.providers.fake_provider import FakeExample`. 
+  backend = AerSimulator.from_backend(FakePerth(), noise_model=noise_model)
+
+更新されたファイルを探しています... 見つかりませんでした
+環境データを保存中... 完了
+整合性をチェック中... 完了
+ドキュメントの出力準備中... 完了
+copying assets... 静的ファイルをコピー中... 完了
+extraファイルをコピー中... 完了
+完了
+出力中...[100%] tutorials/visualization
+索引を生成中... genindex py-modindex 完了
+copying linked files... 
+copying notebooks ... 
+追加のページを出力中... search 完了
+画像をコピー中... [100%] _build/jupyter_execute/tutorials/visualization_5_0.png
+English (code: en) の検索インデックスを出力... 完了
+オブジェクト インベントリを出力... 完了
+ビルド 完了（問題あり）, 7 警告.
+docs: exit 1 (1301.91 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev10/qiskit-experiments> sphinx-build -T -W --keep-going -b html docs/ docs/_build/html pid=6656
+.pkg: _exit> python /Users/nakazawa/anaconda3/envs/experiments-dev10/lib/python3.10/site-packages/pyproject_api/_backend.py True setuptools.build_meta
+  docs: FAIL code 1 (1377.70=setup[75.79]+cmd[1301.91] seconds)
+  evaluation failed :( (1378.10 seconds)
+```
