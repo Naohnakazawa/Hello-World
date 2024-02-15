@@ -284,6 +284,7 @@ In the commit, ***1ffc536e, the Author is wrong.
 The GPG key is set up on github.com and also on local.
 ```
 
+<<<<<<< HEAD
 ### tox -epy310 (local, branch issue-1238, 20240115)
 ```
 ======
@@ -395,3 +396,12 @@ docs: exit 1 (1301.91 seconds) /Users/nakazawa/anaconda3/envs/experiments-dev10/
   docs: FAIL code 1 (1377.70=setup[75.79]+cmd[1301.91] seconds)
   evaluation failed :( (1378.10 seconds)
 ```
+=======
+### git commit problem (20240209)
+```
+
+The GPG key works.
+```
+
+
+>>>>>>> 7adde019bd77c63bc9133fd65aec5a5d16f5bba0
