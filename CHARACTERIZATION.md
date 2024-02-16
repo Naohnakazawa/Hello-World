@@ -377,7 +377,8 @@
 
             # backend 
             from qiskit_aer import AerSimulator
-            from qiskit.providers.fake_provider import FakePerth
+            # from qiskit.providers.fake_provider import FakePerth
+            from qiskit_ibm_runtime.fake_provider import FakePerth # for qiskit v1.0.0
             backend = AerSimulator.from_backend(FakePerth())
 
         ..jupyter-execute::
@@ -520,8 +521,8 @@
 
             # backend 
             from qiskit_aer import AerSimulator
-            from qiskit.providers.fake_provider import FakePerth
-
+            # from qiskit.providers.fake_provider import FakePerth
+            from qiskit_ibm_runtime.fake_provider import FakePerth # for qiskit v1.0.0
             backend = AerSimulator.from_backend(FakePerth())
 
         ..jupyter-execute::
@@ -737,7 +738,8 @@
             :hide-code:
 
             # backend 
-            from qiskit.providers.fake_provider import FakeManilaV2
+            # from qiskit.providers.fake_provider import FakeManilaV2
+            from qiskit_ibm_runtime.fake_provider import FakeManilaV2 # for qiskit v1.0.0
             from qiskit_aer import AerSimulator
             backend = AerSimulator.from_backend(FakeManilaV2())
 
@@ -843,10 +845,10 @@
             :hide-code:
 
             # backend
-            from qiskit.providers.fake_provider import FakeManilaV2
+            # from qiskit.providers.fake_provider import FakeManilaV2
+            from qiskit_ibm_runtime.fake_provider import FakeManilaV2 # for qiskit v1.0.0
             from qiskit_aer import AerSimulator
             from qiskit_aer.noise import NoiseModel
-
             noise_model = NoiseModel.from_backend(FakeManilaV2(), 
                                                   thermal_relaxation=True, 
                                                   gate_error=False, 
@@ -880,7 +882,8 @@
             :hide-code:
 
             # backend
-            from qiskit.providers.fake_provider import FakeManilaV2
+            # from qiskit.providers.fake_provider import FakeManilaV2
+            from qiskit_ibm_runtime.fake_provider import FakeManilaV2 # for qiskit v1.0.0
             from qiskit_aer import AerSimulator
             from qiskit_aer.noise import NoiseModel
 
@@ -925,7 +928,8 @@
             :hide-code:
 
             # backend
-            from qiskit.providers.fake_provider import FakePerth
+            # from qiskit.providers.fake_provider import FakePerth
+            from qiskit_ibm_runtime.fake_provider import FakePerth # for qiskit v1.0.0
             from qiskit_aer import AerSimulator
             from qiskit_aer.noise import NoiseModel
 
