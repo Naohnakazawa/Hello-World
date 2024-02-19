@@ -2,53 +2,49 @@
 
 ### CorrelatedReadoutError
 ```
-# section: example
-# ..jupyter-execute::
-# :hide-code:
+    # section: example
+        .. jupyter-execute::
+            :hide-code:
 
-# backend
-from qiskit_ibm_provider import IBMProvider
+            # backend
+            from qiskit_ibm_provider import IBMProvider
+            INSTANCE="ibm-q/open/main"
+            provider = IBMProvider(instance=INSTANCE)
+            backend = provider.get_backend("ibm_brisbane")
 
-INSTANCE="ibm-q/open/main"
-provider = IBMProvider(instance=INSTANCE)
-backend = provider.get_backend("ibm_brisbane")
+        .. jupyter-execute::
+            # mwc
+            from qiskit_experiments.library import CorrelatedReadoutError
+      
+            qubits = [119,120]
+            num_qubits = len(qubits)
+            exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
+            exp.set_run_options(shots=1000)
+            exp.analysis.set_options(plot=True)
 
-# ..jupyter-execute::
-# mwc
+            step1=False # run carefully if your device is a real one!
+            if step1==True:
+     
+                exp_data = exp.run()
+                mitigator = exp_data.analysis_results(0).value
+                result=exp_data.analysis_results()
+  
+                for _ in result:
+                    print(_)
+       
+                exp_data.figure(0)
 
-from qiskit_experiments.library import CorrelatedReadoutError
+            else:
+                pass
 
-qubits = [119,120]
-num_qubits = len(qubits)
-exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
-exp.set_run_options(shots=1000)
-exp.analysis.set_options(plot=True)
-
-step1=False # run carefully if your device is a real one!
-if step1==True:
-    
-    exp_data = exp.run()
-    mitigator = exp_data.analysis_results(0).value
-    result=exp_data.analysis_results()
-    
-    for _ in result:
-        print(_)
-        
-    exp_data.figure(0)
-
-else:
-    pass
-
-# retrieve your jobs
-from qiskit_experiments.framework import ExperimentData 
-
-job_ids= ["cq863hp7fy8g008hsseg"] # In case : backend=ibm_brisbane, shots=1000, physical_qubits=(119, 120)
-exp_data = ExperimentData(experiment=exp)
-exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-exp.analysis.run(exp_data)
-exp_data.block_for_results()
-result=exp_data.analysis_results()
-exp_data.figure(0)
+            from qiskit_experiments.framework import ExperimentData             
+            job_ids= ["cq863hp7fy8g008hsseg"] # retrieve your jobs
+            exp_data = ExperimentData(experiment=exp)
+            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+            exp.analysis.run(exp_data)
+            exp_data.block_for_results()
+            result=exp_data.analysis_results()
+            exp_data.figure(0)
 ```
 
 ### CrossResonanceHamiltonian
