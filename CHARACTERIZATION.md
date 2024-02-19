@@ -272,60 +272,35 @@
 
 ### FineFrequency
 ```
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
+# section: example
+# ..jupyter-execute::
+# :hide-code:
 
-            # backend ibm_kyoto
-            from qiskit_ibm_provider import IBMProvider
-            INSTANCE="ibm-q/open/main"
-            provider = IBMProvider(instance=INSTANCE)
-            backend = provider.get_backend("ibm_kyoto")
+# backend
+from qiskit.providers.fake_provider import GenericBackendV2
 
-        ..jupyter-execute::
+num_qubits=27
+backend =GenericBackendV2(num_qubits=num_qubits)
 
-            from qiskit_experiments.library.characterization import FineFrequency
+# ..jupyter-execute::
+# mwc
+from qiskit_experiments.library.characterization import FineFrequency
 
-            qubit=13
-            repetitions = list(range(40))
-            exp = FineFrequency((qubit,), 
-                                delay_duration=320, 
-                                backend=backend, 
-                                repetitions=repetitions)
-            exp.set_run_options(shots=100, seed_simulator=199)
-            print(exp.circuits()[3])
+qubit=0
+repetitions = list(range(40))
+exp = FineFrequency((qubit,), 
+                    delay_duration=320, 
+                    backend=backend, 
+                    repetitions=repetitions)
+exp.set_transpile_options(optimization_level=0, basis_gates=['sx', 'rz', 'delay'])
+exp.set_run_options(shots=1000, seed_simulator=199)
+print(exp.circuits()[3])
 
-            step1=False # run carefully if your device is a real one
-            if step1==True:
-                exp_data = exp.run().block_for_results()
-                result = exp_data.analysis_results()    
-                for _ in result:
-                    print(_)
-
-                exp_data.figure(0)
-
-            else:
-                pass
-
-            # retrieve your jobs
-            from qiskit_experiments.framework import ExperimentData 
-
-            job_ids=["cnrj6gazeg00008v7nrg"] # list of job IDs for the experiment
-            exp_data = ExperimentData(experiment=exp)
-            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-            exp.analysis.run(exp_data)
-            exp_data.block_for_results()
-            result=exp_data.analysis_results()
-
-            import numpy as np
-            d_theta = exp_data.analysis_results(1).value.n
-            print(f"d_theta : {d_theta}")
-            dt = backend.dt
-            print(f"dt :{dt}")
-            d_freq = d_theta / (2 * np.pi * exp.experiment_options.delay_duration * dt)
-            print(f"d_freq : {d_freq}")
-
-            exp_data.figure(0)
+# ..jupyter-execute::
+# mwc
+exp_data = exp.run().block_for_results()
+result = exp_data.analysis_results()
+exp_data.figure(0)
 ```
 
 ### HalfAngle
