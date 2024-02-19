@@ -676,8 +676,8 @@
             from qiskit_experiments.library.characterization import ResonatorSpectroscopy
 
             qubit = 13
-            exp = ResonatorSpectroscopy(physical_qubits = [qubit], backend = backend)
-            exp.set_run_options(shots=100, seed_simulator=119)
+            exp = ResonatorSpectroscopy(physical_qubits = (qubit,), backend = backend)
+            exp.set_run_options(shots=1000, seed_simulator=119)
             print(exp.circuits()[0])
 
             step1=False  # run carefully if your backend is a real device
@@ -692,7 +692,7 @@
             # retrieve your jobs
             from qiskit_experiments.framework import ExperimentData
 
-            job_ids= ["cnnm53we4ks0008gmpa0"] # List of job IDs for the experiment
+            job_ids= ["cq80v7wf1wdg0086g60g"] # List of job IDs for the experiment
             exp_data = ExperimentData(experiment=exp)
             exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
             exp.analysis.run(exp_data)
