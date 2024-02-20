@@ -162,8 +162,8 @@ features:
     The minimal working code example is a code snippet which users can copy
     and paste to run the experiment. Users must provide a backend in the code
     example. As a default, the backend is a simulator such as
-    AerSimulator(FakePerth). In some experiments, the backend is an IBM real
-    device due to the backend.default() dependence of the code example.
+    AerSimulator.get_backend(FakePerth()). In some experiments, the backend is
+    an IBM real device due to the backend.defaults() dependence of the code example.
 ```
 
 ### Pull request checklist (for qiskit)
