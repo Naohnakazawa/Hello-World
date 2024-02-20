@@ -154,45 +154,17 @@ exp_data.figure(0)
 ### Issue#1238(also #1221)
 
 ### reno
-prelude: >
-    Replace this text with content to appear at the top of the section for this
-    release. All of the prelude content is merged together and then rendered
-    separately from the items listed in other parts of the file, so the text
-    needs to be worded so that both the prelude and the other items make sense
-    when read independently. This may mean repeating some details. Not every
-    release note requires a prelude. Usually only notes describing major
-    features or adding release theme details should have a prelude.
-
-    comment, minimal working code examples are added to the API pages for each 
-    experiment, especially in characterizaion experiments.  
-    
-    
-
+```
 features:
   - |
-    List new features here, or remove this section.  All of the list items in
-    this section are combined when the release notes are rendered, so the text
-    needs to be worded so that it does not depend on any information only
-    available in another section, such as the prelude. This may mean repeating
-    some details.
-
-    comment, the minimal working code example is a code snippet which users 
-    can copy and paste to run the experiment. Users must provide a backend in 
-    the code example. As a default, the backend is a simulator such as 
-    AerSimulator(FakePerth). In some experiments, the backend is an IBM real 
-    device due to the backend.default() dependence of the code example.   
-
-issues:
-  - |
-    List known issues here, or remove this section.  All of the list items in
-    this section are combined when the release notes are rendered, so the text
-    needs to be worded so that it does not depend on any information only
-    available in another section, such as the prelude. This may mean repeating
-    some details.
-
-    comment, issues, #1238 and also #1224, are solved. 
-
-
+    Added minimal working code examples to the API pages for each
+    experiment, especially in characterizaion experiments.
+    The minimal working code example is a code snippet which users can copy
+    and paste to run the experiment. Users must provide a backend in the code
+    example. As a default, the backend is a simulator such as
+    AerSimulator(FakePerth). In some experiments, the backend is an IBM real
+    device due to the backend.default() dependence of the code example.
+```
 
 ### Pull request checklist (for qiskit)
 
