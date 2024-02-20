@@ -162,7 +162,7 @@ features:
     The minimal working code example is a code snippet which users can copy
     and paste to run the experiment. Users are required to specify a backend
     in the code example. As a default, the backend is a simulator such as
-    `AerSimulator.from_backend(FakeManilaV2())`. In some experiments,
+    `GenericBackendV2(num_qubits=27)`. In some experiments,
     the backend is an IBM real device due to the `backend.defaults()` dependence
     of the code example.
 
