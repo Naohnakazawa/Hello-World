@@ -154,17 +154,17 @@ exp_data.figure(0)
 ### Issue#1238(also #1221)
 
 ### reno
-```
+
 features:
   - |
     Added minimal working code examples to the API pages for each
     experiment, especially in characterizaion experiments.
     The minimal working code example is a code snippet which users can copy
-    and paste to run the experiment. Users must provide a backend in the code
-    example. As a default, the backend is a simulator such as
-    AerSimulator.get_backend(FakePerth()). In some experiments, the backend is
-    an IBM real device due to the backend.defaults() dependence of the code example.
-```
+    and paste to run the experiment. Users are required to specify a backend
+    in the code example. As a default, the backend is a simulator such as
+    ```backend = AerSimulator.from_backend(FakeManilaV2())```. In some experiments,
+    the backend is an IBM real device due to the backend.defaults() dependence
+    of the code example.
 
 ### Pull request checklist (for qiskit)
 
@@ -207,33 +207,33 @@ tox -epy310                      : well-done
 
 tox -elint & tox -eblack         : well-done
 
-tox -e docs                      : Tere are some issues. This must be fiexd.
+tox -e docs                      : well-done
 
 2. The API documentation has been updated accordingly.
 
-No documentation has been created. This must be fixed.
+yes
 
 3. You have updated the relevant documentation or written new docs. In case the PR needs
    to be merged without delay (e.g. for a high priority fix), open an issue for updating
    or adding the documentation later.
 
-No documentation has been created. This must be fixed.
+yes
 
 4. You've added tests that cover the changes you've made, if relevant.
 
-I've not added any tests. This may be no problem.
+I've not added any tests. This is no problem.
 
 5. If your change has an end user facing impact (new feature, deprecation, removal,
    etc.), you've added or updated a reno release note for that change and tagged the PR
    for the changelog.
 
-I've not added any reno release notes. This may be no problem
+I've added a reno release notes which describes the new feature.
 
 6. If your code requires a change to dependencies, you've updated the corresponding
    requirements file: `requirements.txt` contain core dependencies,
    `requirements-extras.txt` for dependencies for optional features, and `requirements-dev.txt`
    for dependencies required for running tests and building documentation.
 
-My code does not require any changes to dependencies. This may be no problem.
+My code does not require any changes to dependencies. This is no problem.
 
 
