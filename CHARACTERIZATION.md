@@ -63,7 +63,12 @@
 
             from qiskit_experiments.library.characterization import CrossResonanceHamiltonian
 
-            qubits=(17, 30)
+            qubit=17
+            for qpair in backend.coupling_map:
+                if qpair[0]==qubit:
+                    qubits=qpair
+                    break
+
             exp=CrossResonanceHamiltonian(physical_qubits=qubits, backend=backend)
 
             exp.set_experiment_options(
