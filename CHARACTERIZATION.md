@@ -130,9 +130,7 @@
 
             qubits=(17, 30)
             exp=EchoedCrossResonanceHamiltonian(physical_qubits=qubits, backend=backend)
-            exp.set_experiment_options(max_circuits=None, 
-                                   flat_top_widths=None, 
-                                   durations=None, 
+            exp.set_experiment_options(
                                    min_durations=1.0e-07, 
                                    max_durations=1.2e-06, 
                                    num_durations=48, 
