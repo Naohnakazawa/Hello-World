@@ -63,10 +63,11 @@
 
             from qiskit_experiments.library.characterization import CrossResonanceHamiltonian
 
-            qubit=17
+            qubit=6
             for qpair in backend.coupling_map:
                 if qpair[0]==qubit:
                     qubits=qpair
+                    print(qubits)
                     break
 
             exp=CrossResonanceHamiltonian(physical_qubits=qubits, backend=backend)
@@ -79,7 +80,6 @@
                                    amp_t=0.0, 
                                    sigma=30, 
                                    risefall=2)
-
             exp.set_run_options(shots=1000)
             print(exp.circuits()[0])
             print(exp.circuits()[287])
@@ -89,7 +89,6 @@
 
                 exp_data=exp.run().block_for_results()
                 result=exp_data.analysis_results()
-
                 for _ in result:
                     print(_)
 
@@ -100,8 +99,10 @@
 
             # retrieve your jobs
             from qiskit_experiments.framework import ExperimentData
+            #job_ids= ["cnvwmx38ybr000846y6g"] # case: shots=100
+            #job_ids= ["cnvwv2c8ybr000846yz0"] # case: shots=1000
 
-            job_ids= ["cnvwv2c8ybr000846yz0"] # List of job IDs for the experiment
+            job_ids= ["cqccf2wqgrzg008cz3dg"]
             exp_data = ExperimentData(experiment=exp)
             exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
             exp.analysis.run(exp_data)
