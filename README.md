@@ -155,7 +155,7 @@ exp_data.figure(0)
 
 ### reno
 
-features:
+features-expclass:
   - |
     Added minimal working code examples to the API pages for each
     experiment, especially in characterizaion experiments.
