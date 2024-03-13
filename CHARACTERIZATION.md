@@ -261,7 +261,7 @@
 
         ..jupyter-execute::
 
-            from qiskit.circuits.library import XGate
+            from qiskit.circuit.library import XGate
             from qiskit_experiments.library.characterization import FineDrag
 
             qubit=0
