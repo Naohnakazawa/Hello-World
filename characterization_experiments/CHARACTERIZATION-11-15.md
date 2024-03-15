@@ -107,24 +107,26 @@ exp_data.figure(0)
 
 ### CorrelatedReadoutError (new)
 ```
+# test (the latest version)
+# qiskit v1.0.0
+# qiskit-experiments v0.6.0
+# backdend=service.backend() # Your code runs on QiskitRuntimeService()
+# provider.job_retrieve() # Retrieve your jobs wiht provicer=IBMProvider()
+
 # section: example
 # ..jupyter-execute::
 # :hide-code:
 
-# backend
-from qiskit_ibm_provider import IBMProvider
-
-INSTANCE="ibm-q/open/main"
-provider = IBMProvider(instance=INSTANCE)
-backend = provider.get_backend("ibm_brisbane")
+# backend=ibm_brisbane
+from qiskit_ibm_runtime import QiskitRuntimeService
+service = QiskitRuntimeService(channel="ibm_quantum") 
+backend = service.backend("ibm_brisbane")
 
 # ..jupyter-execute::
-# mwc
 
 from qiskit_experiments.library import CorrelatedReadoutError
 
-qubits = [119,120]
-num_qubits = len(qubits)
+qubits = (120,119,)
 exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
 exp.set_run_options(shots=1000)
 exp.analysis.set_options(plot=True)
@@ -134,18 +136,24 @@ if step1==True:
     
     exp_data = exp.run()
     mitigator = exp_data.analysis_results(0).value
-    result=exp_data.analysis_results()    
+    result=exp_data.analysis_results()
+    
     for _ in result:
         print(_)
         
     exp_data.figure(0)
+
 else:
     pass
 
 # retrieve your jobs
+from qiskit_ibm_provider import IBMProvider
 from qiskit_experiments.framework import ExperimentData 
 
-job_ids= ["cq863hp7fy8g008hsseg"] # In case : backend=ibm_brisbane, shots=1000, physical_qubits=(119, 120)
+provider=IBMProvider()
+# job_ids= ["cqs4dhe9nfw0008hpafg"] # In case : backend=ibm_brisbane, shots=100, physical_qubits=(119, 120)
+job_ids= ["cqs655w4x0mg008jgccg"] # In case : backend=ibm_brisbane, shots=1000, physical_qubits=(120, 119,)
+
 exp_data = ExperimentData(experiment=exp)
 exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
 exp.analysis.run(exp_data)
@@ -157,7 +165,9 @@ exp_data.figure(0)
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/ebb9ee59-9926-48fe-b400-27fc2f405368)
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/286f55a9-0d0c-4c7f-8cc3-7622a7d37fd7)
+
 
 
 
