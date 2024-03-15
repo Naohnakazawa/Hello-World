@@ -81,7 +81,7 @@ exp_data.figure(0)
 
 
 
-### FineAmplitude
+### FineXAmplitude
 ```
 # section: example
 # ..jupyter-execute::
