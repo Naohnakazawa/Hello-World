@@ -267,6 +267,70 @@ exp_data.figure(0)
 
 
 
+### ResonatorSpectroscopy(new)
+```
+# test (the latest version)
+# qiskit v1.0.0
+# qiskit-experiments v0.6.0
+# backdend=service.backend() # Your code runs on QiskitRuntimeService()
+# provider.job_retrieve() # Retrieve your jobs wiht provicer=IBMProvider()
+
+
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm-kyoto
+from qiskit_ibm_runtime import QiskitRuntimeService
+service = QiskitRuntimeService(channel="ibm_quantum") 
+backend = service.backend("ibm_kyoto")
+
+# ..jupyter-execute::
+
+# mwc 
+import numpy as np
+from qiskit_experiments.library.characterization import ResonatorSpectroscopy
+
+qubit = 107
+exp = ResonatorSpectroscopy(physical_qubits = (qubit,), backend = backend)
+exp.set_run_options(shots=1000, seed_simulator=118)
+
+print(exp.circuits()[0])
+
+step1=False  # run carefully if your backend is a real device
+if step1==True:
+    exp_data = exp.run().block_for_results()
+    result = exp_data.analysis_results()
+    exp_data.figure(0)
+
+else:
+    pass
+
+# retrieve your jobs
+from qiskit_ibm_provider import IBMProvider
+from qiskit_experiments.framework import ExperimentData
+
+provider=IBMProvider()
+job_ids= ["cqs4qjy88ev00080zbj0"] # case: backend=ibm_kyoto, shots=1000, qubits=(107,)
+
+exp_data = ExperimentData(experiment=exp)
+exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+exp.analysis.run(exp_data)
+
+exp_data.block_for_results()
+result = exp_data.analysis_results()
+exp_data.figure(0)
+```
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/8af0bb3f-bbf1-477b-8a5e-8a497dbd07cf)
+
+
+
+
+
+
 
 ### MultiStateDiscrimination
 ```
