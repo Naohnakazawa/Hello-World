@@ -116,6 +116,38 @@ exp_data.figure(0)
 
 
 
+### FineSXAmplitude
+```
+# backend
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+seed=198
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=seed)
+
+# mwc
+from qiskit_experiments.library import FineSXAmplitude
+
+qubit = 0
+exp = FineSXAmplitude(physical_qubits=(qubit,), backend=backend)
+
+exp.circuits()[5].draw("mpl")
+
+# mwc
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
+```
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/fca01b61-825a-4329-8c30-3375c8fc5c9e)
+
+
+
+
+
+
+
 
 ### EFSpectroscopy
 ```
