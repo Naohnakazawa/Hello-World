@@ -2,59 +2,51 @@
 
 ### CorrelatedReadoutError
 ```
-# test (the latest version)
-# qiskit v1.0.0
-# qiskit-experiments v0.6.0
-# backdend=service.backend() # Your code runs on QiskitRuntimeService()
-# provider.job_retrieve() # Retrieve your jobs wiht provicer=IBMProvider()
-
-# section: example
-# ..jupyter-execute::
-# :hide-code:
-
-# backend=ibm_brisbane
-from qiskit_ibm_runtime import QiskitRuntimeService
-service = QiskitRuntimeService(channel="ibm_quantum") 
-backend = service.backend("ibm_brisbane")
-
-# ..jupyter-execute::
-
-from qiskit_experiments.library import CorrelatedReadoutError
-
-qubits = (120,119,)
-exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
-exp.set_run_options(shots=1000)
-exp.analysis.set_options(plot=True)
-
-step1=False # run carefully if your device is a real one!
-if step1==True:
-    
-    exp_data = exp.run()
-    mitigator = exp_data.analysis_results(0).value
-    result=exp_data.analysis_results()
-    
-    for _ in result:
-        print(_)
+    # section: example
+        ..jupyter-execute::
+            :hide-code:
+            
+            # backend=ibm_brisbane
+            from qiskit_ibm_runtime import QiskitRuntimeService
+            service = QiskitRuntimeService(channel="ibm_quantum") 
+            backend = service.backend("ibm_brisbane")
+            
+        ..jupyter-execute::
         
-    exp_data.figure(0)
-
-else:
-    pass
-
-# retrieve your jobs
-from qiskit_ibm_provider import IBMProvider
-from qiskit_experiments.framework import ExperimentData 
-
-provider=IBMProvider()
-# job_ids= ["cqs4dhe9nfw0008hpafg"] # In case : backend=ibm_brisbane, shots=100, physical_qubits=(119, 120)
-job_ids= ["cqs655w4x0mg008jgccg"] # In case : backend=ibm_brisbane, shots=1000, physical_qubits=(120, 119,)
-
-exp_data = ExperimentData(experiment=exp)
-exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-exp.analysis.run(exp_data)
-exp_data.block_for_results()
-result=exp_data.analysis_results()
-exp_data.figure(0)
+            from qiskit_experiments.library import CorrelatedReadoutError
+            
+            qubits = (120,119,)
+            exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
+            exp.set_run_options(shots=1000)
+            exp.analysis.set_options(plot=True)
+            
+            step1=False # run carefully if your device is a real one!
+            if step1==True:
+                
+                exp_data = exp.run()
+                mitigator = exp_data.analysis_results(0).value
+                result=exp_data.analysis_results()                
+                for _ in result:
+                    print(_)
+                    
+                exp_data.figure(0)
+            
+            else:
+                pass
+        
+            # retrieve your jobs
+            from qiskit_ibm_provider import IBMProvider
+            from qiskit_experiments.framework import ExperimentData 
+            
+            provider=IBMProvider()
+            job_ids= ["cqs655w4x0mg008jgccg"] 
+            
+            exp_data = ExperimentData(experiment=exp)
+            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+            exp.analysis.run(exp_data)
+            exp_data.block_for_results()
+            result=exp_data.analysis_results()
+            exp_data.figure(0)
 ```
 
 ### CrossResonanceHamiltonian
@@ -261,22 +253,26 @@ exp_data.figure(0)
 
 ### FineSXAmplitude
 ```
-# backend
-from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-seed=198
-backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=seed)
+    # section: example
+        ..jupyter-execute::
+            :hide-code:
 
-# mwc
-from qiskit_experiments.library import FineSXAmplitude
+            # backend
+            from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+            backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=198)
 
-qubit = 0
-exp = FineSXAmplitude(physical_qubits=(qubit,), backend=backend)
+        ..jupyter-execute::
 
-exp.circuits()[5].draw("mpl")
+            from qiskit_experiments.library import FineSXAmplitude
+            
+            qubit = 0
+            exp = FineSXAmplitude(physical_qubits=(qubit,), backend=backend)            
+            exp.circuits()[5].draw("mpl")
 
-# mwc
-exp_data = exp.run().block_for_results()
-exp_data.figure(0)
+        ..jupyter-execute::
+
+            exp_data = exp.run().block_for_results()
+            exp_data.figure(0)
 ```
 
 
@@ -747,57 +743,48 @@ exp_data.figure(0)
 
 ### ResonatorSpectroscopy
 ```
-# test (the latest version)
-# qiskit v1.0.0
-# qiskit-experiments v0.6.0
-# backdend=service.backend() # Your code runs on QiskitRuntimeService()
-# provider.job_retrieve() # Retrieve your jobs wiht provicer=IBMProvider()
-
-
-# section: example
-# ..jupyter-execute::
-# :hide-code:
-
-# backend ibm-kyoto
-from qiskit_ibm_runtime import QiskitRuntimeService
-service = QiskitRuntimeService(channel="ibm_quantum") 
-backend = service.backend("ibm_kyoto")
-
-# ..jupyter-execute::
-
-# mwc 
-import numpy as np
-from qiskit_experiments.library.characterization import ResonatorSpectroscopy
-
-qubit = 107
-exp = ResonatorSpectroscopy(physical_qubits = (qubit,), backend = backend)
-exp.set_run_options(shots=1000, seed_simulator=118)
-
-print(exp.circuits()[0])
-
-step1=False  # run carefully if your backend is a real device
-if step1==True:
-    exp_data = exp.run().block_for_results()
-    result = exp_data.analysis_results()
-    exp_data.figure(0)
-
-else:
-    pass
-
-# retrieve your jobs
-from qiskit_ibm_provider import IBMProvider
-from qiskit_experiments.framework import ExperimentData
-
-provider=IBMProvider()
-job_ids= ["cqs4qjy88ev00080zbj0"] # case: backend=ibm_kyoto, shots=1000, qubits=(107,)
-
-exp_data = ExperimentData(experiment=exp)
-exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-exp.analysis.run(exp_data)
-
-exp_data.block_for_results()
-result = exp_data.analysis_results()
-exp_data.figure(0)
+    # section: example
+        ..jupyter-execute::
+            :hide-code:
+            
+            # backend ibm-kyoto
+            from qiskit_ibm_runtime import QiskitRuntimeService
+            service = QiskitRuntimeService(channel="ibm_quantum") 
+            backend = service.backend("ibm_kyoto")
+            
+        ..jupyter-execute::
+            
+            import numpy as np
+            from qiskit_experiments.library.characterization import ResonatorSpectroscopy
+            
+            qubit = 107
+            exp = ResonatorSpectroscopy(physical_qubits = (qubit,), backend = backend)
+            exp.set_run_options(shots=1000, seed_simulator=118)            
+            print(exp.circuits()[0])
+            
+            step1=False  # run carefully if your backend is a real device
+            if step1==True:
+                exp_data = exp.run().block_for_results()
+                result = exp_data.analysis_results()
+                exp_data.figure(0)
+            
+            else:
+                pass
+        
+            # retrieve your jobs
+            from qiskit_ibm_provider import IBMProvider
+            from qiskit_experiments.framework import ExperimentData
+            
+            provider=IBMProvider()
+            job_ids= ["cqs4qjy88ev00080zbj0"]
+            
+            exp_data = ExperimentData(experiment=exp)
+            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+            exp.analysis.run(exp_data)
+            
+            exp_data.block_for_results()
+            result = exp_data.analysis_results()
+            exp_data.figure(0)
 ```
 
 ### T1
