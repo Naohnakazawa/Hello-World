@@ -227,9 +227,49 @@ exp_data.figure(0)
 
 
 
-### FineDrag
+### FineDrag(XGate)
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend 
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199) # "noise" option is "False"
+
+# ..jupyter-execute::
+
+# mwc
+from qiskit.circuit.library import XGate
+from qiskit_experiments.library.characterization import FineDrag
+
+qubit=0
+exp = FineDrag((qubit,), gate=XGate(), backend=backend)
+print(exp.circuits()[3])
+
+# ..jupyter-execute::
+
+# mwc
+exp.set_run_options(shots=1000, seed_simulator=101)
+exp_data = exp.run().block_for_results()
+exp_data.figure(0)
 ```
 
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/ba0ee53d-76f4-412c-aaf1-dd96344ca5d2)
+
+
+
+
+
+
+
+### FineXDrag
+```
 # section: example
 # ..jupyter-execute::
 # :hide-code:
@@ -253,13 +293,51 @@ print(exp.circuits()[3])
 exp.set_run_options(shots=1000, seed_simulator=101)
 exp_data = exp.run().block_for_results()
 exp_data.figure(0)
-
 ```
 
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/2eb727ab-2d3f-4283-8108-cf1fe168474d)
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/78c1b9e4-1aea-4331-b2e5-f4fdcd889932)
+
+
+
+
+
+
+### FineSXDrag
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend 
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199) # "noise" option is "False"
+
+# ..jupyter-execute::
+
+# mwc
+from qiskit_experiments.library.characterization import FineSXDrag
+
+qubit=0
+exp = FineSXDrag((qubit,), backend=backend)
+print(exp.circuits()[3])
+
+# ..jupyter-execute::
+
+# mwc
+exp.set_run_options(shots=10000, seed_simulator=101)
+exp_data = exp.run().block_for_results()
+result = exp_data.analysis_results()
+exp_data.figure(0)
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/27fb5de5-3137-40ae-a32e-2ea620144844)
+
 
 
 
