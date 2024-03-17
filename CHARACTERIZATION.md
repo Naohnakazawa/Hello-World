@@ -227,6 +227,45 @@
             exp_data.figure(0)
 ```
 
+### FineAmplitude(XGate)
+```
+    # section: example
+        ..jupyter-execute::
+            :hide-code:
+
+            # backend
+            from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+            backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=185)
+
+        ..jupyter-execute::
+
+            import numpy as np
+            from qiskit.circuit.library import XGate
+            from qiskit_experiments.library import FineAmplitude
+            
+            qubit = 0
+            exp = FineAmplitude(physical_qubits=(qubit,), gate=XGate(), backend=backend)
+            exp.set_run_options(shots=1000)
+            exp.analysis.set_options(fixed_parameters={"angle_per_gate" : np.pi, "phase_offset" : np.pi/2})
+            
+            print(exp.circuits()[5])
+            exp_data = exp.run().block_for_results()
+            result =exp_data.analysis_results()
+            for _ in result:
+                print(_)
+                
+            exp_data.figure(0)
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/3b333e36-64e4-4bd1-82ea-218a6e82f177)
+
+
+
+
+
 ### FineXAmplitude
 ```
     # section: example
