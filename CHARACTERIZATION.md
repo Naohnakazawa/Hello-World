@@ -373,6 +373,7 @@
 
         ..jupyter-execute::
 
+            import numpy as np
             from qiskit_experiments.library.characterization import FineSXDrag
 
             qubit=0
