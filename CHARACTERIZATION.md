@@ -235,7 +235,7 @@
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-            backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=185)
+            backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e6, noise=True, seed=185)
 
         ..jupyter-execute::
 
@@ -245,22 +245,21 @@
             
             qubit = 0
             exp = FineAmplitude(physical_qubits=(qubit,), gate=XGate(), backend=backend)
-            exp.set_run_options(shots=1000)
-            exp.analysis.set_options(fixed_parameters={"angle_per_gate" : np.pi, "phase_offset" : np.pi/2})
-            
+            exp.set_run_options(shots=10000)
+            exp.analysis.set_options(fixed_parameters={"angle_per_gate" : np.pi, "phase_offset" : np.pi})            
             print(exp.circuits()[5])
+
             exp_data = exp.run().block_for_results()
-            result =exp_data.analysis_results()
-            for _ in result:
-                print(_)
-                
+            result =exp_data.analysis_results()               
             exp_data.figure(0)
 ```
 
 
 
 
-![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/3b333e36-64e4-4bd1-82ea-218a6e82f177)
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/2617a69c-1af3-41f2-96b2-58b0b787211f)
+
+
 
 
 
@@ -332,11 +331,8 @@
 
             qubit=0
             exp = FineDrag(physical_qubits=(qubit,), gate=XGate(), backend=backend)
-            print(exp.circuits()[3])
-
-        ..jupyter-execute::
-
             exp.set_run_options(shots=1000, seed_simulator=101)
+
             exp_data = exp.run().block_for_results()
             result = exp_data.analysis_results()
             exp_data.figure(0)
@@ -358,12 +354,10 @@
 
             qubit=0
             exp = FineXDrag(physical_qubits=(qubit,), backend=backend)
-            print(exp.circuits()[3])
-
-        ..jupyter-execute::
-
             exp.set_run_options(shots=1000, seed_simulator=101)
+
             exp_data = exp.run().block_for_results()
+            result = exp_data.analysis_results()
             exp_data.figure(0)
 ```
 
@@ -383,14 +377,31 @@
 
             qubit=0
             exp = FineSXDrag(physical_qubits=(qubit,), backend=backend)
-            print(exp.circuits()[3])
+            exp.analysis.set_options(normalization= True,              # 0319
+                                     fixed_parameters={                #
+                                         "angle_per_gate" : 0.0,       #
+                                         "phase_offset" : np.pi/2,     #
+                                         "amp" : 0.6                   #
+                                         },                            #
+                                    )                                  #
+            print(exp.circuits()[1])
 
         ..jupyter-execute::
 
-            exp.set_run_options(shots=1000, seed_simulator=101)
+            exp.set_run_options(shots=10000, seed_simulator=101)
             exp_data = exp.run().block_for_results()
             exp_data.figure(0)
 ```
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/79c856d6-d0f9-4631-ad34-caca31a44943)
+
+
+
+
 
 ### FineFrequency
 ```
