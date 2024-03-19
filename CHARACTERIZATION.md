@@ -448,7 +448,6 @@
 
         ..jupyter-execute::
 
-            from qiskit import pulse
             from qiskit_experiments.library.characterization import HalfAngle
 
             qubit=0
