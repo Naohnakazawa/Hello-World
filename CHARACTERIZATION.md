@@ -55,17 +55,16 @@
         ..jupyter-execute::
             :hide-code:
 
-            # backend ibm_kyoto
-            from qiskit_ibm_provider import IBMProvider
-            INSTANCE="ibm-q/open/main"
-            provider = IBMProvider(instance=INSTANCE)
-            backend = provider.get_backend("ibm_kyoto")
+            # backend ibm_brisbane
+            from qiskit_ibm_runtime import QiskitRuntimeService
+            service = QiskitRuntimeService(channel="ibm_quantum")
+            backend = service.backend("ibm_brisbane")
 
         ..jupyter-execute::
 
             from qiskit_experiments.library.characterization import CrossResonanceHamiltonian
 
-            qubit=6
+            qubit=63
             for qpair in backend.coupling_map:
                 if qpair[0]==qubit:
                     qubits=qpair
@@ -78,7 +77,7 @@
                                    min_durations=1.0e-07, 
                                    max_durations=1.2e-06, 
                                    num_durations=48, 
-                                   amp=0.2024212826036257, 
+                                   amp=0.20, 
                                    amp_t=0.0, 
                                    sigma=30, 
                                    risefall=2)
@@ -100,11 +99,14 @@
                 pass
 
             # retrieve your jobs
+            from qiskit_ibm_provider import IBMProvider
             from qiskit_experiments.framework import ExperimentData
-            #job_ids= ["cnvwmx38ybr000846y6g"] # case: shots=100
-            #job_ids= ["cnvwv2c8ybr000846yz0"] # case: shots=1000
+            # job_ids= ["cnvwmx38ybr000846y6g"] # case: shots=100
+            # job_ids= ["cnvwv2c8ybr000846yz0"] # case: shots=1000
+            # job_ids= ["cqccf2wqgrzg008cz3dg"] # case: ibm_kyoto, physical_qubits=(6,5), shots=100
 
-            job_ids= ["cqccf2wqgrzg008cz3dg"]
+            provider = IBMProvider()
+            job_ids = ["cqweecsae5gg008mftw0"] # case: ibm_brisbane, physical_qubits=(63,64), shots=1000, amp=0.20
             exp_data = ExperimentData(experiment=exp)
             exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
             exp.analysis.run(exp_data)
@@ -121,10 +123,9 @@
             :hide-code:
 
             # backend ibm-kyoto
-            from qiskit_ibm_provider import IBMProvider
-            INSTANCE="ibm-q/open/main"
-            provider = IBMProvider(instance=INSTANCE)
-            backend = provider.get_backend("ibm_kyoto")
+            from qiskit_ibm_runtime import QiskitRuntimeService
+            service = QiskitRuntimeService(channel="ibm_quantum")
+            backend = service.backend("ibm_kyoto")
 
         ..jupyter-execute::
 
@@ -136,7 +137,7 @@
                                    min_durations=1.0e-07, 
                                    max_durations=1.2e-06, 
                                    num_durations=48, 
-                                   amp=0.2024212826036257, 
+                                   amp=0.20, 
                                    amp_t=0.0, 
                                    sigma=30, 
                                    risefall=2)
@@ -155,9 +156,12 @@
                 pass 
 
             # retrieve your jobs
+            from qiskit_ibm_provider import IBMProvider
             from qiskit_experiments.framework import ExperimentData 
+            # job_ids= ["cnwbhqe5vh500087x5fg"] # case : ibm_kyoto, shots=1000, qubits=(17, 30)
 
-            job_ids= ["cnwbhqe5vh500087x5fg"] # List of job IDs for the experiment
+            provider = IBMProvider()
+            job_ids = ["cqwegbs1j3r00081x4t0"] # case : ibm_kyoto, shots=1000, qubits=(17, 30), amp=0.20
             exp_data = ExperimentData(experiment=exp)
             exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
             exp.analysis.run(exp_data)
