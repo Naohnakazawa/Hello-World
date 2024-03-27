@@ -13,6 +13,9 @@
 
         ..jupyter-execute::
 
+            # In this example, the backend is assumed to be a real device
+            # on the IBM Quantum platform
+
             from qiskit_experiments.library import CorrelatedReadoutError
   
             qubits = (120,119,)
@@ -20,7 +23,7 @@
             exp.set_run_options(shots=1000)
             exp.analysis.set_options(plot=True)
 
-            step1=False # run carefully if your device is a real one!
+            step1=False # "False" shows the result saved in a previous job
             if step1==True:
 
                 exp_data = exp.run()
@@ -62,6 +65,9 @@
 
         ..jupyter-execute::
 
+            # In this example, the backend is assumed to be a real device
+            # on the IBM Quantum platform
+
             from qiskit_experiments.library.characterization import CrossResonanceHamiltonian
 
             qubit=63
@@ -85,7 +91,7 @@
             print(exp.circuits()[0])
             print(exp.circuits()[287])
 
-            step1=False # run carefully if your device is a real device!
+            step1=False # "False" shows the result saved in a previous job
             if step1==True:
 
                 exp_data=exp.run().block_for_results()
@@ -129,6 +135,9 @@
 
         ..jupyter-execute::
 
+            # In this example, the backend is assumed to be a real device
+            # on the IBM Quantum platform
+
             from qiskit_experiments.library.characterization import EchoedCrossResonanceHamiltonian
 
             qubits=(17, 30)
@@ -143,7 +152,7 @@
                                    risefall=2)
             exp.set_run_options(shots=1000)
 
-            step1=False # run carefully if your device is a real device!
+            step1=False # "False" shows the result saved in a previous job
             if step1==True:
                 exp_data=exp.run().block_for_results()
                 result=exp_data.analysis_results()
@@ -797,6 +806,9 @@
 
         ..jupyter-execute::
 
+            # In this example, the backend is assumed to be a real device
+            # on the IBM Quantum platform
+
             import numpy as np
             from qiskit_experiments.library.characterization import ResonatorSpectroscopy
 
@@ -805,7 +817,7 @@
             exp.set_run_options(shots=1000, seed_simulator=118)            
             print(exp.circuits()[0])
 
-            step1=False  # run carefully if your backend is a real device
+            step1=False  # "False" shows the result saved in a previous job
             if step1==True:
                 exp_data = exp.run().block_for_results()
                 result = exp_data.analysis_results()
