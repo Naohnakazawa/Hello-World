@@ -26,28 +26,22 @@
             step1=False # "False" shows the result saved in a previous job
             if step1==True:
 
-                exp_data = exp.run()
+                exp_data = exp.run().block_for_results()
                 mitigator = exp_data.analysis_results(0).value
-                result=exp_data.analysis_results()
-                for _ in result:
-                    print(_)
-      
-                exp_data.figure(0)
 
             else:
-                pass
+                # retrieve your jobs
+                from qiskit_ibm_provider import IBMProvider
+                from qiskit_experiments.framework import ExperimentData
+    
+                provider=IBMProvider()
+                job_ids= ["cqs655w4x0mg008jgccg"]
+    
+                exp_data = ExperimentData(experiment=exp)
+                exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+                exp.analysis.run(exp_data)
+                exp_data.block_for_results()
 
-            # retrieve your jobs
-            from qiskit_ibm_provider import IBMProvider
-            from qiskit_experiments.framework import ExperimentData
-
-            provider=IBMProvider()
-            job_ids= ["cqs655w4x0mg008jgccg"]
-
-            exp_data = ExperimentData(experiment=exp)
-            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-            exp.analysis.run(exp_data)
-            exp_data.block_for_results()
             result=exp_data.analysis_results()
             exp_data.figure(0)
 ```
@@ -93,32 +87,24 @@
 
             step1=False # "False" shows the result saved in a previous job
             if step1==True:
-
                 exp_data=exp.run().block_for_results()
-                result=exp_data.analysis_results()
-                for _ in result:
-                    print(_)
-
-                exp_data.figure(0)
 
             else:
-                pass
+                # retrieve your jobs
+                from qiskit_ibm_provider import IBMProvider
+                from qiskit_experiments.framework import ExperimentData
+                # job_ids= ["cnvwmx38ybr000846y6g"] # case: shots=100
+                # job_ids= ["cnvwv2c8ybr000846yz0"] # case: shots=1000
+                # job_ids= ["cqccf2wqgrzg008cz3dg"] # case: ibm_kyoto, physical_qubits=(6,5), shots=100
+    
+                provider = IBMProvider()
+                job_ids = ["cqweecsae5gg008mftw0"] # case: ibm_brisbane, physical_qubits=(63,64), shots=1000, amp=0.20
+                exp_data = ExperimentData(experiment=exp)
+                exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+                exp.analysis.run(exp_data)
+                exp_data.block_for_results()
 
-            # retrieve your jobs
-            from qiskit_ibm_provider import IBMProvider
-            from qiskit_experiments.framework import ExperimentData
-            # job_ids= ["cnvwmx38ybr000846y6g"] # case: shots=100
-            # job_ids= ["cnvwv2c8ybr000846yz0"] # case: shots=1000
-            # job_ids= ["cqccf2wqgrzg008cz3dg"] # case: ibm_kyoto, physical_qubits=(6,5), shots=100
-
-            provider = IBMProvider()
-            job_ids = ["cqweecsae5gg008mftw0"] # case: ibm_brisbane, physical_qubits=(63,64), shots=1000, amp=0.20
-            exp_data = ExperimentData(experiment=exp)
-            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-            exp.analysis.run(exp_data)
-            exp_data.block_for_results()
             result=exp_data.analysis_results()
-
             exp_data.figure(0)
 ```
 
@@ -156,27 +142,21 @@
             if step1==True:
                 exp_data=exp.run().block_for_results()
                 result=exp_data.analysis_results()
-                for _ in result:
-                    print(_)
-
-                exp_data.figure(0)
-
+ 
             else:
-                pass 
+                # retrieve your jobs
+                from qiskit_ibm_provider import IBMProvider
+                from qiskit_experiments.framework import ExperimentData 
+                # job_ids= ["cnwbhqe5vh500087x5fg"] # case : ibm_kyoto, shots=1000, qubits=(17, 30)
+    
+                provider = IBMProvider()
+                job_ids = ["cqwegbs1j3r00081x4t0"] # case : ibm_kyoto, shots=1000, qubits=(17, 30), amp=0.20
+                exp_data = ExperimentData(experiment=exp)
+                exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+                exp.analysis.run(exp_data)
+                exp_data.block_for_results()
 
-            # retrieve your jobs
-            from qiskit_ibm_provider import IBMProvider
-            from qiskit_experiments.framework import ExperimentData 
-            # job_ids= ["cnwbhqe5vh500087x5fg"] # case : ibm_kyoto, shots=1000, qubits=(17, 30)
-
-            provider = IBMProvider()
-            job_ids = ["cqwegbs1j3r00081x4t0"] # case : ibm_kyoto, shots=1000, qubits=(17, 30), amp=0.20
-            exp_data = ExperimentData(experiment=exp)
-            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-            exp.analysis.run(exp_data)
-            exp_data.block_for_results()
             result=exp_data.analysis_results()
-
             exp_data.figure(0)
 ```
 
@@ -820,24 +800,20 @@
             step1=False  # "False" shows the result saved in a previous job
             if step1==True:
                 exp_data = exp.run().block_for_results()
-                result = exp_data.analysis_results()
-                exp_data.figure(0)
-
+  
             else:
-                pass
+                # retrieve your jobs
+                from qiskit_ibm_provider import IBMProvider
+                from qiskit_experiments.framework import ExperimentData
+    
+                provider=IBMProvider()
+                job_ids= ["cqs4qjy88ev00080zbj0"]
+    
+                exp_data = ExperimentData(experiment=exp)
+                exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+                exp.analysis.run(exp_data)
+                exp_data.block_for_results()
 
-            # retrieve your jobs
-            from qiskit_ibm_provider import IBMProvider
-            from qiskit_experiments.framework import ExperimentData
-
-            provider=IBMProvider()
-            job_ids= ["cqs4qjy88ev00080zbj0"]
-
-            exp_data = ExperimentData(experiment=exp)
-            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-            exp.analysis.run(exp_data)
-
-            exp_data.block_for_results()
             result = exp_data.analysis_results()
             exp_data.figure(0)
 ```
