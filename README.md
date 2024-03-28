@@ -228,13 +228,12 @@ This change adds minimal working code examples to the API pages for each experim
 
 ### Details and comments
 
-This change solves the `issue#1238` (See also the `issue#1221`).
-In the API pages, the documentation for each experiment has been updated with its code example. 
-Users are required to specify a backend in the code example. As a default, the backend is a simulator such as `GenericBackendV2(num_qubits=27)`. 
-In some experiments,
-`CorrelatedReadoutError`,
-`ResonatorSpectroscopy`,
-`CrossResonanceHamiltonian`,
+- This change solves the `issue#1238` (See also the `issue#1221`).
+- In the API pages, the documentation for each experiment has been updated with its code example. Users are required to specify a backend in the code example. As a default, the backend is a simulator such as `GenericBackendV2(num_qubits=27)`. 
+- In some experiments,
+`CorrelatedReadoutError` 
+`ResonatorSpectroscopy` 
+`CrossResonanceHamiltonian` and 
 `EchoedCrossResonanceHamiltonian`, 
 the backend is an IBM Quantum real device due to the `backend.defaults()` dependence of the code example.
 In these cases, the code example explicitly imports the module `qiskit-ibm-provider` in order to retrieve the job on IBM Quantum real devices.
