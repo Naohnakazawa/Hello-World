@@ -220,4 +220,32 @@ I've added a reno release notes which describes the new feature.
 
 My code does not require any changes to dependencies. This is no problem.
 
+### PR for Qiskit-Extesions/qiskit-experiments issue#1238
 
+### Summary
+
+This change adds minimal working code examples to the API pages for each experiment,especially in characterizaion experiments. The minimal working code example is a code snippet which users can copy and paste to run the experiment. 
+
+### Details and comments
+
+Some details that should be in this section include:
+
+- Why this change was necessary
+
+This change solves the issue#1238 (See also the issue#1221).
+
+- What tests and documentation have been added/updated
+
+In the API pages, the documentation for each experiment has been updated with its code example. 
+  
+- What do users and developers need to know about this change
+
+Users are required to specify a backend in the code example. As a default, the backend is a simulator such as GenericBackendV2(num_qubits=27). In some experiments, the backend is an IBM real device due to the backend.defaults() dependence of the code example.
+
+
+### PR checklist
+
+- [x] I have read the contributing guide `CONTRIBUTING.md`.
+- [ ] I have added the tests to cover my changes.
+- [x] I have updated the documentation accordingly.
+- [x] I have added a release note file using `reno` if this change needs to be documented in the release notes.
