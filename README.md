@@ -222,6 +222,9 @@ My code does not require any changes to dependencies. This is no problem.
 
 ### PR for Qiskit-Extesions/qiskit-experiments issue#1238
 
+PR title : Add minimal working code expample in experiment API docs
+
+
 ### Summary
 
 This change adds minimal working code examples to the API pages for each experiment,especially in characterizaion experiments. The minimal working code example is a code snippet which users can copy and paste to run the experiment. 
