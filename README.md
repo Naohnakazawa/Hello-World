@@ -243,9 +243,28 @@ In the API pages, the documentation for each experiment has been updated with it
 Users are required to specify a backend in the code example. As a default, the backend is a simulator such as GenericBackendV2(num_qubits=27). In some experiments, the backend is an IBM real device due to the backend.defaults() dependence of the code example.
 
 
-### PR checklist
+### PR checklist (template)
 
 - [x] I have read the contributing guide `CONTRIBUTING.md`.
 - [ ] I have added the tests to cover my changes.
 - [x] I have updated the documentation accordingly.
 - [x] I have added a release note file using `reno` if this change needs to be documented in the release notes.
+
+
+### PR checklist (additional in CONTRIBUTING.md)
+
+- [x] The code follows the code style of the project and successfully passes the tests.
+- [x] The API documentation has been updated accordingly.
+- [x] You have updated the relevant documentation or written new docs. In case the PR needs
+      to be merged without delay (e.g. for a high priority fix), open an issue for updating
+      or adding the documentation later.
+- [] You've added tests that cover the changes you've made, if relevant.
+- [] If your change has an end user facing impact (new feature, deprecation, removal,
+     etc.), you've added or updated a reno release note for that change and tagged the PR
+     for the changelog.
+- [x] If your code requires a change to dependencies, you've updated the corresponding
+      requirements file: `requirements.txt` for core dependencies,
+      `requirements-extras.txt` for dependencies for optional features, and `requirements-dev.txt`
+      for dependencies required for running tests and building documentation.
+
+
