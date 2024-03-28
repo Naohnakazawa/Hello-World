@@ -53,31 +53,22 @@ exp.analysis.set_options(plot=True)
 for c in exp.circuits():
     print(c)
     
-step1=False # run carefully if your device is a real one!
+step1=False # "False" shows the result saved in the previous run.
 if step1==True:
-    
-    exp_data = exp.run()
-    mitigator = exp_data.analysis_results(0).value
-    result=exp_data.analysis_results()    
-    for _ in result:
-        print(_)
-        
-    exp_data.figure(0)
-    
+    exp_data = exp.run().block_for_results()
+
 else:
-    pass
+    # retrieve your jobs
+    from qiskit_experiments.framework import ExperimentData 
+    # job_ids=["cpgb4e9btqp0008tsp40"] # In case : shots=1000
 
-# retrieve your jobs
-from qiskit_experiments.framework import ExperimentData 
-# job_ids=["cpgb4e9btqp0008tsp40"] # In case : shots=1000
+    job_ids=["cpgdp28ja3gg00817x6g"] # list of job IDs for the experiment
+    exp_data = ExperimentData(experiment=exp)
+    exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+    exp.analysis.run(exp_data)
+    exp_data.block_for_results()
 
-job_ids=["cpgdp28ja3gg00817x6g"] # list of job IDs for the experiment
-exp_data = ExperimentData(experiment=exp)
-exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-exp.analysis.run(exp_data)
-exp_data.block_for_results()
 result=exp_data.analysis_results()
-
 exp_data.figure(0)
 ```
 
@@ -115,26 +106,19 @@ for c in exp.circuits():
 
 step1=False # run carefully if your device is a real one!
 if step1==True:
-    
-    exp_data = exp.run()
-    mitigator = exp_data.analysis_results(0).value
-    result=exp_data.analysis_results()
-    
-    for _ in result:
-        print(_)
-        
-    exp_data.figure(0)
+    exp_data = exp.run().block_for_results()
 
-# retrieve your jobs
-from qiskit_experiments.framework import ExperimentData 
+else:
+    # retrieve your jobs
+    from qiskit_experiments.framework import ExperimentData 
 
-job_ids= ["cpgdwf9mbjng008qsqt0"] # In case : backend=ibm_brisbane, shots=100, physical_qubits=(10, 11), date=20140112
-exp_data = ExperimentData(experiment=exp)
-exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-exp.analysis.run(exp_data)
-exp_data.block_for_results()
+    job_ids= ["cpgdwf9mbjng008qsqt0"] # In case : backend=ibm_brisbane, shots=100, physical_qubits=(10, 11), date=20140112
+    exp_data = ExperimentData(experiment=exp)
+    exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+    exp.analysis.run(exp_data)
+    exp_data.block_for_results()
+
 result=exp_data.analysis_results()
-
 exp_data.figure(0)
 ```
 
