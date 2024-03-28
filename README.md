@@ -240,7 +240,10 @@ In the API pages, the documentation for each experiment has been updated with it
   
 - What do users and developers need to know about this change
 
-Users are required to specify a backend in the code example. As a default, the backend is a simulator such as GenericBackendV2(num_qubits=27). In some experiments, the backend is an IBM real device due to the backend.defaults() dependence of the code example.
+Users are required to specify a backend in the code example. As a default, the backend is a simulator such as GenericBackendV2(num_qubits=27). 
+In some experiments, the backend is an IBM real device due to the backend.defaults() dependence of the code example.
+In these cases, the code example explicitly imports the module "qiskit-ibm-provider" in order to retrieve the job on IBM real devices. Therefore, `requirements-dev.txt` is updated 
+to add the dependency on "qiskit-ibm-provider" for running tests and building documentation.  
 
 
 ### PR checklist (template)
