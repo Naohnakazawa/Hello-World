@@ -282,11 +282,21 @@ from qiskit_experiments.test.mock_iq_backend import MockIQBackend
 backend = MockIQBackend()
 backend_data = BackendData(backend)
 
-print(backend_data.__dict__)
+print()
+
+print(dir(backend_data))
 
 print()
 
-print(backend_data._backend.__dict__)
+print(backend_data.__dict__.keys())
+
+print()
+
+print(backend_data._backend.__dict__.keys())
+
+print()
+
+print(backend_data._backend.__dict__.get("_defs_dict").keys())
 
 print()
 
@@ -294,7 +304,15 @@ print(backend_data._backend.__dict__.get("_defs_dict").get("meas_freq_est"))
 
 print()
 
-print(backend_data._pulse_conf.to_dict())
+print(backend_data._pulse_conf.__dict__.keys())
+
+print()
+
+print(backend_data._pulse_conf.__dict__.get("qubit_lo_range"))
+
+print()
+
+print(backend_data._pulse_conf.__dict__.get("meas_lo_range"))
 
 print()
 
@@ -330,6 +348,10 @@ print(backend_data.meas_freqs)
 
 print()
 
+print(dir(backend_data.meas_freqs))
+
+print()
+
 print(backend_data.measure_channel(qubit=1))
 
 print()
@@ -357,13 +379,21 @@ print()
 print(backend_data.version)
 ```
 
-{'_backend': <qiskit_experiments.test.mock_iq_backend.MockIQBackend object at 0x7f901d131f00>, '_v1': False, '_v2': True, '_pulse_conf': <qiskit.providers.models.backendconfiguration.PulseBackendConfiguration object at 0x7f90165e8f40>}
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_backend', '_parse_additional_data', '_pulse_conf', '_v1', '_v2', 'acquire_alignment', 'acquire_channel', 'control_channel', 'coupling_map', 'drive_channel', 'drive_freqs', 'dt', 'granularity', 'is_simulator', 'max_circuits', 'meas_freqs', 'measure_channel', 'min_length', 'name', 'num_qubits', 'provider', 'pulse_alignment', 'qubit_t1', 'version']
 
-{'_experiment_helper': None, '_rng': Generator(PCG64) at 0x7F901D65F680, '_conf_dict_real': {'backend_name': 'fake_openpulse_2q', 'backend_version': '0.0.0', 'n_qubits': 2, 'basis_gates': ['u1', 'u2', 'u3', 'cx', 'id'], 'gates': [{'name': 'TODO', 'parameters': [], 'qasm_def': 'TODO'}], 'local': True, 'simulator': False, 'conditional': True, 'open_pulse': True, 'memory': False, 'max_shots': 65536, 'coupling_map': [[0, 1]], 'dynamic_reprate_enabled': False, 'n_registers': 1, 'description': 'A fake test backend with pulse defaults', 'dt': 1.3333, 'dtm': 10.500000000000002, 'processor_type': {'family': 'Canary', 'revision': '1.0', 'segment': 'A'}, 'n_uchannels': 2, 'u_channel_lo': [[{'q': 0, 'scale': (1+0j)}], [{'q': 0, 'scale': (-1+0j)}, {'q': 1, 'scale': (1+0j)}]], 'meas_levels': [0, 1, 2], 'qubit_lo_range': [[4.5, 5.5], [4.5, 5.5]], 'meas_lo_range': [[6.0, 7.0], [6.0, 7.0]], 'meas_kernels': ['kernel1'], 'discriminators': ['max_1Q_fidelity'], 'rep_times': [99.99999999999999, 250.0, 500.0, 1000.0], 'channel_bandwidth': [[-0.2, 0.4], [-0.30000000000000004, 0.30000000000000004], [-0.30000000000000004, 0.30000000000000004], [-0.02, 0.02], [-0.02, 0.02], [-0.02, 0.02]], 'meas_map': [[0, 1]], 'acquisition_latency': [[100, 100], [100, 100]], 'conditional_latency': [[100, 1000], [1000, 100], [100, 1000], [1000, 100], [100, 1000], [1000, 100]], 'hamiltonian': {'h_str': ['np.pi*(2*v0-alpha0)*O0', 'np.pi*alpha0*O0*O0', '2*np.pi*r*X0||D0', '2*np.pi*r*X0||U1', '2*np.pi*r*X1||U0', 'np.pi*(2*v1-alpha1)*O1', 'np.pi*alpha1*O1*O1', '2*np.pi*r*X1||D1', '2*np.pi*j*(Sp0*Sm1+Sm0*Sp1)'], 'description': 'A hamiltonian for a mocked 2Q device, with 1Q and 2Q terms.', 'qub': {'0': 3, '1': 3}, 'vars': {'v0': 5.0, 'v1': 5.1000000000000005, 'j': 0.01, 'r': 0.02, 'alpha0': -0.33, 'alpha1': -0.33}}, 'channels': {'acquire0': {'operates': {'qubits': [0]}, 'purpose': 'acquire', 'type': 'acquire'}, 'acquire1': {'operates': {'qubits': [1]}, 'purpose': 'acquire', 'type': 'acquire'}, 'd0': {'operates': {'qubits': [0]}, 'purpose': 'drive', 'type': 'drive'}, 'd1': {'operates': {'qubits': [1]}, 'purpose': 'drive', 'type': 'drive'}, 'm0': {'type': 'measure', 'purpose': 'measure', 'operates': {'qubits': [0]}}, 'm1': {'type': 'measure', 'purpose': 'measure', 'operates': {'qubits': [1]}}, 'u0': {'operates': {'qubits': [0, 1]}, 'purpose': 'cross-resonance', 'type': 'control'}, 'u1': {'operates': {'qubits': [1, 0]}, 'purpose': 'cross-resonance', 'type': 'control'}}}, '_props_dict': {'backend_name': 'fake_openpulse_2q', 'backend_version': '0.0.0', 'last_update_date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'qubits': [[{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'T1', 'unit': 'µs', 'value': 71.9500421005539}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'T2', 'unit': 'µs', 'value': 69.4240447362455}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'frequency', 'unit': 'MHz', 'value': 4919.96800692}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'readout_error', 'unit': '', 'value': 0.02}], [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'T1', 'unit': 'µs', 'value': 81.9500421005539}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'T2', 'unit': 'µs', 'value': 75.5598482446578}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'frequency', 'unit': 'GHz', 'value': 5.01996800692}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'readout_error', 'unit': '', 'value': 0.02}]], 'gates': [{'qubits': [0], 'gate': 'id', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 2.6666}]}, {'qubits': [1], 'gate': 'id', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 2.6666}]}, {'qubits': [0], 'gate': 'u1', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0.06}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 0.0}]}, {'qubits': [1], 'gate': 'u1', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0.06}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 0.0}]}, {'qubits': [0], 'gate': 'u2', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0.06}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 2.6666}]}, {'qubits': [1], 'gate': 'u2', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0.06}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 2.6666}]}, {'qubits': [0], 'gate': 'u3', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0.06}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 5.3332}]}, {'qubits': [1], 'gate': 'u3', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0.06}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 5.3332}]}, {'qubits': [0, 1], 'gate': 'cx', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 1.0}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 29.3326}]}, {'qubits': [1], 'gate': 'u1', 'parameters': [{'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_error', 'unit': '', 'value': 0.06}, {'date': datetime.datetime(2024, 4, 6, 10, 58, 23, 342002), 'name': 'gate_length', 'unit': 'ns', 'value': 0.0}]}], 'general': []}, '_defs_dict': {'qubit_freq_est': [4.9, 5.0], 'meas_freq_est': [6.5, 6.6000000000000005], 'buffer': 10, 'pulse_library': [{'name': 'x90p_d0', 'samples': [(0.1+0j), (0.1+0j)]}, {'name': 'x90p_d1', 'samples': [(0.1+0j), (0.1+0j)]}, {'name': 'x90m_d0', 'samples': [(-0.1+0j), (-0.1+0j)]}, {'name': 'x90m_d1', 'samples': [(-0.1+0j), (-0.1+0j)]}, {'name': 'y90p_d0', 'samples': [0.1j, 0.1j]}, {'name': 'y90p_d1', 'samples': [0.1j, 0.1j]}, {'name': 'xp_d0', 'samples': [(0.2+0j), (0.2+0j)]}, {'name': 'ym_d0', 'samples': [(-0-0.2j), (-0-0.2j)]}, {'name': 'cr90p_u0', 'samples': [(0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j)]}, {'name': 'cr90m_u0', 'samples': [(-0.1+0j), (-0.1+0j), (-0.1+0j), (-0.1+0j), (-0.1+0j), (-0.1+0j), (-0.1+0j), (-0.1+0j), (-0.1+0j)]}, {'name': 'measure_m0', 'samples': [(0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j)]}, {'name': 'measure_m1', 'samples': [(0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j), (0.1+0j)]}], 'cmd_def': [{'name': 'u1', 'qubits': [0], 'sequence': [{'name': 'fc', 't0': 0, 'ch': 'd0', 'phase': '-P0'}]}, {'name': 'u1', 'qubits': [1], 'sequence': [{'name': 'fc', 't0': 0, 'ch': 'd1', 'phase': '-P0'}]}, {'name': 'u2', 'qubits': [0], 'sequence': [{'name': 'fc', 't0': 0, 'ch': 'd0', 'phase': '-P1'}, {'name': 'y90p_d0', 't0': 0, 'ch': 'd0'}, {'name': 'fc', 't0': 2, 'ch': 'd0', 'phase': '-P0'}]}, {'name': 'u2', 'qubits': [1], 'sequence': [{'name': 'fc', 't0': 0, 'ch': 'd1', 'phase': '-P1'}, {'name': 'y90p_d1', 't0': 0, 'ch': 'd1'}, {'name': 'fc', 't0': 2, 'ch': 'd1', 'phase': '-P0'}]}, {'name': 'u3', 'qubits': [0], 'sequence': [{'name': 'fc', 't0': 0, 'ch': 'd0', 'phase': '-P2'}, {'name': 'x90p_d0', 't0': 0, 'ch': 'd0'}, {'name': 'fc', 't0': 2, 'ch': 'd0', 'phase': '-P0'}, {'name': 'x90m_d0', 't0': 2, 'ch': 'd0'}, {'name': 'fc', 't0': 4, 'ch': 'd0', 'phase': '-P1'}]}, {'name': 'u3', 'qubits': [1], 'sequence': [{'name': 'fc', 't0': 0, 'ch': 'd1', 'phase': '-P2'}, {'name': 'x90p_d1', 't0': 0, 'ch': 'd1'}, {'name': 'fc', 't0': 2, 'ch': 'd1', 'phase': '-P0'}, {'name': 'x90m_d1', 't0': 2, 'ch': 'd1'}, {'name': 'fc', 't0': 4, 'ch': 'd1', 'phase': '-P1'}]}, {'name': 'cx', 'qubits': [0, 1], 'sequence': [{'name': 'fc', 't0': 0, 'ch': 'd0', 'phase': 1.57}, {'name': 'ym_d0', 't0': 0, 'ch': 'd0'}, {'name': 'xp_d0', 't0': 11, 'ch': 'd0'}, {'name': 'x90p_d1', 't0': 0, 'ch': 'd1'}, {'name': 'cr90p_u0', 't0': 2, 'ch': 'u0'}, {'name': 'cr90m_u0', 't0': 13, 'ch': 'u0'}]}, {'name': 'measure', 'qubits': [0, 1], 'sequence': [{'name': 'measure_m0', 't0': 0, 'ch': 'm0'}, {'name': 'measure_m1', 't0': 0, 'ch': 'm1'}, {'name': 'acquire', 't0': 0, 'duration': 10, 'qubits': [0, 1], 'memory_slot': [0, 1]}]}], '_data': {}}, '_options': Options(shots=1024, meas_level=<MeasLevel.KERNELED: 1>, meas_return='single'), '_provider': None, 'name': 'fake_openpulse_2q', 'description': 'A fake test backend with pulse defaults', 'online_date': None, 'backend_version': '0.0.0', '_coupling_map': None, '_target': None, 'sim': None, 'channels_map': {'acquire': defaultdict(<class 'list'>, {(0,): [AcquireChannel(0)], (1,): [AcquireChannel(1)]}), 'drive': defaultdict(<class 'list'>, {(0,): [DriveChannel(0)], (1,): [DriveChannel(1)]}), 'measure': defaultdict(<class 'list'>, {(0,): [MeasureChannel(0)], (1,): [MeasureChannel(1)]}), 'control': defaultdict(<class 'list'>, {(0, 1): [ControlChannel(0)], (1, 0): [ControlChannel(1)]})}, '_defaults': <qiskit.providers.models.pulsedefaults.PulseDefaults object at 0x7f901d6aa650>}
+dict_keys(['_backend', '_v1', '_v2', '_pulse_conf'])
+
+dict_keys(['_experiment_helper', '_rng', '_conf_dict_real', '_props_dict', '_defs_dict', '_options', '_provider', 'name', 'description', 'online_date', 'backend_version', '_coupling_map', '_target', 'sim', 'channels_map', '_defaults'])
+
+dict_keys(['qubit_freq_est', 'meas_freq_est', 'buffer', 'pulse_library', 'cmd_def', '_data'])
 
 [6.5, 6.6000000000000005]
 
-{'backend_name': 'fake_openpulse_2q', 'backend_version': '0.0.0', 'n_qubits': 2, 'basis_gates': ['u1', 'u2', 'u3', 'cx', 'id'], 'gates': [{'name': 'TODO', 'parameters': [], 'qasm_def': 'TODO'}], 'local': True, 'simulator': False, 'conditional': True, 'open_pulse': True, 'memory': False, 'max_shots': 65536, 'coupling_map': [[0, 1]], 'dynamic_reprate_enabled': False, 'n_registers': 1, 'description': 'A fake test backend with pulse defaults', 'dt': 1.3333, 'dtm': 10.500000000000004, 'processor_type': {'family': 'Canary', 'revision': '1.0', 'segment': 'A'}, 'n_uchannels': 2, 'u_channel_lo': [[{'q': 0, 'scale': (1+0j)}], [{'q': 0, 'scale': (-1+0j)}, {'q': 1, 'scale': (1+0j)}]], 'meas_levels': [0, 1, 2], 'qubit_lo_range': [[4.5, 5.5], [4.5, 5.5]], 'meas_lo_range': [[6.0, 7.0], [6.0, 7.0]], 'meas_kernels': ['kernel1'], 'discriminators': ['max_1Q_fidelity'], 'rep_times': [99.99999999999997, 250.0, 500.0, 1000.0], 'channel_bandwidth': [[-0.2, 0.4], [-0.3000000000000001, 0.3000000000000001], [-0.3000000000000001, 0.3000000000000001], [-0.02, 0.02], [-0.02, 0.02], [-0.02, 0.02]], 'meas_map': [[0, 1]], 'acquisition_latency': [[100, 100], [100, 100]], 'conditional_latency': [[100, 1000], [1000, 100], [100, 1000], [1000, 100], [100, 1000], [1000, 100]], 'hamiltonian': {'h_str': ['np.pi*(2*v0-alpha0)*O0', 'np.pi*alpha0*O0*O0', '2*np.pi*r*X0||D0', '2*np.pi*r*X0||U1', '2*np.pi*r*X1||U0', 'np.pi*(2*v1-alpha1)*O1', 'np.pi*alpha1*O1*O1', '2*np.pi*r*X1||D1', '2*np.pi*j*(Sp0*Sm1+Sm0*Sp1)'], 'description': 'A hamiltonian for a mocked 2Q device, with 1Q and 2Q terms.', 'qub': {'0': 3, '1': 3}, 'vars': {'v0': 5.0, 'v1': 5.100000000000001, 'j': 0.01, 'r': 0.02, 'alpha0': -0.33, 'alpha1': -0.33}}, 'channels': {'acquire0': {'operates': {'qubits': [0]}, 'purpose': 'acquire', 'type': 'acquire'}, 'acquire1': {'operates': {'qubits': [1]}, 'purpose': 'acquire', 'type': 'acquire'}, 'd0': {'operates': {'qubits': [0]}, 'purpose': 'drive', 'type': 'drive'}, 'd1': {'operates': {'qubits': [1]}, 'purpose': 'drive', 'type': 'drive'}, 'm0': {'type': 'measure', 'purpose': 'measure', 'operates': {'qubits': [0]}}, 'm1': {'type': 'measure', 'purpose': 'measure', 'operates': {'qubits': [1]}}, 'u0': {'operates': {'qubits': [0, 1]}, 'purpose': 'cross-resonance', 'type': 'control'}, 'u1': {'operates': {'qubits': [1, 0]}, 'purpose': 'cross-resonance', 'type': 'control'}}}
+dict_keys(['n_uchannels', 'u_channel_lo', 'meas_levels', 'qubit_lo_range', 'meas_lo_range', 'meas_kernels', 'discriminators', 'hamiltonian', 'rep_times', 'dt', 'dtm', 'channels', '_qubit_channel_map', '_channel_qubit_map', '_control_channels', 'channel_bandwidth', 'acquisition_latency', 'conditional_latency', 'meas_map', '_data', 'backend_name', 'backend_version', 'n_qubits', 'basis_gates', 'gates', 'local', 'simulator', 'conditional', 'open_pulse', 'memory', 'max_shots', 'coupling_map', 'dynamic_reprate_enabled', 'n_registers', 'description', 'processor_type'])
+
+[[4500000000.0, 5500000000.0], [4500000000.0, 5500000000.0]]
+
+[[6000000000.0, 7000000000.0], [6000000000.0, 7000000000.0]]
 
 1
 
@@ -380,6 +410,8 @@ DriveChannel(1)
 1
 
 []
+
+['__add__', '__class__', '__class_getitem__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
 
 MeasureChannel(1)
 
