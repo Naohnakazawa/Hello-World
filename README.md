@@ -135,6 +135,136 @@ exp_data.figure(0)
 
 
 
+
+### Plot Experiment Raw Data (T1)
+```
+# backend 
+from qiskit_ibm_runtime.fake_provider import FakeManilaV2
+from qiskit_aer import AerSimulator
+backend = AerSimulator.from_backend(FakeManilaV2())
+
+# mwc
+import numpy as np
+from qiskit_experiments.library.characterization import T1
+
+qubit0_t1 = FakeManilaV2().qubit_properties(0).t1
+print(qubit0_t1)
+
+qubit=0
+delays = np.arange(1.00e-6, 3*qubit0_t1, 30.0e-6)
+exp = T1(physical_qubits=(qubit, ), delays=delays, backend=backend)
+
+shots=50
+exp.set_run_options(shots=shots)
+exp_data=exp.run().block_for_results()
+exp_data.figure(0)
+
+# experiment-raw-data
+data_raw = exp_data.data()
+x_data=[]
+y_data=[]
+for i in range(len(exp_data.data())):
+    x_data.append(data_raw[i]["metadata"]["xval"]*1000) # the unit of x_data is "ms"
+    if data_raw[i]["counts"].get("1") == None:
+        p1 = 0
+    else:
+        p1 = float(int(data_raw[i]["counts"]["1"]) / int(data_raw[i]["shots"]))
+    y_data.append(p1)
+
+x_min = x_data[0]
+x_max = x_data[-1]
+import matplotlib.pyplot as plt
+import numpy as np
+
+# plot raw-data with matplotlib.plot
+x=x_data
+y=y_data
+
+fig1, ax = plt.subplots()
+
+# figure style
+ax.scatter(x, y)
+
+ax.set(xlim=(x_min, x_max),
+       ylim=(0., 1.))
+ax.set_xlabel("Delay(ms)")
+ax.set_ylabel("P(1)")
+ax.set_title("T1-experiment")
+
+plt.show()
+```
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/7a512711-5d0c-4c40-8135-73aa6a16c07d)
+
+
+
+
+
+### Least-Squares Fitting with Scipy (T1)
+```
+# test 
+
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy 
+from scipy.optimize import least_squares
+
+# fit model
+def func(x, u, y):
+    return x[0]*np.exp((- 1) * x[1] * u) + x[2] - y
+
+# experiment-raw-data 
+u_data = np.array([0.001, 0.031, 0.061, 0.091, 0.121,
+             0.151, 0.181, 0.21099999999999997, 0.241, 0.27099999999999996, 0.301])
+y_data = np.array([0.86, 0.66, 0.5, 0.42, 0.52, 0.24, 0.34, 0.2, 0.24, 0.18, 0.12])
+
+# initial guess of fitting parameters
+x0 = np.array([0.86, 1.00, 1.00])
+
+# main
+res = least_squares(fun=func, x0=x0, args=(u_data, y_data), verbose=2)
+res.x
+t1=(1 / res.x[1])* 1.e-3
+
+# a solution with least-squares method
+u_min = u_data[0]
+u_max = u_data[-1]
+u_val = np.linspace(u_min, u_max, 1001)
+y_val = res.x[0]*np.exp((- 1) * res.x[1] * u_val) + res.x[2] 
+
+print(f"The value of T1 is {t1} (s).")
+
+# figure
+plt.plot(u_data, y_data, "ob", label = "data")
+plt.plot(u_val, y_val, "-r", label = "least_square")
+
+plt.xlabel("Delay(ms)")
+plt.ylabel("P(1)")
+plt.title("T1-experiment")
+plt.legend()
+plt.show()
+```
+
+The value of T1 is 0.0001335043664939613 (s).
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/0f725cdf-a7c9-4352-a8ae-7b56456b258b)
+
+
+
+
+
+
+
+
 ### Issue#1238(also #1221)
 
 ### reno
