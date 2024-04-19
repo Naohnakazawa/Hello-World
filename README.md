@@ -705,6 +705,202 @@ The value of kappa is 8734845.157049231 (Hz).
 
 
 
+### Plot Experiment Raw Data (MultiStateDiscrimination)
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+# backend ibm-kyoto
+from qiskit_ibm_provider import IBMProvider
+provider = IBMProvider() 
+backend = provider.get_backend("ibm_sherbrooke")
+
+# ..jupyter-execute::
+
+# mwc
+import numpy as np
+import matplotlib.pyplot as plt
+from qiskit_experiments.library.characterization import MultiStateDiscrimination
+
+qubit=107
+exp=MultiStateDiscrimination([qubit], backend=backend)
+exp.set_run_options(shots=100)
+
+step1=False  # "False" shows the result in the previous run
+if step1==True:
+    exp_data = exp.run().block_for_results()
+    
+else:
+    # retrieve your jobs
+    from qiskit_experiments.framework import ExperimentData
+    job_ids = ["crgmfvzqzd5000886y7g"] # case: backend=ibm_sherbrooke, shots=100, physical_qubits=[107]
+                                              
+    exp_data = ExperimentData(experiment=exp)
+    exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
+    exp.analysis.run(exp_data)
+    exp_data.block_for_results()
+    
+result = exp_data.analysis_results()
+exp_data.figure(0)
+
+# ..jupyter-execute::
+
+# plot iq-data (iq_center with standard_deviation)
+from matplotlib.patches import Ellipse
+
+data_raw = exp_data.data()
+print(f"The qubit state is {data_raw[0].get('metadata')} for qubit=107.")
+
+iq_center=[]
+u_data=[]
+v_data=[]
+
+for i in range(len(data_raw[0].get("memory"))):    
+    u, v=data_raw[0].get("memory")[i][0]    
+    u_data.append(u)       
+    v_data.append(v)
+    
+u_min = min(u_data)
+u_max = max(u_data)
+v_min = min(v_data)
+v_max = max(v_data)
+
+iq_center = [np.mean(u_data), np.mean(v_data)]
+iq_std = [np.std(u_data), np.std(v_data)]
+
+print(data_raw[0].get("metadata"))
+print(iq_center)
+print(iq_std)
+
+# data
+x=u_data
+y=v_data
+
+fig0, ax = plt.subplots()
+
+# figure style
+ax.scatter(x, y, marker="o", color="b")
+
+# The ellipse of 100 shots
+width = 2 * iq_std[0]
+height = 2 * iq_std[1]
+ellipse = Ellipse(xy=(iq_center[0], iq_center[1]),
+                  width = width,
+                  height = height,
+                  facecolor="none",
+                  edgecolor="b",)
+
+ax.add_patch(ellipse)
+
+ax.set(xlim=(u_min, u_max),
+       ylim=(v_min, v_max))
+
+ax.set_xlabel("I")
+ax.set_ylabel("Q")
+ax.set_title("MultiStateDiscrimination '0'")
+plt.show()
+
+# ..jupyter-execute::
+
+print(f"The qubit state is {data_raw[1].get('metadata')} for qubit=107.")
+
+iq_center=[]
+u_data=[]
+v_data=[]
+
+for i in range(len(data_raw[1].get("memory"))):    
+    u, v=data_raw[1].get("memory")[i][0]    
+    u_data.append(u)       
+    v_data.append(v)
+    
+u_min = min(u_data)
+u_max = max(u_data)
+v_min = min(v_data)
+v_max = max(v_data)
+
+iq_center = [np.mean(u_data), np.mean(v_data)]
+iq_std = [np.std(u_data), np.std(v_data)]
+
+print(data_raw[1].get("metadata"))
+print(iq_center)
+print(iq_std)
+
+# data
+x=u_data
+y=v_data
+
+fig1, ax = plt.subplots()
+
+# figure style
+ax.scatter(x, y, marker="o", color="r")
+
+# The ellipse of 100 shots
+width = 2 * iq_std[0]
+height = 2 * iq_std[1]
+ellipse = Ellipse(xy=(iq_center[0], iq_center[1]),
+                  width = width,
+                  height = height,
+                  facecolor="none",
+                  edgecolor="r",)
+
+ax.add_patch(ellipse)
+
+ax.set(xlim=(u_min, u_max),
+       ylim=(v_min, v_max))
+
+ax.set_xlabel("I")
+ax.set_ylabel("Q")
+ax.set_title("MultiStateDiscrimination '0'")
+plt.show()
+
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/4881cd64-232c-42b1-ab31-45fb6fc9634b)
+
+
+
+
+
+
+
+The qubit state is {'label': 0} for qubit=107.
+{'label': 0}
+[-72705130.43, 83287911.52]
+[22681331.42185364, 13971081.881666945]
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/703dcf6f-2789-4a99-9611-af9c943c9e31)
+
+
+
+
+
+
+
+The qubit state is {'label': 1} for qubit=107.
+{'label': 1}
+[38391372.06, 85121201.36]
+[16765032.499758402, 12909267.318687618]
+
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/093ffb8d-2d96-4c47-b102-db20bcbc6531)
+
+
+
+
+
 
 
 ### Issue#1238(also #1221)
