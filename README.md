@@ -141,10 +141,8 @@ features-expclass:
     The minimal working code example is a code snippet which users can copy
     and paste to run the experiment. Users are required to specify a backend
     in the code example. As a default, the backend is a simulator such as
-    `GenericBackendV2(num_qubits=27)`. In some experiments,
-    the backend is an IBM real device due to the `backend.defaults()` dependence
-    of the code example.
-
+    `GenericBackendV2(num_qubits=27)`.
+    
 ### Pull request checklist (for qiskit)
 
 1. The code follows the code style of the project and successfully
@@ -228,15 +226,6 @@ This change adds minimal working code examples to the API pages for each experim
 
 - This change solves the `issue#1238` (See also the `issue#1221`).
 - In the API pages, the documentation for each experiment has been updated with its code example. Users are required to specify a backend in the code example. As a default, the backend is a simulator such as `GenericBackendV2(num_qubits=27)`. 
-- In some experiments,
-`CorrelatedReadoutError` 
-`ResonatorSpectroscopy` 
-`CrossResonanceHamiltonian` and 
-`EchoedCrossResonanceHamiltonian`, 
-the backend is an IBM Quantum real device due to the `backend.defaults()` dependence of the code example.
-In these cases, the code example explicitly imports the module `qiskit-ibm-provider` in order to retrieve the job on IBM Quantum real devices.
-Therefore, `requirements-dev.txt` has been updated to add the dependency on `qiskit-ibm-provider` for running tests and building documentation.  
-
 
 ### PR checklist (template)
 
