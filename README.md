@@ -252,3 +252,15 @@ This change adds minimal working code examples to the API pages for each experim
       for dependencies required for running tests and building documentation.
 
 
+### issue-#1238-revised
+
+issue-#1238 is closed and open a new PR issue-#1238-revised
+
+### Summary
+
+This change adds minimal working code examples to the API pages for each experiment,especially in characterizaion experiments. The minimal working code example is a code snippet which users can copy and paste to run the experiment. 
+
+### Details and comments
+
+- This change solves the `issue#1238` (See also the `issue#1221`).
+- In the API pages, the documentation for each experiment has been updated with its code example. Users are required to specify a backend in the code example. As a default, the backend is a simulator such as `GenericBackendV2(num_qubits=27)`. 
