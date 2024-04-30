@@ -453,6 +453,19 @@
             exp_data.figure(0)
 ```
 
+### FineFrequency (revised) FakeBackend
+```
+    # section: example
+        .. jupyter-execute::
+            # :hide-code:
+
+            # backend
+            from qiskit_ibm_runtime.fake_provider FakePerth
+            from qiskit_aer import AerSimulator
+            backend =AerSimulaor.from_backend(FakePerth())
+
+```
+
 ### HalfAngle
 ```
     # section: example
