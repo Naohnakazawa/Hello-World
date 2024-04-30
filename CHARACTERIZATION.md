@@ -923,7 +923,7 @@
             exp_data.figure(0)
 ```
 
-### T2Hahn
+### T2Hahn (revised)
 ```
     # section: example
         ..jupyter-execute::
@@ -946,6 +946,7 @@
             import qiskit
             from qiskit_experiments.library.characterization.t2hahn import T2Hahn
 
+            conversion_factor = 1e-6
             delays = list(range(0, 50, 1))
             delays = [float(_)*conversion_factor for _ in delays]
             number_of_echoes = 1
