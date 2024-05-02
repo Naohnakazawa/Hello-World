@@ -70,6 +70,37 @@
             exp_data.figure(0)
 ```
 
+### CorrelatedReadoutError (revised)
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+
+from qiskit_ibm_runtime.fake_provider import FakePerth
+from qiskit_aer import AerSimulator
+
+backend = AerSimulator.from_backend(FakePerth())
+
+# ..jupyter-execute::
+
+from qiskit_experiments.library import CorrelatedReadoutError
+            
+exp = CorrelatedReadoutError(physical_qubits=(0,1,2), backend=backend)
+exp.analysis.set_options(plot=True)
+
+exp_data = exp.run().block_for_results()
+display(exp_data.figure(0))
+exp_data.analysis_results(dataframe=True)
+```
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/f7003eb7-4597-4eb4-b503-19719213feb3)
+
+
+
+
 ### CrossResonanceHamiltonian
 ```
     # section: example
