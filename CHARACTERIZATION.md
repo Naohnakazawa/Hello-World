@@ -1,4 +1,4 @@
-# Characterization experimnents
+# Characterization experiments
 
 ### CorrelatedReadoutError
 ```
