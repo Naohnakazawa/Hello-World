@@ -12,9 +12,6 @@ This is a <sub>subscript</sub> text.
 
 This is a <sup>superscript</sup> test.
 
-Today is a **holiday**.
-> Today is a **holiday**.
-
 Some basic **Git** commands are:
 ```
 git config
@@ -38,11 +35,23 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 ### Git commit 
 
 This is a test case#1=origin/main/README.md update
-	local/main pull results ff
+>	local/main pull
+
+results ff(fasr-forward)
 
 This is a test case#2=local/hello-world-0515/README.md update
-	git add + git commit may be necessary
+>	git add + git commit
 
-This is a test case#3 marge local/hello-world-0515 to local/main
-	git checkout main
-	git merge local/hello-world-0515 results ff 
+may be necessary
+
+This is a test case#3 merge local/hello-world-0515 to local/main
+>	git checkout main
+>
+>	git merge local/hello-world-0515
+
+results ff 
+
+This is a test case#4 loal/main push
+>	git push origin main
+
+results ff (merge local/main to origin/main without commit)
