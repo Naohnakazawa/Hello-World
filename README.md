@@ -37,4 +37,8 @@ An interesting paper is [here](https://arxiv.org/abs/2308.02321).
 
 ### Git commit 
 
-This is a test case#1=origin/README.md update
+This is a test case#1=origin/main/README.md update
+	local/main pull results ff
+
+This is a test case#2=local/hello-world-0515/README.md update
+ 
