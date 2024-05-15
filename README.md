@@ -43,4 +43,6 @@ This is a test case#1=origin/main/README.md update
 This is a test case#2=local/hello-world-0515/README.md update
 	git add + git commit may be necessary
 
-This is a test case#3 marge local/hello-world-0515 to local/main 
+This is a test case#3 marge local/hello-world-0515 to local/main
+	git checkout main
+	git merge local/hello-world-0515 results ff 
