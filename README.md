@@ -58,3 +58,5 @@ results ff (merge local/main to origin/main without commit)
 
 This is a test case#5 origin/branch=my-workflows-0516 work on this branch only without use of local branches
 > git commit "work on origin/branch"
+
+results one commit
