@@ -1,4 +1,4 @@
-### EFRoughXSXAmplidude
+### EFRoughXSXAmplidudeCal
 ```
 # section: example
 # ..jupyter-execute::
