@@ -17,15 +17,14 @@ from qiskit_experiments.library.calibration import EFRoughXSXAmplitudeCal
 from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
 
 qubit = 0
-library = FixedFrequencyTransmon(default_values={"duration": 320})
+library = FixedFrequencyTransmon(default_values={"duration": 80})
 cals = Calibrations.from_backend(backend, libraries=[library])
 exp_cal = EFRoughXSXAmplitudeCal((qubit,),
                                  cals,
                                  backend=backend,
-                                 amplitudes=np.linspace(-0.1, 0.1, 21),
+                                 amplitudes=np.linspace(-0.5, 0.5, 51),
                                  ef_pulse_label="12",
                                 )
-print(exp_cal.circuits()[3])
 
 columns_to_show = ["parameter", "qubits", "schedule", "value", "date_time"]
 print("parameters before the calibration")
@@ -36,10 +35,9 @@ cal_result=cal_data.analysis_results()
     
 for _ in cal_result:
     print(_)
-        
-cal_data.figure(0)
 
 print("parameters after the calibration")
 print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("amp")))[columns_to_show])
 
-cal_data.figure(0)```
+cal_data.figure(0)
+```
