@@ -72,6 +72,7 @@ pauli_op = SparsePauliOp(['ZII', 'IZI', 'IIZ', 'XII', 'IXI', 'IIX'])
 
 
 
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/6ed54b02-dc18-48b5-9d5e-a478685d0397)
 
 
 
