@@ -245,7 +245,7 @@ exp_data.analysis_results(dataframe=True)
             exp_data.figure(0)
 ```
 
-### EFSpectroscopy
+### EFSpectroscopy(revised 20240629)
 ```
     # section: example
         ..jupyter-execute::
@@ -262,7 +262,8 @@ exp_data.analysis_results(dataframe=True)
 
             qubit = 0
             freq01_estimate = backend.defaults().qubit_freq_est[qubit]
-            frequencies = np.linspace(freq01_estimate-15e6, freq01_estimate+15e6, 51)
+            freq12_estimate = freq_01 + (-.25e9)
+            frequencies = np.linspace(freq12_estimate-15e6, freq12_estimate+15e6, 51)
 
             exp = EFSpectroscopy(physical_qubits = (0,),
                                      frequencies = frequencies,
@@ -274,6 +275,18 @@ exp_data.analysis_results(dataframe=True)
             exp_data = exp.run().block_for_results()
             exp_data.figure(0)
 ```
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/78d0dace-f5ed-4dad-854b-37f6604cbaa4)
+
+
+
+
+
+
 
 ### FineAmplitude(XGate)
 ```
