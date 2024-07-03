@@ -1,4 +1,4 @@
-### EFRoughXSXAmplidudeCal
+### EFRoughXSXAmplidudeCal(error)
 ```
 # section: example
 # ..jupyter-execute::
@@ -41,3 +41,7 @@ print(pd.DataFrame(**cals.parameters_table(qubit_list=[qubit, ()], parameters=("
 
 cal_data.figure(0)
 ```
+
+This code does not work on both STT and ibm_kyoto. The error mssage is like this,
+
+TranspilerError: "HighLevelSynthesis was unable to synthesize Instruction(name='rzx01', num_qubits=2, num_clbits=0, params=[1.5707963267948966])."
