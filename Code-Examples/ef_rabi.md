@@ -159,4 +159,94 @@ else:
 
 
 
+### EFRabi (revised 20240705, backend=ibm_kyoto) Sampler() raw results
+```
+# backend
+from qiskit_ibm_runtime import QiskitRuntimeService
+
+service = QiskitRuntimeService(channel="ibm_quantum")
+backend = service.backend("ibm_kyoto")
+
+num_qubits = 1
+qubit = 0
+
+# mwc
+import numpy as np
+from qiskit import pulse
+from qiskit import QuantumCircuit
+from qiskit.circuit import Gate, Parameter
+from qiskit.pulse import ScheduleBlock
+from qiskit.compiler import transpile, schedule
+from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
+
+amplitudes = np.linspace(-0.1, 0.1, 21)
+param = Parameter("amp")
+gate_efrabi = Gate("EFRabi", 1, [param])
+
+with pulse.build() as build_sched_efrabi:
+    with pulse.align_left():
+        pulse.shift_frequency(- 0.30803e9, pulse.DriveChannel(0))
+        pulse.play(pulse.Gaussian(160, param, 40), pulse.DriveChannel(0))
+    
+def template_circuit(physical_qubits):
+    
+    circuit = QuantumCircuit(num_qubits)
+    circuit.x(qubit)
+    circuit.append(gate_efrabi, physical_qubits)
+    circuit.add_calibration(gate_efrabi, physical_qubits, build_sched_efrabi, params=[param])
+    
+    return circuit, param
+
+circs = []
+for i, amp in enumerate(amplitudes):
+    circuit, param = template_circuit((qubit,))
+    
+    amp = float(np.round(amp, decimals=6))    
+    assigned_circ = circuit.assign_parameters({param: amp}, inplace=False)
+    assigned_circ.measure_all()
+    
+    circs.append(assigned_circ)
+
+pm = generate_preset_pass_manager(optimization_level=1, backend=backend)
+isa_circs = pm.run(circs)
+
+from qiskit_ibm_runtime import SamplerV2 as Sampler
+ 
+sampler = Sampler(mode=backend)
+ 
+# Setting options after primitive initialization
+# This uses auto complete.
+sampler.options.default_shots = 1000
+
+job = sampler.run(isa_circs)
+print(f">>> Job ID: {job.job_id()}")
+print(f">>> Job Status: {job.status()}")
+
+results = job.result()
+
+counts_list = []
+for idx, pub_result in enumerate(results):
+    counts = pub_result.data.meas.get_counts()
+    if counts.get("0") == None:
+        counts_list.append(0)
+        
+    else:
+        counts_list.append(counts.get("0"))
+
+import matplotlib.pyplot as plt
+
+container = plt.plot(amplitudes, counts_list, "o")
+plt.xlabel("amp")
+plt.ylabel("counts");
+```
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/988c0a14-ab9b-4632-8f8c-48ad5dfe1bdc)
+
+
+
+
 
