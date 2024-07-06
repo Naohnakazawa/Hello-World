@@ -203,3 +203,81 @@ exp_data.analysis_results(dataframe=True)
 
 
 
+
+
+### ZZRamsey (backend=ibm_kyoto)
+```
+# backend
+from qiskit_ibm_runtime import QiskitRuntimeService
+from qiskit_experiments.framework import ExperimentData
+
+service = QiskitRuntimeService(channel="ibm_quantum")
+backend = service.backend("ibm_kyoto")
+
+num_qubits = 1
+qubit = 0
+
+qubit=63
+for qpair in backend.coupling_map:
+    if qpair[0] == qubit:
+        qubits=qpair
+        print(qubits)
+        break
+
+# mwc
+
+from qiskit_experiments.library.characterization import ZZRamsey
+
+backend.open_session()
+qubits = (63, 64)
+exp = ZZRamsey(physical_qubits=qubits, backend=backend)
+exp.set_run_options(shots=100)
+
+print(exp.circuits()[2]) #0319
+print(exp.circuits()[3]) #0319
+print(len(exp.circuits()))
+    
+exp_data = exp.run().block_for_results()
+display(exp_data.figure(0))
+exp_data.analysis_results(dataframe=True)
+
+backend.close_session()
+    
+# retrieve your jobs
+# List of job IDs for the experiment
+job_ids= ["ct4gmeh7srd00088rbk0"]
+
+experiment = exp
+expdata = ExperimentData(experiment = experiment)
+expdata.add_data([service.job(job_id).result() for job_id in job_ids])
+experiment.analysis.run(expdata, replace_results=True)
+
+# Block execution of subsequent code until analysis is complete
+expdata.block_for_results()
+
+display(expdata.figure(0))
+expdata.analysis_results(dataframe=True)
+```
+
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/1f2b5440-2c33-414f-a028-66ed70e9e00f)
+
+
+
+
+
+
+
+
+![image](https://github.com/Naohnakazawa/Hello-World/assets/117684192/091e9cf8-6155-4661-9be0-90774e7eff75)
+
+
+
+
+
+
