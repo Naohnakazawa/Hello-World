@@ -57,6 +57,22 @@ exp_data = exp.run()
 ```
 
 
+
+
+
+
+![image](https://github.com/user-attachments/assets/87fdb425-bc9c-49e9-9d52-84e8bb28d6c5)
+
+
+
+
+
+
+
+TranspilerError: "HighLevelSynthesis was unable to synthesize Instruction(name='szx', num_qubits=2, num_clbits=0, params=[1.5707963267948966])."
+
+
+
 ### FineZXAmplitude (backend=ibm_kyoto)
 ```
 # backend ibm-kyoto
@@ -134,4 +150,24 @@ if step1==True:
 else:
     pass 
 ```
+
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/4279c229-7b02-4a5d-b515-98194ea6f94c)
+
+
+
+
+
+
+
+
+
+
+TranspilerError: "HighLevelSynthesis was unable to synthesize Instruction(name='szx', num_qubits=2, num_clbits=0, params=[1.5707963267948966])."
+
+
 
