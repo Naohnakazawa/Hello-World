@@ -75,31 +75,29 @@ TranspilerError: "HighLevelSynthesis was unable to synthesize Instruction(name='
 
 ### FineZXAmplitude (backend=ibm_kyoto)
 ```
-# backend ibm-kyoto
-from qiskit_ibm_provider import IBMProvider
+# backend
+from qiskit_ibm_runtime import QiskitRuntimeService
 
-provider = IBMProvider()
-backend = provider.get_backend("ibm_kyoto")
+service = QiskitRuntimeService(channel="ibm_quantum")
+backend = service.backend("ibm_kyoto")
 
-qubit=0
+qubit=12
 for qpair in backend.coupling_map:
-    if qpair[0]==qubit:
+    if qpair[0] == qubit:
         qubits=qpair
+        print(qubits)
         break
-        
-print(qubits)
 
-# mwc is as follows
+qubits=(12, 17)
+
+# mwc
 import numpy as np
 import qiskit.pulse as pulse
 from qiskit.circuit import QuantumCircuit
 from qiskit.circuit.library import RZXGate
 from qiskit.compiler import schedule, transpile
-from qiskit.pulse import InstructionScheduleMap
+from qiskit.pulse import Schedule, ScheduleBlock, InstructionScheduleMap
 from qiskit_experiments.library import FineZXAmplitude
-
-# definition of RZXGate(np.pi/2)
-print(RZXGate(np.pi/2).decompositions[0])
 
 # decomposition of RZXGate(np.pi/2) and the pulse schedule
 qc=QuantumCircuit(2)
@@ -118,14 +116,10 @@ qc.rz(np.pi/2, 1)
 
 qc.draw("mpl")
 
-# palse schedule
-qc_t = transpile(qc, backend, optimization_level=3)
+qc_t = transpile(qc, backend=backend, optimization_level=3, initial_layout=[12, 17])
 rzx_sched = schedule(qc_t, backend=backend)
+display(transpiled_rzx_sched.draw())
 
-display(rzx_sched.draw())
-
-# FineZXAmplitude experiment
-qubits=(0,14,)
 inst_map = InstructionScheduleMap()
 inst_map.add("szx", qubits, rzx_sched)
 
@@ -133,8 +127,10 @@ repetitions = list(range(15))
 exp = FineZXAmplitude(physical_qubits=qubits, backend=backend)
 exp.set_experiment_options(repetitions=repetitions)
 exp.set_transpile_options(inst_map=inst_map,
-                          basis_gates=['cx', 'measure', 'id', 'reset', 'x', 'sx'],
-                          optimization_level=3,)
+                          basis_gates=["id","rz","sx","x","cx","reset","delay","measure"],
+                          unitary_synthesis_method="default",
+                          optimization_level=1)
+exp.set_run_options(shots=100)
 
 step1=True # run carefully if your device is a real device!
 if step1==True:
@@ -156,7 +152,7 @@ else:
 
 
 
-![image](https://github.com/user-attachments/assets/4279c229-7b02-4a5d-b515-98194ea6f94c)
+![image](https://github.com/user-attachments/assets/f369aff1-a0e4-46d1-b270-083246c0aed9)
 
 
 
@@ -165,9 +161,35 @@ else:
 
 
 
+TranspilerError: "HighLevelSynthesis was unable to synthesize Instruction(name='szx', num_qubits=2, num_clbits=0, params=[])."
 
 
-TranspilerError: "HighLevelSynthesis was unable to synthesize Instruction(name='szx', num_qubits=2, num_clbits=0, params=[1.5707963267948966])."
 
 
+
+### FineZXAmplitude (backend=ibm_brisbane)
+```
+# backend
+from qiskit_ibm_runtime import QiskitRuntimeService
+
+service = QiskitRuntimeService(channel="ibm_quantum")
+backend = service.backend("ibm_brisbane")
+
+qubit=12
+for qpair in backend.coupling_map:
+    if qpair[0] == qubit:
+        qubits=qpair
+        print(qubits)
+        break
+
+qubits=(12, 17)
+
+...
+
+```
+
+
+
+
+![image](https://github.com/user-attachments/assets/4d076c6b-01dc-491a-acf8-408c636e30a8)
 
