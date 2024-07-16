@@ -193,3 +193,66 @@ qubits=(12, 17)
 
 ![image](https://github.com/user-attachments/assets/4d076c6b-01dc-491a-acf8-408c636e30a8)
 
+
+
+
+
+
+
+
+
+
+
+
+### The index of a ControlChannel
+```
+# Qiskit pulse
+
+a0 = pulse.AcquireChannel(0)
+u0 = pulse.ControlChannel(0)
+d0 = pulse.DriveChannel(0)
+m0 = pulse.MeasureChannel(0)
+
+with pulse.build() as sched:
+    pulse.play(np.linspace(0,1,100), d0)
+    pulse.play(np.linspace(1,0,100), d0)
+    pulse.barrier(d0, m0)
+    pulse.play(pulse.Gaussian(200, 0.5, 20), m0)
+
+sched.draw()
+
+with pulse.build(schedule=sched) as sched:
+    pulse.shift_frequency(1e9, d0)
+    pulse.shift_phase(np.pi, m0)
+    
+sched.draw()
+
+# measurement schedule
+#
+#n The acquirechannel does not appear!
+
+mem_slot = pulse.MemorySlot(0)
+
+with pulse.build() as meas_sched:
+    with pulse.align_right():        
+        pulse.call(sched)
+        pulse.acquire(200, a0, mem_slot)
+    
+meas_sched.draw()
+```
+
+
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/375cec01-4512-4d64-baee-5cd892a55816)
+
+
+
+
+
+
+
+
