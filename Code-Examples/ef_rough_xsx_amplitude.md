@@ -124,6 +124,10 @@ cal_data.analysis_results(dataframe=True)
 
 
 
+![image](https://github.com/Naohnakazawa/Plasmid-Box/assets/117684192/6938230f-0308-4dcc-8036-09b762ab4db9)
+
+
+
 
 
 
