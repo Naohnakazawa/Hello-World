@@ -60,3 +60,35 @@ This is a test case#5 origin/branch=my-workflows-0516 work on this branch only w
 > git commit "work on origin/branch"
 
 results one commit
+
+### Question
+
+How do we implement a "cx" gate insturuction to backend.target in DynamicsBackend module?
+Following the tutorial (https://qiskit-community.github.io/qiskit-dynamics/tutorials/dynamics_backend.html, we have 
+
+```
+print(backend.target)
+```
+
+Target
+Number of qubits: 2
+Instructions:
+	measure
+		(0,):
+			With pulse schedule calibration
+		(1,):
+			With pulse schedule calibration
+	x
+		(0,)
+		(1,)
+	sx
+		(0,)
+		(1,)
+	cx
+		(0, 1)
+		(1, 0)
+	rz
+		(0,):
+			With pulse schedule calibration
+		(1,):
+			With pulse schedule calibration
