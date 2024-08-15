@@ -92,3 +92,59 @@ Instructions:
 			With pulse schedule calibration
 		(1,):
 			With pulse schedule calibration
+
+
+
+```
+backend.target.update_from_instruction_schedule_map(cals.get_inst_map())
+print(backend.target)
+```
+
+
+
+Target
+Number of qubits: 2
+Instructions:
+	measure
+		(0,):
+			With pulse schedule calibration
+		(1,):
+			With pulse schedule calibration
+	x
+		(0,):
+			Duration: 3.5555555555555554e-08 sec.
+			With pulse schedule calibration
+		(1,):
+			Duration: 3.5555555555555554e-08 sec.
+			With pulse schedule calibration
+	sx
+		(0,):
+			Duration: 3.5555555555555554e-08 sec.
+			With pulse schedule calibration
+		(1,):
+			Duration: 3.5555555555555554e-08 sec.
+			With pulse schedule calibration
+	cx
+		(0, 1)
+		(1, 0)
+	rz
+		(0,):
+			With pulse schedule calibration
+		(1,):
+			With pulse schedule calibration
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
