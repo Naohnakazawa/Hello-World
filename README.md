@@ -63,7 +63,7 @@ results one commit
 
 ### Question
 
-How do we implement a "cx" gate insturuction to backend.target in DynamicsBackend module?
+How do we implement a "cx" gate insturuction to backend.target in DynamicsBackend ?
 Following the tutorial (https://qiskit-community.github.io/qiskit-dynamics/tutorials/dynamics_backend.html, we have 
 
 ```
