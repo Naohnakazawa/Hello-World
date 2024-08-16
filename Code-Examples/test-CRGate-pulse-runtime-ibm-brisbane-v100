@@ -1,71 +1,193 @@
 ### CRH
 ```
-# backend ibm_brisbane
-from qiskit_ibm_runtime import QiskitRuntimeService
-service = QiskitRuntimeService(channel="ibm_quantum")
-backend = service.backend("ibm_brisbane")
+### backend = dynamics_backend
 
-# mwc
-from qiskit_experiments.library.characterization import CrossResonanceHamiltonian
+# Configure JAX
+import jax
+jax.config.update("jax_enable_x64", True)
+jax.config.update("jax_platform_name", "cpu")
 
-qubit=63
-for qpair in backend.coupling_map:
-    if qpair[0] == qubit:
-        qubits=qpair
-        print(qubits)
-        break
+### a 2-qubit fixed-frequency transmon model with fixed coupling
+import numpy as np
 
-exp=CrossResonanceHamiltonian(physical_qubits=qubits, backend=backend)
+dim = 3
 
-exp.set_experiment_options(max_circuits=None, 
-                       durations=None, 
-                       min_durations=1.0e-07, 
-                       max_durations=1.2e-06, 
-                       num_durations=48, 
-                       amp=0.20, 
-                       amp_t=0.0, 
-                       sigma=30, 
-                       risefall=2)
-exp.set_run_options(shots=1000)
-print(exp.circuits()[0])
-print(exp.circuits()[1])
-print(exp.circuits()[2])
-print(exp.circuits()[287])
+v0 = 4.86e9
+anharm0 = -0.32e9
+r0 = 0.22e9
 
-step1=False # run carefully if your device is a real device!
-if step1==True:
-    
-    exp_data=exp.run().block_for_results()
-    result=exp_data.analysis_results()
-    
-    for _ in result:
-        print(_)
-        
-    exp_data.figure(0)
+v1 = 4.97e9
+anharm1 = -0.32e9
+r1 = 0.26e9
 
-else:
-    pass
-    
-# retrieve your jobs
-from qiskit_experiments.framework import ExperimentData # retrieve jove
+J = 0.002e9
 
-# job_ids= ["cnvwmx38ybr000846y6g"] # case: ibm_kyoto, physical_qubits=(6,5) ,shots=100
-# job_ids= ["cnvwv2c8ybr000846yz0"] # case: ibm_kyoto, physical_qubits=(6,5), shots=1000
-# job_ids= ["cqccf2wqgrzg008cz3dg"] # case: ibm_kyoto, physical_qubits=(6,5), shots=100
-# job_ids= ["cqq1vwfv78p00084ksn0"] # case: ibm_brisbane, physical_qubits=(63,64), shots=1000, amp=0.20
+a = np.diag(np.sqrt(np.arange(1, dim)), 1)
+adag = np.diag(np.sqrt(np.arange(1, dim)), -1)
+N = np.diag(np.arange(dim))
 
-job_ids= ["cqweecsae5gg008mftw0"] # case: ibm_brisbane, physical_qubits=(63,64), shots=1000, amp=0.20
+ident = np.eye(dim, dtype=complex)
+full_ident = np.eye(dim**2, dtype=complex)
 
-exp_data = ExperimentData(experiment=exp)
-exp_data.add_jobs([service.job(job_id) for job_id in job_ids])
-exp.analysis.run(exp_data, replace_results=True)
-exp_data.block_for_results()
-result=exp_data.analysis_results()
+N0 = np.kron(ident, N)
+N1 = np.kron(N, ident)
 
-exp_data.figure(0)
+a0 = np.kron(ident, a)
+a1 = np.kron(a, ident)
+
+a0dag = np.kron(ident, adag)
+a1dag = np.kron(adag, ident)
+
+
+static_ham0 = 2 * np.pi * v0 * N0 + np.pi * anharm0 * N0 * (N0 - full_ident)
+static_ham1 = 2 * np.pi * v1 * N1 + np.pi * anharm1 * N1 * (N1 - full_ident)
+
+static_ham_full = static_ham0 + static_ham1 + 2 * np.pi * J * ((a0 + a0dag) @ (a1 + a1dag))
+
+drive_op0 = 2 * np.pi * r0 * (a0 + a0dag)
+drive_op1 = 2 * np.pi * r1 * (a1 + a1dag)
+
+### definiton of the solver
+from qiskit_dynamics import Solver
+
+# build solver
+dt = 1/4.5e9
+
+solver = Solver(
+    static_hamiltonian=static_ham_full,
+    hamiltonian_operators=[drive_op0, drive_op1, drive_op0, drive_op1],
+    rotating_frame=static_ham_full,
+    hamiltonian_channels=["d0", "d1", "u0", "u1"],
+    channel_carrier_freqs={"d0": v0, "d1": v1, "u0": v1, "u1": v0},
+    dt=dt,
+    array_library="jax",
+)
+
+### backend
+from qiskit_dynamics import DynamicsBackend
+
+# Consistent solver option to use throughout notebook
+solver_options = {"method": "jax_odeint", "atol": 1e-6, "rtol": 1e-8, "hmax": dt}
+
+backend = DynamicsBackend(
+    solver=solver,
+    subsystem_dims=[dim, dim], # for computing measurement data
+    solver_options=solver_options, # to be used every time run is called
+)
+
+### backend.target
+from qiskit import pulse
+from qiskit.transpiler import InstructionProperties
+
+from qiskit.circuit.library import XGate, SXGate, RZGate, CXGate
+from qiskit.circuit import Parameter
+from qiskit.providers.backend import QubitProperties
+
+target = backend.target
+
+# qubit properties
+target.qubit_properties = [QubitProperties(frequency=v0), QubitProperties(frequency=v1)]
+
+# add instructions
+target.add_instruction(XGate(), properties={(0,): None, (1,): None})
+target.add_instruction(SXGate(), properties={(0,): None, (1,): None})
+
+target.add_instruction(CXGate(), properties={(0, 1): None, (1, 0): None})
+
+# Add RZ instruction as phase shift for drag cal
+phi = Parameter("phi")
+with pulse.build() as rz0:
+    pulse.shift_phase(phi, pulse.DriveChannel(0))
+    pulse.shift_phase(phi, pulse.ControlChannel(1))
+
+with pulse.build() as rz1:
+    pulse.shift_phase(phi, pulse.DriveChannel(1))
+    pulse.shift_phase(phi, pulse.ControlChannel(0))
+
+target.add_instruction(
+    RZGate(phi),
+    {(0,): InstructionProperties(calibration=rz0), (1,): InstructionProperties(calibration=rz1)}
+)
+
+### initialization of Calibrations object
+import pandas as pd
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon
+
+cals = Calibrations(libraries=[FixedFrequencyTransmon(basis_gates=['x', 'sx'])])
+
+display(pd.DataFrame(**cals.parameters_table(qubit_list=[0, ()])))
+
+### calibrations of "amp" and "beta" in "sx" and "x" gates
+from qiskit_experiments.library.calibration import RoughXSXAmplitudeCal
+
+# rabi experiments for qubit 0
+rabi0 = RoughXSXAmplitudeCal([0], cals, backend=backend, amplitudes=np.linspace(-0.2, 0.2, 27))
+
+# rabi experiments for qubit 1
+rabi1 = RoughXSXAmplitudeCal([1], cals, backend=backend, amplitudes=np.linspace(-0.2, 0.2, 27))
+
+# %%time
+rabi0_data = rabi0.run().block_for_results()
+rabi1_data = rabi1.run().block_for_results()
+
+from qiskit_experiments.library.calibration import RoughDragCal
+
+cal_drag0 = RoughDragCal([0], cals, backend=backend, betas=np.linspace(-20, 20, 15))
+cal_drag1 = RoughDragCal([1], cals, backend=backend, betas=np.linspace(-20, 20, 15))
+
+cal_drag0.set_experiment_options(reps=[3, 5, 7])
+cal_drag1.set_experiment_options(reps=[3, 5, 7])
+
+# %%time
+drag0_data = cal_drag0.run().block_for_results()
+drag1_data = cal_drag1.run().block_for_results()
+
+display(pd.DataFrame(**cals.parameters_table(qubit_list=[0, ()])))
+display(pd.DataFrame(**cals.parameters_table(qubit_list=[1, ()])))
+
+### contral channel map
+# set the control channel map
+backend.set_options(control_channel_map={(0, 1): 0, (1, 0): 1})
+
+print(backend.target)
+
+# Do not forget to executen this line!
+# There still remains "cx" gate instruction empty!
+
+backend.target.update_from_instruction_schedule_map(cals.get_inst_map())
+print(backend.target)
+
+# mwc for CRH experiment
+
+from qiskit_experiments.library import CrossResonanceHamiltonian
+
+cr_ham_experiment = CrossResonanceHamiltonian(
+    physical_qubits=(0, 1),
+    durations=np.linspace(1e-7, 1e-6, 17),
+    backend=backend
+)
+
+backend.target.update_from_instruction_schedule_map(cals.get_inst_map())
+display(cr_ham_experiment.circuits()[2].draw())
+display(cr_ham_experiment.circuits()[2].calibrations)
+
+# %time 
+data_cr = cr_ham_experiment.run().block_for_results()
+data_cr.figure(0)
 ```
 
 
+
+     ┌──────────────────────┐   
+q_0: ┤0                     ├───
+     │  Cr_gate(4.3111e-08) │┌─┐
+q_1: ┤1                     ├┤M├
+     └──────────────────────┘└╥┘
+c: 1/═════════════════════════╩═
+                              0 
+{'cr_gate': {((0, 1),
+   (4.311111111111111e-08,)): ScheduleBlock(Play(GaussianSquare(duration=450, sigma=64, width=194, amp=0.5, angle=0.0), ControlChannel(0)), Delay(450, DriveChannel(1)), Delay(450, DriveChannel(0)), name="cr", transform=AlignLeft())}}
 
 
 
