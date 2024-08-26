@@ -1,75 +1,5 @@
 # Characterization experiments
 
-### CorrelatedReadoutError
-```
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
-
-            # backend=ibm_brisbane
-            from qiskit_ibm_runtime import QiskitRuntimeService
-            service = QiskitRuntimeService(channel="ibm_quantum") 
-            backend = service.backend("ibm_brisbane")
-
-        ..jupyter-execute::
-
-            # In this example, the backend is assumed to be a real device
-            # on the IBM Quantum platform
-
-            from qiskit_experiments.library import CorrelatedReadoutError
-  
-            qubits = (120,119,)
-            exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
-            exp.set_run_options(shots=1000)
-            exp.analysis.set_options(plot=True)
-
-            step1=False # "False" shows the result saved in a previous job
-            if step1==True:
-
-                exp_data = exp.run().block_for_results()
-                mitigator = exp_data.analysis_results(0).value
-
-            else:
-                # retrieve your jobs
-                from qiskit_ibm_provider import IBMProvider
-                from qiskit_experiments.framework import ExperimentData
-    
-                provider=IBMProvider()
-                job_ids= ["cqs655w4x0mg008jgccg"]
-    
-                exp_data = ExperimentData(experiment=exp)
-                exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-                exp.analysis.run(exp_data)
-                exp_data.block_for_results()
-
-            result=exp_data.analysis_results()
-            exp_data.figure(0)
-```
-
-### CorrelatedReadoutError (AerSimulator)
-```
-
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
-
-            from qiskit.providers.fake_provider import GenericBackendV2
-            from qiskit_aer import AerSimulator
-           
-            num_qubits=5
-            backend = AerSimulator.from_backend(GenericBackendV2(num_qubits=num_qubits, calibrate_instructions=True))
-            
-        ..jupyter-execute::
-
-            from qiskit_experiments.library import CorrelatedReadoutError
-            
-            qubits = [0,1,2]
-            exp = CorrelatedReadoutError(physical_qubits=qubits, backend=backend)
-            exp.analysis.set_options(plot=True)            
-            exp_data = exp.run().block_for_results()
-            exp_data.figure(0)
-```
-
 ### CorrelatedReadoutError (revised)
 ```
 # section: example
@@ -103,116 +33,10 @@ exp_data.analysis_results(dataframe=True)
 
 ### CrossResonanceHamiltonian
 ```
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
-
-            # backend ibm_brisbane
-            from qiskit_ibm_runtime import QiskitRuntimeService
-            service = QiskitRuntimeService(channel="ibm_quantum")
-            backend = service.backend("ibm_brisbane")
-
-        ..jupyter-execute::
-
-            # In this example, the backend is assumed to be a real device
-            # on the IBM Quantum platform
-
-            from qiskit_experiments.library.characterization import CrossResonanceHamiltonian
-
-            qubit=63
-            for qpair in backend.coupling_map:
-                if qpair[0]==qubit:
-                    qubits=qpair
-                    print(qubits)
-                    break
-
-            exp=CrossResonanceHamiltonian(physical_qubits=qubits, backend=backend)
-
-            exp.set_experiment_options(
-                                   min_durations=1.0e-07, 
-                                   max_durations=1.2e-06, 
-                                   num_durations=48, 
-                                   amp=0.20, 
-                                   amp_t=0.0, 
-                                   sigma=30, 
-                                   risefall=2)
-            exp.set_run_options(shots=1000)
-            print(exp.circuits()[0])
-            print(exp.circuits()[287])
-
-            step1=False # "False" shows the result saved in a previous job
-            if step1==True:
-                exp_data=exp.run().block_for_results()
-
-            else:
-                # retrieve your jobs
-                from qiskit_ibm_provider import IBMProvider
-                from qiskit_experiments.framework import ExperimentData
-                # job_ids= ["cnvwmx38ybr000846y6g"] # case: shots=100
-                # job_ids= ["cnvwv2c8ybr000846yz0"] # case: shots=1000
-                # job_ids= ["cqccf2wqgrzg008cz3dg"] # case: ibm_kyoto, physical_qubits=(6,5), shots=100
-    
-                provider = IBMProvider()
-                job_ids = ["cqweecsae5gg008mftw0"] # case: ibm_brisbane, physical_qubits=(63,64), shots=1000, amp=0.20
-                exp_data = ExperimentData(experiment=exp)
-                exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-                exp.analysis.run(exp_data)
-                exp_data.block_for_results()
-
-            result=exp_data.analysis_results()
-            exp_data.figure(0)
 ```
 
 ### EchoedCRH
 ```
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
-
-            # backend ibm-kyoto
-            from qiskit_ibm_runtime import QiskitRuntimeService
-            service = QiskitRuntimeService(channel="ibm_quantum")
-            backend = service.backend("ibm_kyoto")
-
-        ..jupyter-execute::
-
-            # In this example, the backend is assumed to be a real device
-            # on the IBM Quantum platform
-
-            from qiskit_experiments.library.characterization import EchoedCrossResonanceHamiltonian
-
-            qubits=(17, 30)
-            exp=EchoedCrossResonanceHamiltonian(physical_qubits=qubits, backend=backend)
-            exp.set_experiment_options(
-                                   min_durations=1.0e-07, 
-                                   max_durations=1.2e-06, 
-                                   num_durations=48, 
-                                   amp=0.20, 
-                                   amp_t=0.0, 
-                                   sigma=30, 
-                                   risefall=2)
-            exp.set_run_options(shots=1000)
-
-            step1=False # "False" shows the result saved in a previous job
-            if step1==True:
-                exp_data=exp.run().block_for_results()
-                result=exp_data.analysis_results()
- 
-            else:
-                # retrieve your jobs
-                from qiskit_ibm_provider import IBMProvider
-                from qiskit_experiments.framework import ExperimentData 
-                # job_ids= ["cnwbhqe5vh500087x5fg"] # case : ibm_kyoto, shots=1000, qubits=(17, 30)
-    
-                provider = IBMProvider()
-                job_ids = ["cqwegbs1j3r00081x4t0"] # case : ibm_kyoto, shots=1000, qubits=(17, 30), amp=0.20
-                exp_data = ExperimentData(experiment=exp)
-                exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-                exp.analysis.run(exp_data)
-                exp_data.block_for_results()
-
-            result=exp_data.analysis_results()
-            exp_data.figure(0)
 ```
 
 ### RoughDrag
@@ -245,7 +69,7 @@ exp_data.analysis_results(dataframe=True)
             exp_data.figure(0)
 ```
 
-### EFSpectroscopy(revised 20240629)
+### EFSpectroscopy(published version must be replaced with the revised version 20240629)
 ```
     # section: example
         ..jupyter-execute::
@@ -465,39 +289,7 @@ exp_data.analysis_results(dataframe=True)
 
 
 
-### FineFrequency
-```
-    # section: example
-        .. jupyter-execute::
-            # :hide-code:
-
-            # backend
-            from qiskit.providers.fake_provider import GenericBackendV2
-            num_qubits=27
-            backend =GenericBackendV2(num_qubits=num_qubits)
-
-        .. jupyter-execute::
-            # mwc
-            from qiskit_experiments.library.characterization import FineFrequency
-
-            qubit=0
-            repetitions = list(range(40))
-            exp = FineFrequency((qubit,), 
-                                delay_duration=320, 
-                                backend=backend, 
-                                repetitions=repetitions)
-            exp.set_transpile_options(optimization_level=0, basis_gates=['sx', 'rz', 'delay'])
-            exp.set_run_options(shots=1000, seed_simulator=199)
-            print(exp.circuits()[3])
-
-        .. jupyter-execute::
-            # mwc
-            exp_data = exp.run().block_for_results()
-            result = exp_data.analysis_results()
-            exp_data.figure(0)
-```
-
-### FineFrequency (revised) FakeBackend
+### FineFrequency (revised backned = Aer(FakePerth)
 ```
     # section: example
         .. jupyter-execute::
@@ -646,7 +438,7 @@ exp_data.analysis_results(dataframe=True)
             exp_data.figure(0)
 ```
 
-### EFRabi
+### EFRabi (published version must be improved)
 ```
     # section: example
         ..jupyter-execute::
@@ -680,7 +472,7 @@ exp_data.analysis_results(dataframe=True)
             exp_data.figure(0)
 ```
 
-### EFRabi(revised 20240705)
+### EFRabi(revised 20240705 ???)
 ```
 # backend
 from qiskit_experiments.test import SingleTransmonTestBackend
@@ -750,122 +542,10 @@ exp_data.analysis_results(dataframe=True)
 
 ### StarkRamseyXY
 ```
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
-
-            # backend ibm_kyoyo
-            from qiskit_ibm_provider import IBMProvider
-            INSTANCE="ibm-q/open/main"
-            provider = IBMProvider(instance=INSTANCE)
-            backend = provider.get_backend("ibm_kyoto")
-
-            qubit = 6
-            for qpair in backend.coupling_map:
-                if qpair[0] == qubit:
-                    break       
-
-        ..jupyter-execute::
-
-            qubit = 6
-            from qiskit import pulse
-            from qiskit_experiments.library import StarkRamseyXY
-
-            exp = StarkRamseyXY(
-                physical_qubits=(qubit,),
-                backend=backend,
-             )
-            exp.set_experiment_options(stark_amp=0.5, 
-                                       stark_channel=pulse.ControlChannel(qubit),
-                                      )
-            exp.set_run_options(shots=1000)
-
-            for i in range(2):
-                print(exp.circuits()[i])
-
-            step1=False   # run carefully if your backend is a real device
-            if step1==True:        
-                exp_data=exp.run().block_for_results()
-                result=exp_data.analysis_results()    
-                for _ in result:
-                    print(_)
-
-                exp_data.figure(0)
-
-            else:
-                pass
-
-            # retrieve your jobs
-            from qiskit_experiments.framework import ExperimentData 
-
-            job_ids= ["cnmb50mtakkg008rgkdg"] # List of job IDs for the experiment
-            exp_data = ExperimentData(experiment=exp)
-            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-            exp.analysis.run(exp_data)
-            exp_data.block_for_results()
-            result=exp_data.analysis_results()
-
-            exp_data.figure(0)
 ```
 
 ### StarkRamseyXYAmpScan
 ```
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
-
-            # backend ibm_kyoyo
-            from qiskit_ibm_provider import IBMProvider
-            INSTANCE="ibm-q/open/main"
-            provider = IBMProvider(instance=INSTANCE)
-            backend = provider.get_backend("ibm_kyoto")
-
-            qubit = 6
-            for qpair in backend.coupling_map:
-                if qpair[0] == qubit:
-                    break       
-
-        ..jupyter-execute::
-
-            qubit = 6
-            from qiskit import pulse
-            from qiskit_experiments.library import StarkRamseyXYAmpScan
-
-            exp = StarkRamseyXYAmpScan(
-                physical_qubits=(qubit,),
-                backend=backend,
-                )
-            exp.set_experiment_options(
-                stark_channel=pulse.ControlChannel(qubit), 
-                )
-            exp.set_run_options(shots=100)
-
-            for i in range(2):
-                print(exp.circuits()[i])
-
-            step1=False   # run carefully if your backend is a real device
-            if step1==True:        
-                exp_data=exp.run().block_for_results()
-                result=exp_data.analysis_results()    
-                for _ in result:
-                    print(_)
-
-                exp_data.figure(0)
-
-            else:
-                pass
-
-            # retrieve your jobs
-            from qiskit_experiments.framework import ExperimentData
-
-            job_ids= ["cnq8b5m24wx0008fe6vg"] # List of job IDs for the experiment
-            exp_data = ExperimentData(experiment=exp)
-            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-            exp.analysis.run(exp_data)
-            exp_data.block_for_results()
-            result=exp_data.analysis_results()
-
-            exp_data.figure(0)
 ```
 
 ### ReadoutAngle
@@ -897,47 +577,6 @@ exp_data.analysis_results(dataframe=True)
 
 ### ResonatorSpectroscopy
 ```
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
-
-            # backend ibm-kyoto
-            from qiskit_ibm_runtime import QiskitRuntimeService
-            service = QiskitRuntimeService(channel="ibm_quantum") 
-            backend = service.backend("ibm_kyoto")
-
-        ..jupyter-execute::
-
-            # In this example, the backend is assumed to be a real device
-            # on the IBM Quantum platform
-
-            import numpy as np
-            from qiskit_experiments.library.characterization import ResonatorSpectroscopy
-
-            qubit = 107
-            exp = ResonatorSpectroscopy(physical_qubits = (qubit,), backend = backend)
-            exp.set_run_options(shots=1000, seed_simulator=118)            
-            print(exp.circuits()[0])
-
-            step1=False  # "False" shows the result saved in a previous job
-            if step1==True:
-                exp_data = exp.run().block_for_results()
-  
-            else:
-                # retrieve your jobs
-                from qiskit_ibm_provider import IBMProvider
-                from qiskit_experiments.framework import ExperimentData
-    
-                provider=IBMProvider()
-                job_ids= ["cqs4qjy88ev00080zbj0"]
-    
-                exp_data = ExperimentData(experiment=exp)
-                exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-                exp.analysis.run(exp_data)
-                exp_data.block_for_results()
-
-            result = exp_data.analysis_results()
-            exp_data.figure(0)
 ```
 
 ### T1
@@ -965,47 +604,6 @@ exp_data.analysis_results(dataframe=True)
 
 ### StarkP1Spectroscopy
 ```
-    # section: example
-        ..jupyter-execute::
-            :hide-code:
-
-            # backend ibm_brisbane
-            from qiskit_ibm_provider import IBMProvider
-            INSTANCE="ibm-q/open/main"
-            provider = IBMProvider(instance=INSTANCE)
-            backend = provider.get_backend("ibm_brisbane")
-
-        ..jupyter-execute::
-
-            from qiskit_experiments.library.characterization.t1 import StarkP1Spectroscopy
-
-            qubit=13
-            exp = StarkP1Spectroscopy((qubit,), backend=backend)
-            exp.set_run_options(shots=100)
-
-            step1=False # run carefully if your device is a real device
-            if step1==True:
-                exp_data = exp.run().block_for_results()
-                result=exp_data.analysis_results()
-                for _ in result:
-                    print(_)
-
-                exp_data.figure(0)
-
-            else:
-                pass
-
-            # retrieve your jobs
-            from qiskit_experiments.framework import ExperimentData
-
-            job_ids= ["cnkf59nq9ax00087ecv0"] # list of job IDs for the experiment
-            exp_data = ExperimentData(experiment = exp)
-            exp_data.add_jobs([provider.retrieve_job(job_id) for job_id in job_ids])
-            exp.analysis.run(exp_data)
-            exp_data.block_for_results()
-            result=exp_data.analysis_results()
-
-            exp_data.figure(0)
 ```
 
 ### T2Hahn (revised)
