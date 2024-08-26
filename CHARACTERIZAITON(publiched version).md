@@ -2,25 +2,26 @@
 
 ### CorrelatedReadoutError (revised)
 ```
-# section: example
-# ..jupyter-execute::
-# :hide-code:
+    # section: example
+        .. jupyter-execute::
+            :hide-code:
 
-from qiskit_ibm_runtime.fake_provider import FakePerth
-from qiskit_aer import AerSimulator
+            from qiskit.providers.fake_provider import GenericBackendV2
+            from qiskit_aer import AerSimulator
 
-backend = AerSimulator.from_backend(FakePerth())
+            num_qubits=5
+            backend = AerSimulator.from_backend(GenericBackendV2(num_qubits=num_qubits,
+                                                                 calibrate_instructions=True))
 
-# ..jupyter-execute::
+        .. jupyter-execute::
 
-from qiskit_experiments.library import CorrelatedReadoutError
-            
-exp = CorrelatedReadoutError(physical_qubits=(0,1,2), backend=backend)
-exp.analysis.set_options(plot=True)
+            from qiskit_experiments.library import CorrelatedReadoutError
 
-exp_data = exp.run().block_for_results()
-display(exp_data.figure(0))
-exp_data.analysis_results(dataframe=True)
+            exp = CorrelatedReadoutError(physical_qubits=(0,1,2), backend=backend)
+
+            exp_data = exp.run().block_for_results()
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 
@@ -67,9 +68,10 @@ exp_data.analysis_results(dataframe=True)
 
             exp_data = exp.run().block_for_results()
             exp_data.figure(0)
+            exp_data.analysis_results(dataframe=True)
 ```
 
-### EFSpectroscopy(published version must be replaced with the revised version 20240629)
+### EFSpectroscopy(published version must be replaced with this revised version 20240629)
 ```
     # section: example
         ..jupyter-execute::
@@ -84,8 +86,7 @@ exp_data.analysis_results(dataframe=True)
             import numpy as np
             from qiskit_experiments.library.characterization import EFSpectroscopy
 
-            qubit = 0
-            freq01_estimate = backend.defaults().qubit_freq_est[qubit]
+            freq01_estimate = backend.defaults().qubit_freq_est[0]
             freq12_estimate = freq_01 + (-.25e9)
             frequencies = np.linspace(freq12_estimate-15e6, freq12_estimate+15e6, 51)
 
@@ -98,6 +99,7 @@ exp_data.analysis_results(dataframe=True)
 
             exp_data = exp.run().block_for_results()
             exp_data.figure(0)
+            exp_data.analysis_results(dataframe=True)
 ```
 
 
@@ -115,28 +117,25 @@ exp_data.analysis_results(dataframe=True)
 ### FineAmplitude(XGate)
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e6, noise=True, seed=185)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             import numpy as np
             from qiskit.circuit.library import XGate
             from qiskit_experiments.library import FineAmplitude
-            
-            qubit = 0
-            exp = FineAmplitude(physical_qubits=(qubit,), gate=XGate(), backend=backend)
-            exp.set_run_options(shots=10000)
-            exp.analysis.set_options(fixed_parameters={"angle_per_gate" : np.pi, "phase_offset" : np.pi})            
-            print(exp.circuits()[5])
+
+            exp = FineAmplitude(physical_qubits=(0,), gate=XGate(), backend=backend)
+            exp.analysis.set_options(fixed_parameters={"angle_per_gate" : np.pi, "phase_offset" : np.pi})
 
             exp_data = exp.run().block_for_results()
-            result =exp_data.analysis_results()               
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 
@@ -153,130 +152,116 @@ exp_data.analysis_results(dataframe=True)
 ### FineXAmplitude
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=198)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit_experiments.library import FineXAmplitude
 
-            qubit = 0
-            exp = FineXAmplitude(qubit, backend=backend)
-            exp.circuits()[5].draw("mpl")
-
-        ..jupyter-execute::
+            exp = FineXAmplitude(physical_qubits=(0,), backend=backend)
 
             exp_data = exp.run().block_for_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### FineSXAmplitude
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=198)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit_experiments.library import FineSXAmplitude
-  
-            qubit = 0
-            exp = FineSXAmplitude(physical_qubits=(qubit,), backend=backend)            
-            exp.circuits()[5].draw("mpl")
 
-        ..jupyter-execute::
+            exp = FineSXAmplitude(physical_qubits=(0,), backend=backend)
 
             exp_data = exp.run().block_for_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 
 ### FineDrag
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit.circuit.library import XGate
             from qiskit_experiments.library.characterization import FineDrag
 
-            qubit=0
-            exp = FineDrag(physical_qubits=(qubit,), gate=XGate(), backend=backend)
-            exp.set_run_options(shots=1000, seed_simulator=101)
+            exp = FineDrag(physical_qubits=(0,), gate=XGate(), backend=backend)
 
             exp_data = exp.run().block_for_results()
-            result = exp_data.analysis_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### FineXDrg
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit_experiments.library.characterization import FineXDrag
 
-            qubit=0
-            exp = FineXDrag(physical_qubits=(qubit,), backend=backend)
-            exp.set_run_options(shots=1000, seed_simulator=101)
+            exp = FineXDrag(physical_qubits=(0,), backend=backend)
 
             exp_data = exp.run().block_for_results()
-            result = exp_data.analysis_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### FineSXDrag
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             import numpy as np
             from qiskit_experiments.library.characterization import FineSXDrag
 
-            qubit=0
-            exp = FineSXDrag(physical_qubits=(qubit,), backend=backend)
-            exp.analysis.set_options(normalization= True,              # 0319
-                                     fixed_parameters={                #
-                                         "angle_per_gate" : 0.0,       #
-                                         "phase_offset" : np.pi/2,     #
-                                         "amp" : 0.6                   #
-                                         },                            #
-                                    )                                  #
-            print(exp.circuits()[1])
+            exp = FineSXDrag(physical_qubits=(0,), backend=backend)
+            exp.analysis.set_options(normalization= True,
+                                     fixed_parameters={
+                                         "angle_per_gate" : 0.0,
+                                         "phase_offset" : np.pi/2,
+                                         "amp" : 0.6
+                                         },
+                                    )
 
-        ..jupyter-execute::
-
-            exp.set_run_options(shots=10000, seed_simulator=101)
             exp_data = exp.run().block_for_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 
@@ -289,55 +274,69 @@ exp_data.analysis_results(dataframe=True)
 
 
 
+
+
 ### FineFrequency (revised backned = Aer(FakePerth)
 ```
     # section: example
         .. jupyter-execute::
-            # :hide-code:
+            :hide-code:
 
             # backend
-            from qiskit_ibm_runtime.fake_provider FakePerth
+            from qiskit_ibm_runtime.fake_provider import FakePerth
             from qiskit_aer import AerSimulator
-            backend =AerSimulaor.from_backend(FakePerth())
+            backend =AerSimulator.from_backend(FakePerth())
 
+        .. jupyter-execute::
+
+            from qiskit_experiments.library.characterization import FineFrequency
+
+            repetitions = list(range(40))
+
+            exp = FineFrequency((0,),
+                                delay_duration=320,
+                                backend=backend,
+                                repetitions=repetitions)
+            exp.set_transpile_options(optimization_level=0, basis_gates=['sx', 'rz', 'delay'])
+
+            exp_data = exp.run().block_for_results()
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### HalfAngle
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit_experiments.library.characterization import HalfAngle
 
-            qubit=0
-            exp = HalfAngle([qubit], backend=backend)
-            exp.set_run_options(shots=1000, seed_simulator=178)
+            exp = HalfAngle((0,), backend=backend)
 
             exp_data = exp.run().block_for_results()
-            result = exp_data.analysys_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### LocalReadoutError
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
-            # backend 
+            # backend
             from qiskit_aer import AerSimulator
-            # from qiskit.providers.fake_provider import FakePerth
-            from qiskit_ibm_runtime.fake_provider import FakePerth # for qiskit v1.0.0
+            from qiskit_ibm_runtime.fake_provider import FakePerth
             backend = AerSimulator.from_backend(FakePerth())
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit_experiments.library import LocalReadoutError
 
@@ -346,47 +345,43 @@ exp_data.analysis_results(dataframe=True)
             exp.analysis.set_options(plot=True)
             exp.set_run_options(shots=10000)
 
-            result = exp.run()
-            mitigator = result.analysis_results(0).value
-
-            result.figure(0)
+            exp_data = exp.run().block_for_results()
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### MultiStateDiscrimination
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
-            # backend 
+            # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit_experiments.library.characterization import MultiStateDiscrimination
 
-            qubit=0
-            exp=MultiStateDiscrimination([qubit], backend=backend)
-            print(exp.circuits()[0])
-            print(exp.circuits()[1])
+            exp=MultiStateDiscrimination((0,), backend=backend)
 
             exp_data=exp.run().block_for_results()
-            result=exp_data.analysis_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### QibitSpectroscopy
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             import numpy as np
             from qiskit_experiments.library.characterization import QubitSpectroscopy
@@ -395,31 +390,28 @@ exp_data.analysis_results(dataframe=True)
             freq01_estimate = backend.defaults().qubit_freq_est[qubit]
             frequencies = np.linspace(freq01_estimate-15e6, freq01_estimate+15e6, 51)
 
-            exp = QubitSpectroscopy(physical_qubits = (0,), 
-                                    frequencies = frequencies, 
-                                    backend = backend, 
-                                    absolute = True,
-                                    analysis = None,
+            exp = QubitSpectroscopy(physical_qubits = (qubit,),
+                                    frequencies = frequencies,
+                                    backend = backend,
                                     )
             exp.set_experiment_options(amp=0.005)
 
-        ..jupyter-execute::
-
             exp_data = exp.run().block_for_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### Rabi
 ```
-    # section: example
-        ..jupyter-execute::
+   # section: example
+        .. jupyter-execute::
             :hide-code:
 
-            # backend 
+            # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-            backend = SingleTransmonTestBackend(5.2e9, seed=200)
+            backend = SingleTransmonTestBackend(5.2e9,-0.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             import numpy as np
             from qiskit import pulse
@@ -435,44 +427,41 @@ exp_data.analysis_results(dataframe=True)
                        backend=backend,)
 
             exp_data = exp.run().block_for_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
-### EFRabi (published version must be improved)
+### EFRabi (This published version must be improved)
 ```
-    # section: example
-        ..jupyter-execute::
+   # section: example
+        .. jupyter-execute::
             :hide-code:
 
-            # backend 
+            # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
-            backend = SingleTransmonTestBackend(5.2e9, seed=200)
+            backend = SingleTransmonTestBackend(5.2e9,-0.25e9, 1e9, 0.8e9, 1e4, noise=True, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             import numpy as np
             from qiskit import pulse
             from qiskit.circuit import Parameter
-            from qiskit_experiments.library import EFRabi
+            from qiskit_experiments.library import Rabi
 
             with pulse.build() as build_sched:
-                pulse.play(
-                    pulse.Gaussian(160, Parameter("amp"), sigma=40),
-                    pulse.DriveChannel(0)
-                )
+                pulse.play(pulse.Gaussian(160, Parameter("amp"), 40), pulse.DriveChannel(0))
 
-            exp = EFRabi(
-                physical_qubits=(0,),
-                backend=backend,
-                schedule=build_sched,
-                amplitudes=np.linspace(-0.1, 0.1, 21),
-            )
+            exp = Rabi(physical_qubits=(0,),
+                       schedule=build_sched,
+                       amplitudes=np.linspace(-0.1, 0.1, 21),
+                       backend=backend,)
 
             exp_data = exp.run().block_for_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
-### EFRabi(revised 20240705 ???)
+### EFRabi(The publised version must be replace with this revised 20240705)
 ```
 # backend
 from qiskit_experiments.test import SingleTransmonTestBackend
@@ -486,7 +475,7 @@ from qiskit_experiments.library import EFRabi
 
 with pulse.build() as build_sched:
     with pulse.align_left():
-        pulse.shift_frequency(-0.25e9, pulse.DriveChannel(0))
+        pulse.shift_frequency(-0.25e9, pulse.DriveChannel(0)) # frequency shift is necessary!
         pulse.play(pulse.Gaussian(160, Parameter("amp"), 40), pulse.DriveChannel(0))
 
 exp = EFRabi(physical_qubits=(0,),
@@ -516,28 +505,26 @@ exp_data.analysis_results(dataframe=True)
 ### RamseyXY
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
-            # backend 
+            # backend
             from qiskit_aer import AerSimulator
-            # from qiskit.providers.fake_provider import FakePerth
-            from qiskit_ibm_runtime.fake_provider import FakePerth # for qiskit v1.0.0
+            from qiskit_ibm_runtime.fake_provider import FakePerth
+
             backend = AerSimulator.from_backend(FakePerth())
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             import numpy as np
             from qiskit_experiments.library.characterization import RamseyXY
 
-            qubit=0
             delays = np.linspace(0, 10.e-7, 101)
-            exp = RamseyXY([qubit], backend=backend, delays=delays, osc_freq=2.0e6)
-            exp.set_run_options(shots=1000, seed_simulator=201)
+            exp = RamseyXY((0,), backend=backend, delays=delays, osc_freq=2.0e6)
 
             exp_data = exp.run().block_for_results()
-            result=exp_data.analysis_results()
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### StarkRamseyXY
@@ -551,28 +538,22 @@ exp_data.analysis_results(dataframe=True)
 ### ReadoutAngle
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
-            # backend  
+            # backend
             from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
             backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=199)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit_experiments.library.characterization import ReadoutAngle
-            qubit=0
-            exp = ReadoutAngle([qubit], backend=backend)
-            exp.set_run_options(shots=1000, seed_simulator=106)
+
+            exp = ReadoutAngle((0,), backend=backend)
 
             exp_data = exp.run().block_for_results()
-            result = exp_data.analysis_results()
-            for _ in result:
-                print(_)
-
-        ..jupyter-execute::
-
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### ResonatorSpectroscopy
@@ -582,24 +563,25 @@ exp_data.analysis_results(dataframe=True)
 ### T1
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
-            # backend 
-            # from qiskit.providers.fake_provider import FakeManilaV2
-            from qiskit_ibm_runtime.fake_provider import FakeManilaV2 # for qiskit v1.0.0
+            # backend
+            from qiskit_ibm_runtime.fake_provider import FakeManilaV2
             from qiskit_aer import AerSimulator
             backend = AerSimulator.from_backend(FakeManilaV2())
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
-            from qiskit_experiments.library import T1
             import numpy as np
+            from qiskit_experiments.library import T1
 
             delays = np.arange(1.e-6, 300.e-6, 30.e-6)
             exp = T1(physical_qubits=(0, ), delays=delays, backend=backend)
+
             exp_data = exp.run().block_for_results()
             display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### StarkP1Spectroscopy
@@ -609,7 +591,7 @@ exp_data.analysis_results(dataframe=True)
 ### T2Hahn (revised)
 ```
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
@@ -618,54 +600,49 @@ exp_data.analysis_results(dataframe=True)
             conversion_factor = 1e-6
             estimated_t2hahn = 20*conversion_factor
             backend = T2HahnBackend(
-                t2hahn=[estimated_t2hahn], 
-                frequency=[100100], 
-                readout0to1 = [0.02], 
-                readout1to0 = [0.02], 
+                t2hahn=[estimated_t2hahn],
+                frequency=[100100],
+                readout0to1 = [0.02],
+                readout1to0 = [0.02],
                 )
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
-            import qiskit
+            import numpy as np
             from qiskit_experiments.library.characterization.t2hahn import T2Hahn
 
-            conversion_factor = 1e-6
-            delays = list(range(0, 50, 1))
-            delays = [float(_)*conversion_factor for _ in delays]
-            number_of_echoes = 1
+            delays = np.linspace(0, 50, 51)*1e-6
 
-            exp = T2Hahn(physical_qubits=(0, ), delays=delays, num_echoes=number_of_echoes, backend=backend)
-            print(exp.circuits()[0])
-
-         ..jupyter-execute::
-
+            exp = T2Hahn(physical_qubits=(0, ),
+                         delays=delays,
+                         backend=backend)
             exp.analysis.set_options(p0=None, plot=True)
-            exp.set_run_options(shots=1000, seed_simulator=121)
-            expdata = exp.run().block_for_results()
 
-            display(expdata.figure(0))
+            exp_data = exp.run().block_for_results()
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### T2Ramsey
 ```
-    # section: example
-        ..jupyter-execute::
+  # section: example
+        .. jupyter-execute::
             :hide-code:
 
             # backend
-            # from qiskit.providers.fake_provider import FakeManilaV2
-            from qiskit_ibm_runtime.fake_provider import FakeManilaV2 # for qiskit v1.0.0
+            from qiskit_ibm_runtime.fake_provider import FakeManilaV2
             from qiskit_aer import AerSimulator
             from qiskit_aer.noise import NoiseModel
-            noise_model = NoiseModel.from_backend(FakeManilaV2(), 
-                                                  thermal_relaxation=True, 
-                                                  gate_error=False, 
-                                                  readout_error=False,                                           
+
+            noise_model = NoiseModel.from_backend(FakeManilaV2(),
+                                                  thermal_relaxation=True,
+                                                  gate_error=False,
+                                                  readout_error=False,
                                                   )
 
             backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             import numpy as np
             import qiskit
@@ -673,37 +650,32 @@ exp_data.analysis_results(dataframe=True)
 
             delays = list(np.arange(1.00e-6, 50.0e-6, 2.00e-6))
             exp = T2Ramsey(physical_qubits=(0, ), delays=delays, backend=backend, osc_freq=1.0e5)
-            print(exp.circuits()[0])
 
-        ..jupyter-execute::
-
-            exp.set_run_options(shots=1000, seed_simulator=101)
-            expdata = exp.run().block_for_results()
-
-            display(expdata.figure(0))
+            exp_data = exp.run().block_for_results()
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### Tphi
 ```
-    # section: example
-        ..jupyter-execute::
+  # section: example
+        .. jupyter-execute::
             :hide-code:
 
             # backend
-            # from qiskit.providers.fake_provider import FakeManilaV2
-            from qiskit_ibm_runtime.fake_provider import FakeManilaV2 # for qiskit v1.0.0
+            from qiskit_ibm_runtime.fake_provider import FakeManilaV2
             from qiskit_aer import AerSimulator
             from qiskit_aer.noise import NoiseModel
 
-            noise_model = NoiseModel.from_backend(FakeManilaV2(), 
-                                                  thermal_relaxation=True, 
-                                                  gate_error=False, 
-                                                  readout_error=False, 
+            noise_model = NoiseModel.from_backend(FakeManilaV2(),
+                                                  thermal_relaxation=True,
+                                                  gate_error=False,
+                                                  readout_error=False,
                                                  )
 
             backend = AerSimulator.from_backend(FakeManilaV2(), noise_model=noise_model)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             import numpy as np
             import qiskit
@@ -712,55 +684,46 @@ exp_data.analysis_results(dataframe=True)
             delays_t1 = np.arange(1e-6, 300e-6, 10e-6)
             delays_t2 = np.arange(1e-6, 50e-6, 2e-6)
 
-        ..jupyter-execute::
-
             exp = Tphi(physical_qubits=(0, ),
                         delays_t1=delays_t1,
                         delays_t2=delays_t2,
-                        t2type="hahn",
-                        osc_freq = 5.e-6, 
-                        num_echoes=1,
                         backend=backend
                         )
-            exp.set_run_options(seed_simulator=100)
-            exp_data = exp.run().block_for_results()
 
-            result = exp_data.analysis_results("T_phi")
-            print(result)
+            exp_data = exp.run().block_for_results()
+            display(exp_data.figure(0))
+            display(exp_data.figure(1))
+            exp_data.analysis_results(dataframe=True)
 ```
 
 ### ZZRamsey
 ```
+
     # section: example
-        ..jupyter-execute::
+        .. jupyter-execute::
             :hide-code:
 
             # backend
-            # from qiskit.providers.fake_provider import FakePerth
-            from qiskit_ibm_runtime.fake_provider import FakePerth # for qiskit v1.0.0
+            from qiskit_ibm_runtime.fake_provider import FakePerth
             from qiskit_aer import AerSimulator
             from qiskit_aer.noise import NoiseModel
 
-            noise_model = NoiseModel.from_backend(FakePerth(), 
-                                                  thermal_relaxation=True, 
-                                                  gate_error=False, 
-                                                  readout_error=False,                                           
+            noise_model = NoiseModel.from_backend(FakePerth(),
+                                                  thermal_relaxation=True,
+                                                  gate_error=False,
+                                                  readout_error=False,
             )
 
             backend = AerSimulator.from_backend(FakePerth(), noise_model=noise_model)
 
-        ..jupyter-execute::
+        .. jupyter-execute::
 
             from qiskit_experiments.library.characterization import ZZRamsey
 
-            qubits = (0, 1)
-            exp = ZZRamsey(physical_qubits=qubits, backend=backend)
-            exp.set_run_options(shots=1000, seed_simulator=101)
+            exp = ZZRamsey(physical_qubits=(0,1), backend=backend)
 
             exp_data = exp.run().block_for_results()
-            result=exp_data.analysis_results()
-#            print(f"The value of {exp_data.analysis_results(1).name} is {exp_data.analysis_results(1).value}")
-
-            exp_data.figure(0)
+            display(exp_data.figure(0))
+            exp_data.analysis_results(dataframe=True)
 ```
 
