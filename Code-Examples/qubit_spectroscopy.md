@@ -31,4 +31,4 @@ exp_data.figure(0)
 ```
 
 
-
+![image](https://github.com/Naohnakazawa/Plasmid-Box/assets/117684192/5f306cd4-2979-4efa-973a-198b5187bdce)
