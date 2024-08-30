@@ -82,17 +82,18 @@ y_11 = probs_11_list
 fig1, ax = plt.subplots()
 
 # figure style
-ax.scatter(x, y_01)
-ax.scatter(x, y_11)
+ax.plot(x, y_01, "bo", label="'01'")
+ax.plot(x, y_11, "ro", label="'11'")
 
 ax.set(xlim=(thetas[0], thetas[-1]),
        ylim=(0., 1.)
       )
 
 ax.set_xlabel("theta")
-ax.set_ylabel("prob_01")
+ax.set_ylabel("prob_**")
 ax.set_title("test-ECRGate-AerSimulator")
 
+plt.legend()
 plt.show()
 ```
 
@@ -100,7 +101,8 @@ plt.show()
 
 
 
-![image](https://github.com/user-attachments/assets/2e1a5030-066a-4e70-9bc0-10762cd571f9)
+
+![image](https://github.com/user-attachments/assets/09cf7f54-4e94-41b9-9a7a-752972c82703)
 
 
 
@@ -108,6 +110,11 @@ plt.show()
 
 
 
-![image](https://github.com/user-attachments/assets/8fa1a7dc-c2f3-47b3-99a3-7a2e98cd1ad8)
+
+
+![image](https://github.com/user-attachments/assets/62e99df3-bb0b-4fe3-b710-9a8077a1f3f7)
+
+
+
 
 
