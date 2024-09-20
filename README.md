@@ -61,7 +61,7 @@ This is a test case#5 origin/branch=my-workflows-0516 work on this branch only w
 
 results one commit
 
-### Question
+### Question 1
 
 How do we implement a "cx" gate insturuction to backend.target in DynamicsBackend ?
 Following the tutorial (https://qiskit-community.github.io/qiskit-dynamics/tutorials/dynamics_backend.html, we have 
@@ -133,7 +133,16 @@ Instructions:
 		(1,):
 			With pulse schedule calibration
 
+It seems that we need some calibration experiments for two-qubit gates!
+One of the candidates may be FineZXAmplitude(Cal) experiment. 
 
+### Question 2
+
+buckend.run() method, which is executed as ""circuit_runner" on the IBM Quantume platform, may be removed soon (15 October?).
+Pulse programs now run via backend.run() method. After the backend.run() method is eliminated, what is the prescription on how to execute 
+pulse scheduled programs ?
+Also, in order to retrieve jobs (for exmaple, jobs with SmplerV2) in a free plan, we use backend.run() (i.e., experiment.run()).
+Can we retrieve these jobs in a free plan after backend.run() method is eliminated?
 
 
 
