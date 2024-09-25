@@ -281,3 +281,208 @@ expdata.analysis_results(dataframe=True)
 
 
 
+### ZZRamsey (DynamicsBackend)
+```
+# backend = dynamics_backend
+
+# Configure JAX
+import jax
+jax.config.update("jax_enable_x64", True)
+jax.config.update("jax_platform_name", "cpu")
+
+### a 2-qubit fixed-frequency transmon model with fixed coupling
+import numpy as np
+
+dim = 3
+
+v0 = 4.86e9
+anharm0 = -0.32e9
+r0 = 0.22e9
+
+v1 = 4.97e9
+anharm1 = -0.32e9
+r1 = 0.26e9
+
+J = 0.002e9
+
+a = np.diag(np.sqrt(np.arange(1, dim)), 1)
+adag = np.diag(np.sqrt(np.arange(1, dim)), -1)
+N = np.diag(np.arange(dim))
+
+ident = np.eye(dim, dtype=complex)
+full_ident = np.eye(dim**2, dtype=complex)
+
+N0 = np.kron(ident, N)
+N1 = np.kron(N, ident)
+
+a0 = np.kron(ident, a)
+a1 = np.kron(a, ident)
+
+a0dag = np.kron(ident, adag)
+a1dag = np.kron(adag, ident)
+
+
+static_ham0 = 2 * np.pi * v0 * N0 + np.pi * anharm0 * N0 * (N0 - full_ident)
+static_ham1 = 2 * np.pi * v1 * N1 + np.pi * anharm1 * N1 * (N1 - full_ident)
+
+static_ham_full = static_ham0 + static_ham1 + 2 * np.pi * J * ((a0 + a0dag) @ (a1 + a1dag))
+
+drive_op0 = 2 * np.pi * r0 * (a0 + a0dag)
+drive_op1 = 2 * np.pi * r1 * (a1 + a1dag)
+
+### definiton of the solver
+from qiskit_dynamics import Solver
+
+# build solver
+dt = 1/4.5e9
+
+solver = Solver(
+    static_hamiltonian=static_ham_full,
+    hamiltonian_operators=[drive_op0, drive_op1, drive_op0, drive_op1],
+    rotating_frame=static_ham_full,
+    hamiltonian_channels=["d0", "d1", "u0", "u1"],
+    channel_carrier_freqs={"d0": v0, "d1": v1, "u0": v1, "u1": v0},
+    dt=dt,
+    array_library="jax",
+)
+
+### backend
+from qiskit_dynamics import DynamicsBackend
+
+# Consistent solver option to use throughout notebook
+solver_options = {"method": "jax_odeint", "atol": 1e-6, "rtol": 1e-8, "hmax": dt}
+
+backend = DynamicsBackend(
+    solver=solver,
+    subsystem_dims=[dim, dim], # for computing measurement data
+    solver_options=solver_options, # to be used every time run is called
+)
+
+### backend.target
+from qiskit import pulse
+from qiskit.transpiler import InstructionProperties
+
+from qiskit.circuit.library import XGate, SXGate, RZGate, CXGate, ECRGate, HGate
+# from qiskit.circuit.instructions import Delay
+from qiskit.circuit import Parameter, Delay
+from qiskit.providers.backend import QubitProperties
+
+target = backend.target
+
+# qubit properties
+target.qubit_properties = [QubitProperties(frequency=v0), QubitProperties(frequency=v1)]
+
+# add instructions
+target.add_instruction(XGate(), properties={(0,): None, (1,): None})
+target.add_instruction(SXGate(), properties={(0,): None, (1,): None})
+
+target.add_instruction(ECRGate(), properties={(0, 1): None, (1, 0): None})
+
+# Add RZ instruction as phase shift for drag cal
+phi = Parameter("phi")
+with pulse.build() as rz0:
+    pulse.shift_phase(phi, pulse.DriveChannel(0))
+    pulse.shift_phase(phi, pulse.ControlChannel(1))
+
+with pulse.build() as rz1:
+    pulse.shift_phase(phi, pulse.DriveChannel(1))
+    pulse.shift_phase(phi, pulse.ControlChannel(0))
+
+target.add_instruction(
+    RZGate(phi),
+    properties={(0,): InstructionProperties(calibration=rz0), (1,): InstructionProperties(calibration=rz1)}
+)
+
+# Add Delay instruction for the ZZRamsey characterization experiments
+duration = Parameter("dur")
+target.add_instruction(Delay(duration), properties={(0,): None, (1,): None})
+
+print(f"The value of dt is {backend.dt}.")
+print(target)
+
+### initialization of Calibrations object
+import pandas as pd
+from qiskit_experiments.calibration_management.calibrations import Calibrations
+from qiskit_experiments.calibration_management.basis_gate_library import FixedFrequencyTransmon, EchoedCrossResonance
+
+cals = Calibrations(libraries=[FixedFrequencyTransmon(basis_gates=['x', 'sx']),
+                               EchoedCrossResonance(basis_gates=["cr45p", "cr45m", "ecr", "rzx"])
+                              ])
+
+display(pd.DataFrame(**cals.parameters_table(qubit_list=[0, ()])))
+
+### calibrations of "amp" and "beta" in "sx" and "x" gates
+from qiskit_experiments.library.calibration import RoughXSXAmplitudeCal
+
+# rabi experiments for qubit 0
+rabi0 = RoughXSXAmplitudeCal([0], cals, backend=backend, amplitudes=np.linspace(-0.2, 0.2, 27))
+
+# rabi experiments for qubit 1
+rabi1 = RoughXSXAmplitudeCal([1], cals, backend=backend, amplitudes=np.linspace(-0.2, 0.2, 27))
+
+# %%time
+rabi0_data = rabi0.run().block_for_results()
+rabi1_data = rabi1.run().block_for_results()
+
+from qiskit_experiments.library.calibration import RoughDragCal
+
+cal_drag0 = RoughDragCal([0], cals, backend=backend, betas=np.linspace(-20, 20, 15))
+cal_drag1 = RoughDragCal([1], cals, backend=backend, betas=np.linspace(-20, 20, 15))
+
+cal_drag0.set_experiment_options(reps=[3, 5, 7])
+cal_drag1.set_experiment_options(reps=[3, 5, 7])
+
+# %%time
+drag0_data = cal_drag0.run().block_for_results()
+drag1_data = cal_drag1.run().block_for_results()
+
+display(pd.DataFrame(**cals.parameters_table(qubit_list=[(0, )])))
+display(pd.DataFrame(**cals.parameters_table(qubit_list=[(1, )])))
+
+### contral channel map
+# set the control channel map
+backend.set_options(control_channel_map={(0, 1): 0, (1, 0): 1})
+
+target.update_from_instruction_schedule_map(cals.get_inst_map())
+print(target)
+
+# mwc
+
+from qiskit_experiments.library.characterization import ZZRamsey
+
+qubits = (0, 1)
+exp = ZZRamsey(physical_qubits=qubits, backend=backend)
+exp.set_run_options(shots=1000, seed_simulator=105)
+print(exp.transpile_options)
+print(exp._default_transpile_options())
+
+display(exp.circuits()[0].draw())
+print(exp.circuits()[0].calibrations) 
+display(exp._transpiled_circuits()[0].draw())
+
+display(exp.circuits()[2].draw())
+print(exp.circuits()[2].calibrations) 
+
+exp_data = exp.run().block_for_results()
+result=exp_data.analysis_results()
+exp_data.figure(0)
+```
+
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/90b4de60-a4c2-4ec3-a5bc-5c9972eddba1)
+
+
+
+
+
+
+
+
+
+
+
+
