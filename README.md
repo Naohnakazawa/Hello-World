@@ -136,13 +136,6 @@ Instructions:
 It seems that we need some calibration experiments for two-qubit gates!
 One of the candidates may be FineZXAmplitude(Cal) experiment. 
 
-### Question 2
-
-buckend.run() method, which is executed as ""circuit_runner" on the IBM Quantume platform, may be removed soon (15 October?).
-Pulse programs now run via backend.run() method. After the backend.run() method is eliminated, what is the prescription on how to execute 
-pulse scheduled programs ?
-Also, How we can execute qiskit_experiments on real devices in the IBM Quantum platform ? 
-
 
 
 
