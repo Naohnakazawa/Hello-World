@@ -667,6 +667,74 @@ exp_data.analysis_results(dataframe=True)
 
 
 
+### StarkRamseyXYAmpScan (revised 20241002, new PR in DrivenFrequencyTuning Experiments)
+```
+# section: example
+# ..jupyter-execute::
+# :hide-code:
+# backend
+
+from qiskit_experiments.test.pulse_backend import SingleTransmonTestBackend
+backend = SingleTransmonTestBackend(5.2e9,-.25e9, 1e9, 0.8e9, 1e4, noise=False, seed=198)
+
+qubit = 0
+
+# ..jupyter-execute::
+# mwc
+
+# StarkRamseyXYAmpScan, see "manual-..."
+# This option is not default values of parameters
+
+import numpy as np
+from qiskit import pulse
+from qiskit.pulse.channels import PulseChannel, DriveChannel
+from qiskit_experiments.library.driven_freq_tuning.p1_spect import StarkP1Spectroscopy
+from qiskit_experiments.library.driven_freq_tuning import StarkRamseyXYAmpScan
+
+exp = StarkRamseyXYAmpScan((qubit,), backend=backend)
+exp.set_experiment_options(
+            stark_channel=pulse.ControlChannel(qubit),
+            stark_freq_offset=80e6,
+            stark_sigma=15e-9,
+            stark_risefall=2,
+            stark_length=50e-9,
+            min_stark_amp=-1.0,
+            max_stark_amp=1.0,
+            num_stark_amps=51,
+            stark_amps=None,
+        )
+
+exp.set_run_options(shots=1000)
+exp_data = exp.run().block_for_results()
+result = exp_data.analysis_results()
+print(result)
+display(exp_data.figure(0))
+
+ret_coeffs = exp_data.analysis_results("stark_coefficients").value
+
+# encode the stark_coefficients for the StarkP1Spectroscopy experiment
+import json
+from qiskit_experiments.framework import ExperimentEncoder
+
+with open("coefficients.json", "w") as fp:
+    json.dump(ret_coeffs, fp, cls=ExperimentEncoder)
+```
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/4f857c34-8384-49b3-873d-80676f97daba)
+
+
+
+
+
+
+
+
+
+
 ### ReadoutAngle
 ```
 ```
@@ -674,8 +742,8 @@ exp_data.analysis_results(dataframe=True)
 ### ResonatorSpectroscopy (This code must be improved)
 ```
 # section: example
-..jupyter-execute::
-:hide-code:
+# ..jupyter-execute::
+# :hide-code:
 
 # backend
 
@@ -683,7 +751,7 @@ from qiskit_ibm_runtime import QiskitRuntimeService
 service = QiskitRuntimeService(channel="ibm_quantum")
 backend = service.backend("ibm_kyoto")
 
-..jupyter-execute::
+# ..jupyter-execute::
 
 # mwc
 import numpy as np
@@ -729,15 +797,15 @@ exp_data.figure(0)
 ### StarkP1Spectroscopy (This code must be improved)
 ```
 # section: example
-..jupyter-execute::
-:hide-code:
+# ..jupyter-execute::
+# :hide-code:
 
 # backend 
 from qiskit_ibm_runtime import QiskitRuntimeService
 service = QiskitRuntimeService(channel="ibm_quantum")
 backend = service.backend("ibm_kyoto")
 
-..jupyter-execute::
+# ..jupyter-execute::
 
 # mwc
 import numpy as np
@@ -782,6 +850,61 @@ exp_data.figure(0)
 
 
 ![image](https://github.com/user-attachments/assets/c726a03a-293e-4097-93ad-af7a5785797c)
+
+
+
+
+
+
+
+### StarkP1Spectroscopy (revised 20241002, new PR in DrivenFrequencyTuning Experiments)
+```
+# after the StarkRamseyXYAmpScan experimnt
+# ...
+
+# ..jupyter-execute::
+# mwc
+
+# decode the stark_coefficients determined by the StarkRamseyXYAmpScan experiment
+from qiskit_experiments.framework import ExperimentDecoder
+
+with open("coefficients.json", "r") as fp:
+    coefficients = json.load(fp, cls=ExperimentDecoder)
+
+# StarkP1Spectroscopy
+exp = StarkP1Spectroscopy(physical_qubits=(qubit,),
+                          backend=backend,
+                          stark_channel=pulse.DriveChannel(qubit),                          
+                         )
+exp.set_experiment_options(
+    t1_delay=20e-6,
+    min_xval=-20e6,
+    max_xval=20e6,
+    xval_type="frequency",
+    spacing="linear",
+    stark_coefficients=coefficients,
+)
+
+exp.set_run_options(shots=100)
+display(exp.circuits()[0].draw("mpl"))
+
+exp_data = exp.run().block_for_results()
+result=exp_data.analysis_results()
+for _ in result:
+    print(_)
+
+display(exp_data.figure(0))
+```
+
+
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/cef47a71-5b76-47a4-9f8a-441a99f18b5c)
+
+
 
 
 
