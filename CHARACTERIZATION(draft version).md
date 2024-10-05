@@ -423,9 +423,6 @@ data_ecr.figure(0)
 ```
 
 
-
-
-
 ### FineXAmplitude
 ```
 ```
@@ -433,6 +430,54 @@ data_ecr.figure(0)
 ### FineSXAmplitude
 ```
 ```
+
+
+### FineZXAmplitude
+```
+# backend
+# use backend = DyanmicsBackend
+# See, example-FineZXAmplitude-DB-v100
+
+from qiskit.circuit import QuantumCircuit, Gate
+from qiskit.transpiler import InstructionProperties
+
+szx_gate = Gate("szx", 2, [])
+y_szx = {(0, 1): InstructionProperties(duration=1520 * backend.dt, error=0.001, calibration=your_rzx),
+         (1, 0): InstructionProperties(duration=1520 * backend.dt, error=0.005, calibration=your_rzx)}
+
+backend.target.add_instruction(szx_gate, y_szx)
+print(backend.target)
+
+# mwc FineZXAmplitude
+from qiskit_experiments.library import FineZXAmplitude
+
+exp = FineZXAmplitude(physical_qubits=(0, 1), backend=backend)
+exp.set_experiment_options(repetitions=range(36))
+
+# %time 
+exp_data = exp.run().block_for_results()
+display(exp_data.figure(0))
+```
+
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/a7bea3a0-6fd1-4a39-9b90-7779a35f9ebd)
+
+
+
+
+
+
+
+![image](https://github.com/user-attachments/assets/6c5f3207-7c19-43d0-96d1-0f61ded16888)
+
+
+
+
+
 
 ### FineDrag
 ```
