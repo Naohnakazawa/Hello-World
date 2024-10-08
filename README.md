@@ -134,7 +134,7 @@ Instructions:
 			With pulse schedule calibration
 
 It seems that we need some calibration experiments for two-qubit gates!
-One of the candidates may be FineZXAmplitude(Cal) experiment. 
+One of the candidates may be FineZXAmplitude(Cal) experiment. As for the pulse definition of the cx-gate, the conversations between Will Shanks, Christopher J Wood and Ali Javadi-Abhari on Qiskit/qiskit/issue#9234(and also #9235) are suggestive. See, also qiskit-experiments/qiskit-experiments/calibration-management/basis-gate-library/EchoedCrossResonance.
 
 
 
