@@ -136,6 +136,7 @@ Instructions:
 It seems that we need some calibration experiments for two-qubit gates!
 One of the candidates may be FineZXAmplitude(Cal) experiment. As for the pulse definition of the cx-gate, the conversations between Will Shanks, Christopher J Wood and Ali Javadi-Abhari on Qiskit/qiskit/issue#9234(and also #9235) are suggestive. See, also qiskit-experiments/qiskit-experiments/calibration-management/basis-gate-library/EchoedCrossResonance.
 
+Rederences: S. Sheldon et al, PRA93(2016)060302; N.Sundaresan et al, PRX Quantum1,(2020)020318.
 
 
 
