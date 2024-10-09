@@ -391,7 +391,7 @@ data_ecr.figure(0)
 
             qubit = 0
             freq01_estimate = backend.defaults().qubit_freq_est[qubit]
-            freq12_estimate = freq_01 + (-.25e9)
+            freq12_estimate = freq01_estimate + (-.25e9)
             frequencies = np.linspace(freq12_estimate-15e6, freq12_estimate+15e6, 51)
 
             exp = EFSpectroscopy(physical_qubits = (0,),
