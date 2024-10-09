@@ -5,7 +5,7 @@
 ```
 ```
 
-### CrossResonanceHamiltonian (new PR)
+### CrossResonanceHamiltonian (backend=DB(2Q, noiseless), new PR)
 ```
 ### backend = dynamics_backend
 
@@ -176,7 +176,7 @@ data_cr = cr_ham_experiment.run().block_for_results()
 data_cr.figure(0)
 ```
 
-### EchoedCRH (new PR)
+### EchoedCRH (backend=DB(2Q, noiseless), new PR)
 ```
 
 ### backend = dynamics_backend
@@ -374,7 +374,7 @@ data_ecr.figure(0)
 ```
 ```
 
-### EFSpectroscopy(new PR, revised 20240629)
+### EFSpectroscopy(backend=STT(1Q, noiseless), new PR, revised 20240629)
 ```
     # section: example
         ..jupyter-execute::
@@ -432,7 +432,7 @@ data_ecr.figure(0)
 ```
 
 
-### FineZXAmplitude
+### FineZXAmplitude(backend=DB(2Q, noiseless))
 ```
 # backend
 # use backend = DyanmicsBackend
@@ -515,7 +515,7 @@ display(exp_data.figure(0))
 ```
 ```
 
-### EFRabi(new PR, the published version must be replaced with this revised 20240705)
+### EFRabi(backend=STT(1Q, noisy), new PR, the published version must be replaced with this revised 20240705)
 ```
 # section: example
 ..jupyter-execute::
@@ -712,7 +712,7 @@ exp_data.analysis_results(dataframe=True)
 
 
 
-### StarkRamseyXYAmpScan (revised 20241002, new PR in DrivenFrequencyTuning Experiments)
+### StarkRamseyXYAmpScan (backend=STT(1Q, noiseless), revised 20241002, new PR in DrivenFrequencyTuning Experiments)
 ```
 # section: example
 # ..jupyter-execute::
@@ -902,7 +902,7 @@ exp_data.figure(0)
 
 
 
-### StarkP1Spectroscopy (revised 20241002, new PR in DrivenFrequencyTuning Experiments)
+### StarkP1Spectroscopy (backend=STT(1Q, noiseless), revised 20241002, new PR in DrivenFrequencyTuning Experiments)
 ```
 # after the StarkRamseyXYAmpScan experimnt
 # ...
