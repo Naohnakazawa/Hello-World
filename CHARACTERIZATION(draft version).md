@@ -433,7 +433,7 @@ exp_data.analysis_results(dataframe=True)
 ```
 
 
-### FineZXAmplitude(backend=DB(2Q, noiseless))
+### FineZXAmplitude(backend=DB(2Q, noiseless), this must be improved)
 ```
 # backend
 # use backend = DyanmicsBackend
