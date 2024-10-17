@@ -433,7 +433,7 @@ exp_data.analysis_results(dataframe=True)
 ```
 
 
-### FineZXAmplitude(backend=DB(2Q, noiseless), this must be improved)
+### FineZXAmplitude(backend=DB(2Q, noiseless), revised)
 ```
 # backend
 # use backend = DyanmicsBackend
@@ -453,7 +453,7 @@ print(backend.target)
 from qiskit_experiments.library import FineZXAmplitude
 
 exp = FineZXAmplitude(physical_qubits=(0, 1), backend=backend)
-exp.set_experiment_options(repetitions=range(36))
+exp.set_experiment_options(repetitions=range(10))
 
 # %time 
 exp_data = exp.run().block_for_results()
@@ -465,7 +465,7 @@ display(exp_data.figure(0))
 
 
 
-![image](https://github.com/user-attachments/assets/a7bea3a0-6fd1-4a39-9b90-7779a35f9ebd)
+![image](https://github.com/user-attachments/assets/195d72ba-fc5f-4d9a-99bf-850525a1be1d)
 
 
 
@@ -473,7 +473,10 @@ display(exp_data.figure(0))
 
 
 
-![image](https://github.com/user-attachments/assets/6c5f3207-7c19-43d0-96d1-0f61ded16888)
+
+![image](https://github.com/user-attachments/assets/3d52ddac-86e3-424a-a4d7-e60b1c19d011)
+
+
 
 
 
