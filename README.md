@@ -152,11 +152,6 @@ Added minimal working code examples to experiments in API pages except
     devices in the IBM Quantum platform. See also the Deprecation Notes in
     the Release Notes 0.8.0.
 
-
-### test
-
-This is a test of GPG signature.
-
 ### PR reno report (revised)
 
 other:
@@ -191,12 +186,6 @@ other:
     By default, the backend used in the code examples, are simulators 
     such as, SingleTransmonTestBackend() and
     AerSimulator(FakePerth()).
-
-
-### test 
-
-This is a test of GPG signature on imac.
-
 
 
 
