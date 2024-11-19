@@ -178,4 +178,42 @@ other:
 This is a test of GPG signature from macbookpro.
 
 
+### PR for Qiskit-Community/qiskit-experiments issue#1238
 
+PR title : Add minimal working code expamples in experiment API docs
+
+### Summary
+
+This change adds minimal working code examples to the API pages for Experiments,
+    EFSpectroscopy,
+    EFRabi,
+    StarkRamseyXYAmpScan,
+    FineAmplitudeCal,
+    FineXAmplitudeCal,
+    FineSXAmplitudeCal,
+    FineDragCal,
+    FineXDragCal,
+    FineSXDragCal,
+    FineFrequencyCal,
+    FrequencyCal,
+    HalfAngleCal,
+    RoughAmplitudeCal,
+    RoughXSXAmplitudeCal,
+    EFRoughXSXAmplitudeCal,
+    RoughDragCal,
+    RoughFrequencyCal,
+    QuantumVolume,
+    InterleavedRB,
+    LayerFidelity,
+    StandardRB,
+    MitigatedProcessTomography,
+    MitigatedStateTomography,
+    ProcessTomography,
+    StateTomography and
+    TomographyExperiment.
+By default, the backend used in the code examples, are simulators such as, SingleTransmonTestBackend() and AerSimulator(FakePerth()).
+
+### Details and comments
+
+- This change solves the `issue#1238` (See also the `issue#1221`).
+- In the API pages, the documentation for each experiment has been updated with its code example. Users are required to specify a backend in the code example. By default, the backend used in the code examples, are simulators such as, SingleTransmonTestBackend() and AerSimulator(FakePerth()).
