@@ -216,3 +216,14 @@ This change adds minimal working code examples to the API pages for Experiments,
 
 - This change solves the `issue#1238` (See also the `issue#1221`).
 - In the API pages, the documentation for each experiment has been updated with its code example. Users are required to specify a backend in the code example. By default, the backend used in the code examples, are simulators such as, SingleTransmonTestBackend() and AerSimulator(FakePerth()).
+
+
+### PR checklist (delete when all criteria are met)
+
+- [] I have read the contributing guide `CONTRIBUTING.md`.
+- [] I have added the tests to cover my changes.
+- [] I have updated the documentation accordingly.
+- [] I have added a release note file using `reno` if this change needs to be documented in the release notes.
+
+
+
