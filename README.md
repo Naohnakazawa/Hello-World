@@ -138,20 +138,6 @@ One of the candidates may be FineZXAmplitude(Cal) experiment. As for the pulse d
 
 Rederences: S. Sheldon et al, PRA93(2016)060302; N.Sundaresan et al, PRX Quantum1,(2020)020318.
 
-
-### new PR reno report
-
-Added minimal working code examples to experiments in API pages except
-    the following experiments which need two qubits gate operations with
-    a forth coming pulse test simulator,
-    CrossResonanceHamiltonian, EchoedCrossResonanceHamiltonian, FineZXAmplitude.
-    By default, the backend used in the code examples, are simulators such as
-    SingleTransmonTestBackend(), AerSimulator(FakePerth()). It is noted that,
-    because of the deprecation policy of the Qiskit Pulse in Qiskit 2.0, some
-    experiments which need pulse level programs are deprecated for the real
-    devices in the IBM Quantum platform. See also the Deprecation Notes in
-    the Release Notes 0.8.0.
-
 ### PR reno report (revised)
 
 other:
@@ -160,7 +146,6 @@ other:
     EFSpectroscopy,
     EFRabi,
     StarkRamseyXYAmpScan,
-    StarkP1Spectroscopy,
     FineAmplitudeCal,
     FineXAmplitudeCal,
     FineSXAmplitudeCal,
@@ -181,8 +166,9 @@ other:
     StandardRB,
     MitigatedProcessTomography,
     MitigatedStateTomography,
-    ProcessTomography and
-    StateTomography.
+    ProcessTomography,
+    StateTomography and
+    TomographyExperiment.
     By default, the backend used in the code examples, are simulators 
     such as, SingleTransmonTestBackend() and
     AerSimulator(FakePerth()).
