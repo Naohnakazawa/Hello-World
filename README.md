@@ -211,7 +211,6 @@ This change adds minimal working code examples to the API pages for Experiments,
     ProcessTomography,
     StateTomography and
     TomographyExperiment.
-By default, the backend used in the code examples, are simulators such as, SingleTransmonTestBackend() and AerSimulator(FakePerth()).
 
 ### Details and comments
 
