@@ -221,7 +221,7 @@ This change adds minimal working code examples to the API pages for Experiments,
 ### PR checklist (delete when all criteria are met)
 
 - [*] I have read the contributing guide `CONTRIBUTING.md`.
-- [*] I have added the tests to cover my changes.
+- [ ] I have added the tests to cover my changes.
 - [*] I have updated the documentation accordingly.
 - [*] I have added a release note file using `reno` if this change needs to be documented in the release notes.
 
