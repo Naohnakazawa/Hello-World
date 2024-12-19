@@ -225,13 +225,19 @@ This change adds minimal working code examples to the API pages for Experiments,
 
 ### some remarks on Qiskit-Community/Qiskit-Experiments/issue-#1238 (20241219 updated)
 
-This issue is originated by @coruscating; Qiskit-Community/Qiskit-Experiments/#1221.
-Te tile of the original issue is "Minimal working code examples for experiments API docs"
-This issue is originated by @coruscating; Qiskit-Community/Qiskit-Experiments/issue-#1238.
-The first PR for the issue is opened by @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/#1433 with Naonakazawa/Qiskit-Experiments/issue-#1238.
-The PR(#1433) was reviewed by @coruscating, then the PR(#1433) has merged by @coruscating. 
-The branch Naonakazawa/Qiskit-Experiments/issue-#1238 still remains.
+- This issue is originated by @coruscating as a PR(#1221); Qiskit-Community/Qiskit-Experiments/PR#1221.
+- The tile of the original PR is "Minimal working code examples for experiments API docs"
+- Then, the issue is opened by @coruscating; Qiskit-Community/Qiskit-Experiments/Issue#1238.
+- The first PR for the issue is opened by @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/PR#1433 with Naonakazawa/Qiskit-Experiments/issue-#1238.
+- The PR(#1433) was reviewed by @coruscating, then it has merged () by @coruscating. 
+- [ ] The branch Naonakazawa/Qiskit-Experiments/issue-#1238 still remains.
 
-The second PR(#1494) for the issue is opened by @Naohnakazawa; @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/#1494 with Naonakazawa/Qiskit-Experiments/issue-#1238-draft2.
-The PR(#1494) was reviewed by @wshanks, then the PR(#1494) has merged by @wshanks.
-The branch Naonakazawa/Qiskit-Experiments/issue-#1238-draft2 has removed by @Naohnakazawa.
+- A new branch Naonakazawa/Qiskit-Experiments/issue-#1238-draft was created by @Nahonakazawa.
+- This branch has not been used as a PR.
+- [ ] The branch still remains (tagged as ).
+- [ ] Nothing will happen if the branch is removed.
+
+- An another branch Naonakazawa/Qiskit-Experiments/issue-#1238-draft2 was created by @Nahonakazawa.
+- The second PR(#1494) for the issue is opened by @Naohnakazawa; @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/PR#1494 with Naonakazawa/Qiskit-Experiments/issue-#1238-draft2.
+- The PR(#1494) was reviewed by @wshanks, then it (tagged as private-v4.7) merged by @wshanks.
+- The branch Naonakazawa/Qiskit-Experiments/issue-#1238-draft2 has removed by @Naohnakazawa.
