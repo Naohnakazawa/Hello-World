@@ -223,4 +223,15 @@ This change adds minimal working code examples to the API pages for Experiments,
 - [*] I have added a release note file using `reno` if this change needs to be documented in the release notes.
 
 
+### some remarks on Qiskit-Community/Qiskit-Experiments/issue-#1238 (20241219 updated)
 
+This issue is originated by @coruscating; Qiskit-Community/Qiskit-Experiments/#1221.
+Te tile of the original issue is "Minimal working code examples for experiments API docs"
+This issue is originated by @coruscating; Qiskit-Community/Qiskit-Experiments/issue-#1238.
+The first PR for the issue is opened by @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/#1433 with Naonakazawa/Qiskit-Experiments/issue-#1238.
+The PR(#1433) was reviewed by @coruscating, then the PR(#1433) has merged by @coruscating. 
+The branch Naonakazawa/Qiskit-Experiments/issue-#1238 still remains.
+
+The second PR(#1494) for the issue is opened by @Naohnakazawa; @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/#1494 with Naonakazawa/Qiskit-Experiments/issue-#1238-draft2.
+The PR(#1494) was reviewed by @wshanks, then the PR(#1494) has merged by @wshanks.
+The branch Naonakazawa/Qiskit-Experiments/issue-#1238-draft2 has removed by @Naohnakazawa.
