@@ -229,9 +229,10 @@ This change adds minimal working code examples to the API pages for Experiments,
 - The tile of the original PR is "Minimal working code examples for experiments API docs"
 - Then, the issue is opened by @coruscating; Qiskit-Community/Qiskit-Experiments/Issue#1238.
 - The first PR for the issue is opened by @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/PR#1433 with Naohnakazawa/Qiskit-Experiments/issue-#1238.
-- The PR(#1433) was reviewed by @coruscating, then it has merged () by @coruscating.
+- The PR(#1433) was reviewed by @coruscating, then it ( ) has merged by @coruscating.
 - The content of the PR appears in the Qiskit Experiments v0.7.0.
 - [ ] The branch Naohnakazawa/Qiskit-Experiments/issue-#1238 still remains.
+- [ ] Nothing will happen if the branch is removed.
 
 - A new branch Naohnakazawa/Qiskit-Experiments/issue-#1238-draft was created by @Naohnakazawa.
 - This branch has not been used as a PR.
@@ -243,4 +244,4 @@ This change adds minimal working code examples to the API pages for Experiments,
 - The PR(#1494) was reviewed by @wshanks, then it (tagged as private-v4.7) merged by @wshanks.
 - A PR(#1505) was opened by @wshanks as a backprot#1494, then it has merged into the branch Qiskit Experiments version stable/0.8.
 - [ ] The content of the PR will appear in the Qiskit Experiments v0.8.1 next year.
-- The branch Naohnakazawa/Qiskit-Experiments/issue-#1238-draft2 has removed by @Naohnakazawa.
+- The branch Naohnakazawa/Qiskit-Experiments/issue-#1238-draft2 has removed safely by @Naohnakazawa.
