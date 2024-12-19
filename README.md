@@ -223,21 +223,24 @@ This change adds minimal working code examples to the API pages for Experiments,
 - [*] I have added a release note file using `reno` if this change needs to be documented in the release notes.
 
 
-### some remarks on Qiskit-Community/Qiskit-Experiments/issue-#1238 (20241219 updated)
+### some remarks on Qiskit-Community/Qiskit-Experiments/issue-#1238 (20241219 updated timeline)
 
 - This issue is originated by @coruscating as a PR(#1221); Qiskit-Community/Qiskit-Experiments/PR#1221.
 - The tile of the original PR is "Minimal working code examples for experiments API docs"
 - Then, the issue is opened by @coruscating; Qiskit-Community/Qiskit-Experiments/Issue#1238.
-- The first PR for the issue is opened by @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/PR#1433 with Naonakazawa/Qiskit-Experiments/issue-#1238.
-- The PR(#1433) was reviewed by @coruscating, then it has merged () by @coruscating. 
-- [ ] The branch Naonakazawa/Qiskit-Experiments/issue-#1238 still remains.
+- The first PR for the issue is opened by @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/PR#1433 with Naohnakazawa/Qiskit-Experiments/issue-#1238.
+- The PR(#1433) was reviewed by @coruscating, then it has merged () by @coruscating.
+- The content of the PR appears in the Qiskit Experiments v0.7.0.
+- [ ] The branch Naohnakazawa/Qiskit-Experiments/issue-#1238 still remains.
 
-- A new branch Naonakazawa/Qiskit-Experiments/issue-#1238-draft was created by @Nahonakazawa.
+- A new branch Naohnakazawa/Qiskit-Experiments/issue-#1238-draft was created by @Naohnakazawa.
 - This branch has not been used as a PR.
 - [ ] The branch still remains (tagged as ).
 - [ ] Nothing will happen if the branch is removed.
 
-- An another branch Naonakazawa/Qiskit-Experiments/issue-#1238-draft2 was created by @Nahonakazawa.
-- The second PR(#1494) for the issue is opened by @Naohnakazawa; @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/PR#1494 with Naonakazawa/Qiskit-Experiments/issue-#1238-draft2.
+- An another branch Naohnakazawa/Qiskit-Experiments/issue-#1238-draft2 was created by @Naohnakazawa.
+- The second PR(#1494) for the issue is opened by @Naohnakazawa; Qiskit-Community/Qiskit-Experiments/PR#1494 with Naohnakazawa/Qiskit-Experiments/issue-#1238-draft2.
 - The PR(#1494) was reviewed by @wshanks, then it (tagged as private-v4.7) merged by @wshanks.
-- The branch Naonakazawa/Qiskit-Experiments/issue-#1238-draft2 has removed by @Naohnakazawa.
+- A PR(#1505) was opened by @wshanks as a backprot#1494, then it has merged into the branch Qiskit Experiments version stable/0.8.
+- [ ] The content of the PR will appear in the Qiskit Experiments v0.8.1 next year.
+- The branch Naohnakazawa/Qiskit-Experiments/issue-#1238-draft2 has removed by @Naohnakazawa.
