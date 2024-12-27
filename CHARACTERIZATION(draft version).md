@@ -5,7 +5,7 @@
 ```
 ```
 
-### CrossResonanceHamiltonian (backend=DB(2Q, noiseless), new PR)
+### CrossResonanceHamiltonian (backend=DB(2Q, noiseless), DB does not work now)
 ```
 ### backend = dynamics_backend
 
@@ -176,7 +176,7 @@ data_cr = cr_ham_experiment.run().block_for_results()
 data_cr.figure(0)
 ```
 
-### EchoedCRH (backend=DB(2Q, noiseless), new PR)
+### EchoedCRH (backend=DB(2Q, noiseless), DB does not work now)
 ```
 
 ### backend = dynamics_backend
@@ -374,7 +374,7 @@ data_ecr.figure(0)
 ```
 ```
 
-### EFSpectroscopy(backend=STT(1Q, noiseless), new PR, revised 20240629)
+### EFSpectroscopy(backend=STT(1Q, noiseless), new PR, merged to Qiskit-Experiments/main)
 ```
 # section: example
 ..jupyter-execute::
@@ -433,7 +433,7 @@ exp_data.analysis_results(dataframe=True)
 ```
 
 
-### FineZXAmplitude(backend=DB(2Q, noiseless), revised)
+### FineZXAmplitude(backend=DB(2Q, noiseless), DB does not work now)
 ```
 # backend
 # use backend = DyanmicsBackend
@@ -519,11 +519,24 @@ display(exp_data.figure(0))
 ```
 ```
 
-### EFRabi(backend=STT(1Q, noisy), new PR, the published version must be replaced with this revised 20240705)
+### EFRabi(backend=STT(1Q, noisy), new PR, merged to Qiskit-Experiments/main)
 ```
 # section: example
 ..jupyter-execute::
 :hide-code:
+
+import warnings
+
+warnings.filterwarnings(
+"ignore",
+message=".*Due to the deprecation of Qiskit Pulse.*",
+category=DeprecationWarning,
+)
+warnings.filterwarnings(
+"ignore",
+message=".*The entire Qiskit Pulse package is being deprecated.*",
+category=DeprecationWarning,
+)
 
 # backend
 from qiskit_experiments.test import SingleTransmonTestBackend
@@ -547,9 +560,6 @@ exp = EFRabi(physical_qubits=(0,),
              amplitudes=np.linspace(-0.1, 0.1, 21),
              backend=backend,)
 
-display(exp.circuits()[1].draw())
-print(exp.circuits()[1].calibrations)
-
 exp_data = exp.run().block_for_results()
 display(exp_data.figure(0))
 exp_data.analysis_results(dataframe=True)
@@ -570,7 +580,7 @@ exp_data.analysis_results(dataframe=True)
 ```
 ```
 
-### StarkRamseyXY (This code must be improved)
+### StarkRamseyXY (This code must be improved, next PR)
 ```
 # section: example
 # ..jupyter-execute::
@@ -645,7 +655,7 @@ exp_data.analysis_results(dataframe=True)
 
 
 
-### StarkRamseyXYAmpScan (This code must be improved)
+### StarkRamseyXYAmpScan (This code must be improved, next PR)
 ```
 # section: example
 # ..jupyter-execute::
@@ -716,7 +726,7 @@ exp_data.analysis_results(dataframe=True)
 
 
 
-### StarkRamseyXYAmpScan (backend=STT(1Q, noiseless), revised 20241002, new PR in DrivenFrequencyTuning Experiments)
+### StarkRamseyXYAmpScan (backend=STT(1Q, noiseless), revised, next PR)
 ```
 # section: example
 # ..jupyter-execute::
@@ -788,7 +798,7 @@ with open("coefficients.json", "w") as fp:
 ```
 ```
 
-### ResonatorSpectroscopy (This code must be improved)
+### ResonatorSpectroscopy (This code must be improved, next PR)
 ```
 # section: example
 # ..jupyter-execute::
@@ -906,7 +916,7 @@ exp_data.figure(0)
 
 
 
-### StarkP1Spectroscopy (backend=STT(1Q, noiseless), revised 20241002, new PR in DrivenFrequencyTuning Experiments)
+### StarkP1Spectroscopy (backend=STT(1Q, noiseless), revised 20241002, next PR)
 ```
 # after the StarkRamseyXYAmpScan experimnt
 # ...
