@@ -28,7 +28,7 @@ git tag
 git show
 ```
 
-An interesting paper is [here](https://arxiv.org/abs/2308.02321).
+An interesting paper is [here](https://arxiv.org/abs/2007.02925).
 
 
 
