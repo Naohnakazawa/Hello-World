@@ -6,7 +6,7 @@ This is ***Naohito Nakazawa's*** first repository on github. I am
 
 and also a part-time lecturer in Waseda University
 
-a beginner of github* and a beginner of python.
+a beginner of github.com and a beginner of python.
 
 This is a <sub>subscript</sub> text.
 
