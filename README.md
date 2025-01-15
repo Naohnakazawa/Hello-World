@@ -2,11 +2,11 @@
 
 This is ***Naohito Nakazawa's*** first repository on github. I am
 
-## *a physicist* 
-### *a part-time lecturer in Waseda University*
+## a physicist (Ph.D)
 
-*a beginner of github* and also, 
-*a beginner of python*
+and also a part-time lecturer in Waseda University
+
+a beginner of github* and a beginner of python.
 
 This is a <sub>subscript</sub> text.
 
