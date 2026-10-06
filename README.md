@@ -1,4 +1,4 @@
-# Hello-World
+# Hello
 
 This is ***Naohito Nakazawa's*** repository. I am
 
